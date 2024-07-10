@@ -3,7 +3,7 @@ from wagtail.snippets.models import register_snippet
 from wagtail.snippets.views.snippets import SnippetViewSet
 
 from config.wagtail_hooks import CustomCreateView
-from .models import Category, Income
+from .models import Category, Income, BudgetItem, Expense
 
 
 class CategoryViewSet(SnippetViewSet):
@@ -38,3 +38,44 @@ class IncomeViewSet(SnippetViewSet):
 
 
 register_snippet(IncomeViewSet)
+
+
+class BudgetItemViewSet(SnippetViewSet):
+    model = BudgetItem
+    add_to_admin_menu = True
+    icon = "crosshairs"
+    list_display = ["category", "amount", "date", UpdatedAtColumn()]
+    list_filter = {"category": ["exact"], "amount": ["icontains"]}
+    list_per_page = 10
+    menu_label = "Budget Items"
+    menu_name = "budgets"
+    menu_order = 400
+    fieldsets = [
+        ('Budget', {
+            'fields': [
+                "category", "amount", "date",
+            ],
+        }),
+    ]
+
+    add_view_class = CustomCreateView
+
+
+register_snippet(BudgetItemViewSet)
+
+
+class ExpenseViewSet(SnippetViewSet):
+    model = Expense
+    add_to_admin_menu = True
+    icon = "crosshairs"
+    list_display = ["category", "amount", "date", UpdatedAtColumn()]
+    list_filter = {"category": ["exact"], "amount": ["icontains"]}
+    list_per_page = 10
+    menu_label = "Expenses"
+    menu_name = "expenses"
+    menu_order = 500
+
+    add_view_class = CustomCreateView
+
+
+register_snippet(ExpenseViewSet)
