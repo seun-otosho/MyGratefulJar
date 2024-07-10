@@ -45,7 +45,14 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+]+[
+    "core.apps.CoreConfig",
 ]
+# core settings
+AUTH_USER_MODEL = 'core.User'
+WAGTAIL_USER_EDIT_FORM = 'core.forms.CustomUserEditForm'
+WAGTAIL_USER_CREATION_FORM = 'core.forms.CustomUserCreationForm'
+WAGTAIL_USER_CUSTOM_FIELDS = ['country', ]
 
 MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -83,9 +90,20 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
+"""
+[15:59, 2024-07-08] #!tOlorun$: Qbstgm!$8ZL4tU3
+[16:29, 2024-07-08] #!tOlorun$: user=postgres.tgahdbldfraordpzfokt password=[YOUR-PASSWORD] host=aws-0-eu-central-1.pooler.supabase.com port=6543 dbname=postgres
+"""
 DATABASES = {
-    "default": {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres.tgahdbldfraordpzfokt',
+        'PASSWORD': 'Qbstgm!$8ZL4tU3',
+        'HOST': 'aws-0-eu-central-1.pooler.supabase.com',
+        'PORT': '6543',
+    },
+    "sqlite": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
     }

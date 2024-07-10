@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "wagtailusers/users/edit.html" %}
 
-</body>
-</html>
+{% block extra_fields %}
+    <li>{% include "wagtailadmin/shared/field.html" with field=form.country %}</li>
+{#    <li>{% include "wagtailadmin/shared/field.html" with field=form.status %}</li>#}
+{% endblock extra_fields %}
