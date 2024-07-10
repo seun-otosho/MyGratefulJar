@@ -6,3 +6,6 @@ from django_countries.fields import CountryField
 
 class User(AbstractUser):
     country = CountryField()
+
+    class Meta:
+        db_table = 'users'
