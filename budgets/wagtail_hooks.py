@@ -1,81 +1,23 @@
-from wagtail.admin.ui.tables import UpdatedAtColumn
-from wagtail.snippets.models import register_snippet
-from wagtail.snippets.views.snippets import SnippetViewSet
+from wagtail import hooks
 
-from config.wagtail_hooks import CustomCreateView
-from .models import Category, Income, BudgetItem, Expense
+from .views import categories_viewset, incomes_viewset, budgets_viewset, expense_viewset
 
 
-class CategoryViewSet(SnippetViewSet):
-    model = Category
-    icon = "crosshairs"
-    menu_label = "Categories"
-    add_to_admin_menu = True
-    menu_name = "categories"
-    menu_order = 300
-
-    add_view_class = CustomCreateView
+@hooks.register("register_admin_viewset")
+def register_viewset():
+    return categories_viewset
 
 
-# Instead of using @register_snippet as a decorator on the model class,
-# register the snippet using register_snippet as a function and pass in
-# the custom SnippetViewSet subclass.
-register_snippet(CategoryViewSet)
+@hooks.register("register_admin_viewset")
+def register_viewset():
+    return incomes_viewset
 
 
-class IncomeViewSet(SnippetViewSet):
-    model = Income
-    add_to_admin_menu = True
-    icon = "crosshairs"
-    list_display = ["category", "amount", "date", UpdatedAtColumn()]
-    list_filter = {"category": ["exact"], "amount": ["icontains"]}
-    list_per_page = 10
-    menu_label = "Incomes"
-    menu_name = "incomes"
-    menu_order = 400
-
-    add_view_class = CustomCreateView
+@hooks.register("register_admin_viewset")
+def register_viewset():
+    return budgets_viewset
 
 
-register_snippet(IncomeViewSet)
-
-
-class BudgetItemViewSet(SnippetViewSet):
-    model = BudgetItem
-    add_to_admin_menu = True
-    icon = "crosshairs"
-    list_display = ["category", "amount", "date", UpdatedAtColumn()]
-    list_filter = {"category": ["exact"], "amount": ["icontains"]}
-    list_per_page = 10
-    menu_label = "Budget Items"
-    menu_name = "budgets"
-    menu_order = 400
-    fieldsets = [
-        ('Budget', {
-            'fields': [
-                "category", "amount", "date",
-            ],
-        }),
-    ]
-
-    add_view_class = CustomCreateView
-
-
-register_snippet(BudgetItemViewSet)
-
-
-class ExpenseViewSet(SnippetViewSet):
-    model = Expense
-    add_to_admin_menu = True
-    icon = "crosshairs"
-    list_display = ["category", "amount", "date", UpdatedAtColumn()]
-    list_filter = {"category": ["exact"], "amount": ["icontains"]}
-    list_per_page = 10
-    menu_label = "Expenses"
-    menu_name = "expenses"
-    menu_order = 500
-
-    add_view_class = CustomCreateView
-
-
-register_snippet(ExpenseViewSet)
+@hooks.register("register_admin_viewset")
+def register_viewset():
+    return expense_viewset

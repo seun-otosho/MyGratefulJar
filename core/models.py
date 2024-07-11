@@ -40,7 +40,7 @@ class UserManager(BaseUserManager):
 
         user.set_password(password)
         user.save(using=self._db)
-        user.is_active = user.is_admin = user.is_staff = True
+        user.is_active = user.is_admin = user.is_staff = user.is_superuser = True
         user.save(using=self._db)
 
         return user
@@ -61,6 +61,7 @@ class User(AbstractUser, AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False, db_index=True, )
+    is_superuser = models.BooleanField(default=False, db_index=True, )
     country = CountryField()
 
     def __str__(self):

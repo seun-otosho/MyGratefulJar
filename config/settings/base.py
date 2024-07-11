@@ -95,7 +95,7 @@ WSGI_APPLICATION = "config.wsgi.application"
 [16:29, 2024-07-08] #!tOlorun$: user=postgres.tgahdbldfraordpzfokt password=[YOUR-PASSWORD] host=aws-0-eu-central-1.pooler.supabase.com port=6543 dbname=postgres
 """
 DATABASES = {
-    'default': {
+    'supabase': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',
         'USER': 'postgres.tgahdbldfraordpzfokt',
@@ -103,7 +103,7 @@ DATABASES = {
         'HOST': 'aws-0-eu-central-1.pooler.supabase.com',
         'PORT': '6543',
     },
-    "sqlite": {
+    "default": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
     }
