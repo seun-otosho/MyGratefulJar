@@ -19,5 +19,5 @@ except ImportError:
 
 
 INSTALLED_APPS += [
-    "budgets",
+    # "budgets",
 ]
