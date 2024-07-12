@@ -1,0 +1,8 @@
+on: push
+name: Deploy to CPanel
+jobs:
+    cpanel-deploy:
+        with:
+            server: ftp.mygratefuljar.com
+            username: tech@mygratefuljar.com
+            password: {{ secrets.ftp_password }}
