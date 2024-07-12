@@ -2,14 +2,17 @@ on:
   push:    
     branches:
       - main
-name: Deploy to CPanel
+name: 🚀 Deploy website on push
 jobs:
-  cpanel-deploy:
-    name: Push to CPanel
+  web-deploy:
+    name: 🎉 Deploy
     runs-on: ubuntu-latest
     steps:
-    - name: Sync Files
-      uses: SamKirkland/FTP-Deploy-Actions@v4.3.4
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v4
+    
+    - name: 📂 Sync files
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:        
         server: ftp.mygratefuljar.com
         username: tech@mygratefuljar.com
