@@ -1,14 +1,14 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block body_class %}template-homepage{% endblock %}
+{#{% block body_class %}template-homepage{% endblock %}#}
 
 {% block extra_css %}
 
 {% comment %}
 Delete the line below if you're just getting started and want to remove the welcome screen!
 {% endcomment %}
-<link rel="stylesheet" href="{% static 'css/welcome_page.css' %}">
+<!-- link rel="stylesheet" href="{% static 'css/welcome_page.css' %}" -->
 {% endblock extra_css %}
 
 {% block content %}
@@ -16,6 +16,43 @@ Delete the line below if you're just getting started and want to remove the welc
 {% comment %}
 Delete the line below if you're just getting started and want to remove the welcome screen!
 {% endcomment %}
-{% include 'home/welcome_page.html' %}
+{#{% include 'home/welcome_page.html' %}#}
+
+    <div class="slider-container">
+        <div class="slider-container-row" id="slider-posts">
+            <div class="widget fbt_fp-slider">
+                <div class="widget-content">
+                    <div class="container">
+                        <div class="row align-items-center slider-width">
+                            <div class="col-lg-7">
+                                <div class="fbt-shape-container">
+                                    <div class="fbt-item-thumbnail radius-10">
+                                        <a class="post-image-link" href="./single.html">
+                                            <img alt="" class="post-thumbnail lazyloaded" data-src="./images/img-1.jpg"
+                                                 src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-5 mt-4 mt-lg-0">
+                                <div class="fbt-shape-title pl-xl-5 pl-lg-4">
+                                    <h1 class="display-4">
+                                        <a href="./single.html">Etiam nec enim id mi maximus consequat sed ut tortor.</a>
+                                    </h1>
+                                    <div class="post-meta my-4">
+                                        <span class="post-author">fbtemplates</span>
+                                        <span class="post-date published">March 08, 2017</span>
+                                    </div>
+                                    <a href="./single.html">
+                                        <span class="fbt_read_more btn btn-primary-slider radius-25 px-5 mt-2">Keep reading ...</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div><!-- .slider-container end-->
 
 {% endblock content %}
