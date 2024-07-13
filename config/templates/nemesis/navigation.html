@@ -1,10 +1,12 @@
-{% load static nav_tags %}
+{% load static nav_tags wagtailcore_tags wagtailimages_tags %}
+{% wagtail_site as current_site %}
 
 {% get_navs as navs %}
 <nav class="navbar navbar-expand-xl navbar-fbt fbt-nav-skin fbt_sticky_nav">
     <div class="container nav-mobile-px clearfix">
         <div class="navbar-brand order-2 order-xl-1 m-auto">
-            <a href="./index.html"><img alt="Nemesis" src="{%  static 'nemesis/images/logo_nemesis.png' %}"></a>
+            <a href="/">
+                {% image settings.site_settings.BrandSettings.logo max-44x45 %} {{ current_site.site_name }}</a>
         </div>
         <button aria-expanded="false" aria-label="Toggle navigation"
                 class="navbar-toggler order-1 order-xl-2" data-target="#navbar-menu" data-toggle="collapse"
