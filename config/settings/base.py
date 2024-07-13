@@ -49,6 +49,8 @@ INSTALLED_APPS = [
 ]+[
     "core.apps.CoreConfig",
     "site_settings",
+]+[
+    "blog",
 ]
 # core settings
 AUTH_USER_MODEL = 'core.User'

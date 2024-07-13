@@ -50,8 +50,8 @@
             </div>
             <button id="close" type="reset" value="">×</button>
         </form><!-- #search -->
-
-        <div id="page-wrapper" class="feed-view">
+        
+        <div id="page-wrapper" class="{% block page_wrapper_class %}   {% endblock %}feed-view">
         
             {% block navigation %}{% include 'nemesis/navigation.html' %}{% endblock navigation %}
         
