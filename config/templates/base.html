@@ -4,6 +4,8 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>
             {% block title %}
             {% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}
@@ -25,19 +27,226 @@
 
         {# Global stylesheets #}
         <link rel="stylesheet" type="text/css" href="{% static 'css/config.css' %}">
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:900%7CNunito:400,700%7COswald%7CRoboto" rel="stylesheet">
+        <link href="{% static 'nemesis/css/animate.min.css' %}" rel="stylesheet" media="screen">
+        <link href="{% static 'nemesis/css/fonts.css' %}" rel="stylesheet" media="screen">
+        <link href="{% static 'nemesis/css/bootstrap.min.css' %}" rel="stylesheet" media="screen">
+        <link href="{% static 'nemesis/css/style.css' %}" rel="stylesheet" media="screen">
 
         {% block extra_css %}
         {# Override this in templates to add extra stylesheets #}
         {% endblock %}
+
     </head>
 
     <body class="{% block body_class %}{% endblock %}">
-        {% wagtailuserbar %}
 
-        {% block content %}{% endblock %}
+        <div id="fbt-content-overlay" onclick="closeNav()"></div>
+        <form autocomplete="off" id="search" role="search">
+            <div class="input">
+                <input class="search" name="search" placeholder="Search..." type="text" />
+                <button class="submit fa fa-search" type="submit" value=""></button>
+            </div>
+            <button id="close" type="reset" value="">×</button>
+        </form><!-- #search -->
+
+        <div id="page-wrapper" class="feed-view">
+
+            <nav class="navbar navbar-expand-xl navbar-fbt fbt-nav-skin fbt_sticky_nav">
+                <div class="container nav-mobile-px clearfix">
+                    <div class="navbar-brand order-2 order-xl-1 m-auto">
+                        <a href="./index.html"><img alt="Nemesis" src="{%  static 'nemesis/images/logo_nemesis.png' %}"></a>
+                    </div>
+                    <button aria-expanded="false" aria-label="Toggle navigation"
+                            class="navbar-toggler order-1 order-xl-2" data-target="#navbar-menu" data-toggle="collapse"
+                            type="button">☰</button>
+                    <div class="header-buttons order-3 order-lg-4">
+                        <span class="fa fa-search navbar-search search-trigger"></span>
+                        <span class="fbt-sidenav ml-1 active" onclick="openNav()">☰</span>
+                    </div>
+                    <div class="collapse navbar-collapse order-4 order-xl-3 clearfix" id="navbar-menu">
+                        <ul class="navbar-nav m-auto clearfix">
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown">Home</a>
+                                <div class="dropdown-menu">
+                                    <a href="./index.html" class="dropdown-item">Home 1</a>
+                                    <a href="./index-2.html" class="dropdown-item">Home 2</a>
+                                    <a href="./index-3.html" class="dropdown-item">Home 3</a>
+                                    <a href="./index-4.html" class="dropdown-item">Home 4</a>
+                                    <a href="./index-5.html" class="dropdown-item">Home 5</a>
+                                    <a href="./blog.html" class="dropdown-item">Home 6</a>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a href="./contact.html" class="nav-link">Contact</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">Sport</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">Policy</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a href="#" class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown">Features</a>
+                                <div class="dropdown-menu">
+                                    <a href="#" class="dropdown-item">Feature 1</a>
+                                    <a href="#" class="dropdown-item">Feature 2</a>
+                                    <a href="#" class="dropdown-item">Feature 3</a>
+                                    <a href="#" class="dropdown-item">Feature 5</a>
+                                    <a href="#" class="dropdown-item">Feature 6</a>
+                                    <a href="#" class="dropdown-item">Feature 7</a>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <a href="./error.html" class="nav-link">Error Page</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link">Lifestyle</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav><!-- .navbar end-->
+        
+            {% block content %}{% endblock %}
+
+            {% wagtailuserbar %}
+
+
+
+            <div class="fbt-bottom-shape">
+                <svg class="fbt-footer-wave-big" preserveAspectRatio="none" version="1.1" viewBox="5 0 1366 222" width="100%">
+                    <path
+                            d="M-2.19,238H1366v-4.27c-67.87-24-146.44-43.08-230.75-53.19-253.33-27.78-293.94,51.64-541.13,29.89C318.08,186.31,289.49,32.92,6.9,11.73c-5.21-.42-10.56-.7-15.9-1V238Z"
+                            transform="translate(9.5 -10.22)">
+                    </path>
+                </svg>
+            </div><!-- .fbt-bottom-shape -->
+
+            <div class="footer-dark pt-4" id="footer-content">
+                <div class="container pb-4">
+                    <div class="row clearfix">
+                        <div class="col-lg-4">
+                            <div class="footer-1" id="footer-1">
+                                <div class="logoImage">
+                                    <div class="widget-content">
+                                        <img alt="" src="{%  static 'nemesis/images/logo-light.png' %}">
+                                    </div>
+                                </div>
+                                <div class="widget Text">
+                                    <div class="widget-content">
+                                        <p>
+                                            Phasellus deserunt. Convallis perspiciatis fusce fermentum accumsan, arcu
+                                            aliquam, velit venenatis augue proin, enim etiam dolor.
+                                            Mi ac lectus vitae cum, fusce purus posuere.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 ml-lg-auto">
+                            <div class="footer-2 section" id="footer-2">
+                                <div class="widget">
+                                    <h4 class="title title-heading">
+                                        About
+                                    </h4>
+                                    <div class="widget-content list-label-widget-content">
+                                        <ul class="list-unstyled">
+                                            <li><a class="label-name" href="#">Home</a></li>
+                                            <li><a class="label-name" href="#">Lifestyle</a></li>
+                                            <li><a class="label-name" href="#"> People</a></li>
+                                            <li><a class="label-name" href="#">Slider</a></li>
+                                            <li><a class="label-name" href="#">Sport</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2">
+                            <div class="footer-3 section" id="footer-3">
+                                <div class="widget">
+                                    <h4 class="title title-heading">
+                                        Categories
+                                    </h4>
+                                    <div class="widget-content list-label-widget-content">
+                                        <ul class="list-unstyled">
+                                            <li><a class="label-name" href="#">Business</a></li>
+                                            <li><a class="label-name" href="#">Design</a></li>
+                                            <li><a class="label-name" href="#">Lifestyle</a></li>
+                                            <li><a class="label-name" href="#">Technology</a></li>
+                                            <li><a class="label-name" href="#">Training</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 last">
+                            <div class="footer-4 section" id="footer-4">
+                                <div class="widget">
+                                    <h4 class="title title-heading">
+                                        Account
+                                    </h4>
+                                    <div class="widget-content list-label-widget-content">
+                                        <ul class="list-unstyled">
+                                            <li><a class="label-name" href="#">Business</a></li>
+                                            <li><a class="label-name" href="#">Design</a></li>
+                                            <li><a class="label-name" href="#">Entertainment</a></li>
+                                            <li><a class="label-name" href="#">Featured</a></li>
+                                            <li><a class="label-name" href="#">Technology</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="credits">
+                    <div class="container">
+                        <div class="row divider py-4">
+                            <div class="col-lg-6">
+                                <div class="copyright-section text-center text-lg-left">
+                                    © <script>document.write(new Date().getFullYear());</script> Nemesis | All Rights Reserved
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="footer-menu section" id="footer-menu">
+                                    <div class="widget socialList">
+                                        <div class="widget-content">
+                                            <ul class="nav">
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="#"><i class="fa fa-facebook"></i></a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="#"><i class="fa fa-twitter"></i></a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="#"><i class="fa fa-instagram"></i></a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="#"><i class="fa fa-linkedin"></i></a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="#"><i class="fa fa-youtube-play"></i></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- #footer-content -->
+        
+        </div><!-- #page-wrapper end -->
 
         {# Global javascript #}
         <script type="text/javascript" src="{% static 'js/config.js' %}"></script>
+        <script src="{% static 'nemesis/js/jquery.min.js' %}"></script>
+        <script src="{% static 'nemesis/js/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static 'nemesis/js/plugins.js' %}"></script>
+        <script src="{% static 'nemesis/js/main.js' %}"></script>
 
         {% block extra_js %}
         {# Override this in templates to add extra javascript #}
