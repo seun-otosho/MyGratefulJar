@@ -1,0 +1,58 @@
+{% load static nav_tags %}
+
+{% get_navs as navs %}
+<nav class="navbar navbar-expand-xl navbar-fbt fbt-nav-skin fbt_sticky_nav">
+    <div class="container nav-mobile-px clearfix">
+        <div class="navbar-brand order-2 order-xl-1 m-auto">
+            <a href="./index.html"><img alt="Nemesis" src="{%  static 'nemesis/images/logo_nemesis.png' %}"></a>
+        </div>
+        <button aria-expanded="false" aria-label="Toggle navigation"
+                class="navbar-toggler order-1 order-xl-2" data-target="#navbar-menu" data-toggle="collapse"
+                type="button">☰</button>
+        <div class="header-buttons order-3 order-lg-4">
+            <span class="fa fa-search navbar-search search-trigger"></span>
+            <span class="fbt-sidenav ml-1 active" onclick="openNav()">☰</span>
+        </div>
+        <div class="collapse navbar-collapse order-4 order-xl-3 clearfix" id="navbar-menu">
+            <ul class="navbar-nav m-auto clearfix">
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown">Home</a>
+                    <div class="dropdown-menu">
+                        
+                        <a href="./index.html" class="dropdown-item">Home 1</a>
+                        <a href="./index-2.html" class="dropdown-item">Home 2</a>
+                        <a href="./index-3.html" class="dropdown-item">Home 3</a>
+                        <a href="./index-4.html" class="dropdown-item">Home 4</a>
+                        <a href="./index-5.html" class="dropdown-item">Home 5</a>
+                        <a href="./blog.html" class="dropdown-item">Home 6</a>
+                    </div>
+                </li>
+                {% for nav in navs %}
+                <li class="nav-item">
+                    <a href="{{ nav.url }}" class="nav-link">{{ nav.title }}</a>
+                </li>
+                {%  endfor %}
+            
+                <li class="nav-item">
+                    <a href="./contact.html" class="nav-link">Contact Us</a>
+                </li>
+                
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown">Features</a>
+                    <div class="dropdown-menu">
+                        <a href="#" class="dropdown-item">Feature 1</a>
+                        <a href="#" class="dropdown-item">Feature 2</a>
+                        <a href="#" class="dropdown-item">Feature 3</a>
+                        <a href="#" class="dropdown-item">Feature 5</a>
+                        <a href="#" class="dropdown-item">Feature 6</a>
+                        <a href="#" class="dropdown-item">Feature 7</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="./error.html" class="nav-link">Error Page</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav><!-- .navbar end-->
+  
