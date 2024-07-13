@@ -50,8 +50,8 @@
             </div>
             <button id="close" type="reset" value="">×</button>
         </form><!-- #search -->
-
-        <div id="page-wrapper" class="feed-view">
+        
+        <div id="page-wrapper" class="{% block page_wrapper_class %}   {% endblock %}feed-view">
         
             {% block navigation %}{% include 'nemesis/navigation.html' %}{% endblock navigation %}
         
@@ -59,13 +59,11 @@
 
             {% wagtailuserbar %}
 
-
-
             <div class="fbt-bottom-shape">
                 <svg class="fbt-footer-wave-big" preserveAspectRatio="none" version="1.1" viewBox="5 0 1366 222" width="100%">
                     <path
-                            d="M-2.19,238H1366v-4.27c-67.87-24-146.44-43.08-230.75-53.19-253.33-27.78-293.94,51.64-541.13,29.89C318.08,186.31,289.49,32.92,6.9,11.73c-5.21-.42-10.56-.7-15.9-1V238Z"
-                            transform="translate(9.5 -10.22)">
+                        d="M-2.19,238H1366v-4.27c-67.87-24-146.44-43.08-230.75-53.19-253.33-27.78-293.94,51.64-541.13,29.89C318.08,186.31,289.49,32.92,6.9,11.73c-5.21-.42-10.56-.7-15.9-1V238Z"
+                        transform="translate(9.5 -10.22)">
                     </path>
                 </svg>
             </div><!-- .fbt-bottom-shape -->

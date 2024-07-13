@@ -1,0 +1,223 @@
+{% extends "base.html" %}
+
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block page_wrapper_class %} magazine-view {% endblock %}
+
+{% block content %}
+    <div class="outer-wrapper my-5" id="outer-wrapper">
+
+        <div class="container fbt-elastic-container mb-5">
+            <div class="widget fbt-ad-block">
+                <div class="fbt_ad text-center">
+                    <div class="widget-content">
+                        <a href="#">
+                            <img alt="" class="img-fluid lazyloaded" data-src="./images/horizontal_ad.jpg"
+                                 src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container fbt-elastic-container">
+            <div class="row justify-content-center">
+
+                <!-- Main Wrapper -->
+                <div class="fbt-main-wrapper col-lg-8 mb-5 mb-lg-0">
+
+                    <div id="main-wrapper">
+                        <div class="main-section" id="main_content">
+
+                            <div class="fbt-sep-title">
+                                <h4 class="title title-heading-left">Recent posts</h4>
+                                <div class="title-sep-container">
+                                    <div class="title-sep sep-double"></div>
+                                </div>
+                            </div>
+
+                            <div class="blog-posts fbt-index-post-wrap">
+
+                                {% for blog_page in page.get_children %}
+                                    {% with blog_page=blog_page.specific %}
+                                        <div class="fbt_magazine-blog-post fbt-index-post row align-items-center justify-content-between">
+                                            <div class="col-xl-6 col-md-5">
+                                                <div class="fbt-post-thumbnail">
+                                                    <a href="{{ blog_page.url }}">
+                                                        <img alt="" class="post-thumbnail lazyloaded" data-src="{% image blog_page.image max-350x230 %}"
+                                                             src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-6 col-md-7">
+                                                <div class="fbt-post-caption mt-3 mt-md-0">
+
+                                                    {% with tags=blog_page.tags.all %}
+                                                        {% if tags %}
+                                                                {% for tag in tags %}
+                                                                    <span class="post-tag index-post-tag">
+                                                                    {{ tag }}</span>
+                                                                    <!-- a href="{% slugurl 'tags' %}?tag={{ tag }}">
+                                                                        <button type="button">{{ tag }}</button></a -->
+                                                                {% endfor %}
+                                                        {% endif %}
+                                                    {% endwith %}
+
+                                                    <h3 class="post-title">
+                                                        <a href="{{ blog_page.url }}">
+                                                            {{ blog_page.title }}
+                                                        </a>
+                                                    </h3>
+                                                    <div class="post-meta mb-2">
+                                                        <span class="post-author"><a href="#">{{ blog_page.owner.username }}</a></span>
+                                                        <span class="post-date published">{{ blog_page.date }}</span>
+                                                    </div>
+                                                    <p class="post-excerpt">
+                                                        {{ blog_page.intro }}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    {% endwith %}
+
+                                {% endfor %}
+
+                                <!-- hentry -->
+                                <div class="fbt_magazine-blog-post hentry fbt-index-post row align-items-center justify-content-between">
+                                </div>
+
+                            </div><!-- .fbt-index-post-wrap -->
+
+                            <div class="pagenav" id="blog-pager">
+                                <span class="showpageOf">2 / 3</span>
+                                <span class="showpage firstpage">
+                                        <a href="#">
+                                            <i class="fa fa-angle-double-left"></i>
+                                        </a>
+                                    </span>
+                                <span class="showpage">
+                                        <a href="#">
+                                            <i class="fa fa-angle-left"></i>
+                                        </a>
+                                    </span>
+                                <span class="displaypageNum">
+                                        <a href="#">1</a>
+                                    </span>
+                                <span class="page current">2</span>
+                                <span class="displaypageNum">
+                                        <a href="#">3</a>
+                                    </span>
+                                <span class="displaypageNum">
+                                        <a href="#">
+                                            <i class="fa fa-angle-right"></i>
+                                        </a>
+                                    </span>
+                                <span class="displaypageNum lastpage">
+                                        <a href="#">
+                                            <i class="fa fa-angle-double-right"></i>
+                                        </a>
+                                    </span>
+                            </div><!-- .pagenav -->
+
+                        </div>
+                    </div><!-- #main-wrapper -->
+
+                </div><!-- .fbt-main-wrapper -->
+
+                <div class="fbt-main-sidebar col-lg-4">
+                    <div class="fbt-main-sidebar__content h-100 pl-lg-3">
+
+                        <!-- FeaturedPost -->
+
+                        <!-- .fbt_list_posts -->
+
+                        <!-- .fbt-ad-block -->
+
+                    </div>
+                </div><!-- .fbt-main-sidebar -->
+
+                <!-- Sidebar Wrapper -->
+                <div class="sidebar-wrapper" id="sidebar-wrapper">
+                    <div class="sidebar-wrapper__content">
+                        <div class="navigation-container clearfix">
+                            <span class="closebtn" onclick="closeNav()">×</span>
+                        </div>
+                        <div class="sidebar-top section" id="menu_sidebar">
+                            <div class="widget LinkList mt-0">
+                                <div class="widget-content fbt-sidebar--menu">
+                                    <ul class="list-group">
+                                        <li class="list-group-item"><a href="/">HOME</a></li>
+                                        <li class="list-group-item"><a href="#">ABOUT</a></li>
+                                        <li class="list-group-item"><a href="#">SERVICES</a></li>
+                                        <li class="list-group-item"><a href="#">CONTACT</a></li>
+                                        <li class="list-group-item"><a href="#">PRIVACY</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="sidebar section" id="main_sidebar">
+                            <div class="widget Label">
+
+                                <div class="fbt-sep-title">
+                                    <h4 class="title title-heading-left">Categories</h4>
+                                    <div class="title-sep-container">
+                                        <div class="title-sep sep-double"></div>
+                                    </div>
+                                </div>
+
+                                <div class="widget-content cloud-label--widget-content">
+                                    <a href="#"><span class="badge badge-success py-1 px-2 mb-1">Business</span></a>
+                                    <a href="#"><span class="badge badge-success py-1 px-2 mb-1">Carousel</span></a>
+                                    <a href="#"><span class="badge badge-success py-1 px-2 mb-1">Design</span></a>
+                                    <a href="#"><span class="badge badge-success py-1 px-2 mb-1">Entertainment</span></a>
+                                    <a href="#"><span class="badge badge-success py-1 px-2 mb-1">Featured</span></a>
+                                    <a href="#"><span class="badge badge-success py-1 px-2 mb-1">Friends</span></a>
+                                    <a href="#"><span class="badge badge-success py-1 px-2 mb-1">Home</span></a>
+                                    <a href="#"><span class="badge badge-success py-1 px-2 mb-1">Lifestyle</span></a>
+                                    <a href="#"><span class="badge badge-success py-1 px-2 mb-1">People</span></a>
+                                    <a href="#"><span class="badge badge-success py-1 px-2 mb-1">Slider</span></a>
+                                    <a href="#"><span class="badge badge-success py-1 px-2 mb-1">Sport</span></a>
+                                    <a href="#"><span class="badge badge-success py-1 px-2 mb-1">Technology</span></a>
+                                    <a href="#"><span class="badge badge-success py-1 px-2 mb-1">Training</span></a>
+                                </div>
+                            </div>
+                            <div class="widget BlogArchive">
+                                <div class="fbt-sep-title">
+                                    <h4 class="title title-heading-left">Archive</h4>
+                                    <div class="title-sep-container">
+                                        <div class="title-sep sep-double"></div>
+                                    </div>
+                                </div>
+                                <div class="widget-content">
+                                    <div id="ArchiveList">
+                                        <div id="BlogArchive1_ArchiveList">
+                                            <ul class="flat list-unstyled">
+                                                <li class="archivedate">
+                                                    <a href="#">June<span class="post-count float-right badge badge-primary">2</span></a>
+                                                </li>
+                                                <li class="archivedate">
+                                                    <a href="#">September<span class="post-count float-right badge badge-primary">1</span></a>
+                                                </li>
+                                                <li class="archivedate">
+                                                    <a href="#">May<span class="post-count float-right badge badge-primary">1</span></a>
+                                                </li>
+                                                <li class="archivedate">
+                                                    <a href="#">April<span class="post-count float-right badge badge-primary">1</span></a>
+                                                </li>
+                                                <li class="archivedate">
+                                                    <a href="#">March<span class="post-count float-right badge badge-primary">26</span></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div><!-- #sidebar-wrapper -->
+            </div>
+        </div>
+    </div><!-- .outer-wrapper -->
+{% endblock %}
