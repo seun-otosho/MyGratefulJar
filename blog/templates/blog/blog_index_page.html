@@ -1,27 +1,10 @@
-{% extends "base.html" %}
+{% extends "nemesis/base.html" %}
 
 {% load wagtailcore_tags wagtailimages_tags %}
 
 {% block page_wrapper_class %} magazine-view {% endblock %}
 
 {% block content %}
-    <div class="outer-wrapper my-5" id="outer-wrapper">
-
-        <div class="container fbt-elastic-container mb-5">
-            <div class="widget fbt-ad-block">
-                <div class="fbt_ad text-center">
-                    <div class="widget-content">
-                        <a href="#">
-                            <img alt="" class="img-fluid lazyloaded" data-src="./images/horizontal_ad.jpg"
-                                 src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==">
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="container fbt-elastic-container">
-            <div class="row justify-content-center">
 
                 <!-- Main Wrapper -->
                 <div class="fbt-main-wrapper col-lg-8 mb-5 mb-lg-0">
@@ -217,7 +200,5 @@
 
                     </div>
                 </div><!-- #sidebar-wrapper -->
-            </div>
-        </div>
-    </div><!-- .outer-wrapper -->
+
 {% endblock %}

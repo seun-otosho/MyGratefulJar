@@ -4,8 +4,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        {% block extra_head %}  {% endblock %}
         <title>
             {% block title %}
             {% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}
@@ -27,57 +26,19 @@
 
         {# Global stylesheets #}
         <link rel="stylesheet" type="text/css" href="{% static 'css/config.css' %}">
-        <link rel="shortcut icon" href="{% static 'my grateful jar favicon.png' %}" type="image/x-icon">
-        <link href="https://fonts.googleapis.com/css?family=Montserrat:900%7CNunito:400,700%7COswald%7CRoboto" rel="stylesheet">
-        <link href="{% static 'nemesis/css/animate.min.css' %}" rel="stylesheet" media="screen">
-        <link href="{% static 'nemesis/css/fonts.css' %}" rel="stylesheet" media="screen">
-        <link href="{% static 'nemesis/css/bootstrap.min.css' %}" rel="stylesheet" media="screen">
-        <link href="{% static 'nemesis/css/style.css' %}" rel="stylesheet" media="screen">
 
         {% block extra_css %}
         {# Override this in templates to add extra stylesheets #}
         {% endblock %}
-
     </head>
 
     <body class="{% block body_class %}{% endblock %}">
-
-        <div id="fbt-content-overlay" onclick="closeNav()"></div>
-        <form autocomplete="off" id="search" role="search">
-            <div class="input">
-                <input class="search" name="search" placeholder="Search..." type="text" />
-                <button class="submit fa fa-search" type="submit" value=""></button>
-            </div>
-            <button id="close" type="reset" value="">×</button>
-        </form><!-- #search -->
-        
-        <div id="page-wrapper" class="{% block page_wrapper_class %}   {% endblock %}feed-view">
-        
-            {% block navigation %}{% include 'nemesis/navigation.html' %}{% endblock navigation %}
-        
-            {% block content %}{% endblock %}
-
-            {% wagtailuserbar %}
-
-            <div class="fbt-bottom-shape">
-                <svg class="fbt-footer-wave-big" preserveAspectRatio="none" version="1.1" viewBox="5 0 1366 222" width="100%">
-                    <path
-                        d="M-2.19,238H1366v-4.27c-67.87-24-146.44-43.08-230.75-53.19-253.33-27.78-293.94,51.64-541.13,29.89C318.08,186.31,289.49,32.92,6.9,11.73c-5.21-.42-10.56-.7-15.9-1V238Z"
-                        transform="translate(9.5 -10.22)">
-                    </path>
-                </svg>
-            </div><!-- .fbt-bottom-shape -->
-
-            {% block footer %}            	{% include 'nemesis/footer.html' %}            {% endblock %}
-        
-        </div><!-- #page-wrapper end -->
-
+        {% wagtailuserbar %}
+        {% block b4content %}  {% endblock %}
+        {% block content %}{% endblock %}
+        {% block after_content %}  {% endblock %}
         {# Global javascript #}
         <script type="text/javascript" src="{% static 'js/config.js' %}"></script>
-        <script src="{% static 'nemesis/js/jquery.min.js' %}"></script>
-        <script src="{% static 'nemesis/js/bootstrap.bundle.min.js' %}"></script>
-        <script src="{% static 'nemesis/js/plugins.js' %}"></script>
-        <script src="{% static 'nemesis/js/main.js' %}"></script>
 
         {% block extra_js %}
         {# Override this in templates to add extra javascript #}
