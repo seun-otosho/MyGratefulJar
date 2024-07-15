@@ -100,7 +100,7 @@ WSGI_APPLICATION = "config.wsgi.application"
 [16:29, 2024-07-08] #!tOlorun$: user=postgres.tgahdbldfraordpzfokt password=[YOUR-PASSWORD] host=aws-0-eu-central-1.pooler.supabase.com port=6543 dbname=postgres
 """
 DATABASES = {
-    'default': {
+    'docker': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'grateful',
         'USER': 'xdba',
@@ -108,7 +108,7 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '5432',
     },
-    'supabase': {
+    'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',
         'USER': 'postgres.tgahdbldfraordpzfokt',
