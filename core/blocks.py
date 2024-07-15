@@ -16,7 +16,7 @@ class ImageBlock(StructBlock):
 
     class Meta:
         icon = "image"
-        template = "core/blocks/image_block.html"
+        template = "core/nemesis/blocks/image_block.html"
 
 
 class BlockQuote(StructBlock):
@@ -24,7 +24,15 @@ class BlockQuote(StructBlock):
 
     class Meta:
         icon = "title"
-        template = "core/blocks/blockquote.html"
+        template = "core/nemesis/blocks/blockquote.html"
+
+
+class Mark(StructBlock):
+    mark_text = CharBlock(required=True, )
+
+    class Meta:
+        icon = "title"
+        template = "core/nemesis/blocks/mark.html"
 
 
 class HeadingBlock(StructBlock):
@@ -42,13 +50,14 @@ class HeadingBlock(StructBlock):
 
     class Meta:
         icon = "title"
-        template = "core/blocks/heading_block.html"
+        template = "core/nemesis/blocks/heading_block.html"
 
 
 class BaseStreamBlock(StreamBlock):
     heading_block = HeadingBlock()
     paragraph_block = RichTextBlock(icon="pilcrow")
     blockquote = BlockQuote()
+    mark = Mark()
     image_block = ImageBlock()
     embed_block = EmbedBlock(
         help_text="Insert a URL to embed. For example, https://www.youtube.com/watch?v=SGJFWirQ3ks",
