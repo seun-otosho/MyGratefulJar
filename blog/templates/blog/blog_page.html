@@ -21,15 +21,17 @@
 
                                     <div class="slider-container">
                                         <div class="row align-items-center slider-width">
-                                            <div class="col-lg-7">
-                                                <div class="fbt-shape-container">
-                                                    <div class="fbt-item-thumbnail radius-10">
-                                                        <img alt="" class="post-thumbnail lazyloaded"
-                                                             data-src="{% image page.image max-746x480 %}"
-                                                             src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==">
+                                            {% if page.image %}
+                                                <div class="col-lg-7">
+                                                    <div class="fbt-shape-container">
+                                                        <div class="fbt-item-thumbnail radius-10">
+                                                            <img alt="" class="post-thumbnail lazyloaded"
+                                                                 data-src="{% image page.image max-746x480 %}"
+                                                                 src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==">
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            {% endif %}
                                             <div class="col-lg-5 mt-4 mt-lg-0">
                                                 <div class="fbt-shape-title pl-xl-5 pl-lg-4">
                                                     <h1 class="post-title display-4">
@@ -65,56 +67,7 @@
                                                 <div class="post-body post-content">
 
                                                     {{ page.intro}}
-                                                    Nunc id purus vel sapien pretium varius eu id risus.
-                                                    Vivamus sit amet nibh sit amet eros porta iaculis. Ut
-                                                    interdum diam nec imperdiet elementum. Proin condimentum
-                                                    faucibus placerat. Donec massa justo, porttitor
-                                                    tincidunt eros a, vehicula malesuada tortor. Praesent
-                                                    nec sem ut justo efficitur tempus. <br>
-                                                    <mark>Donec bibendum urna quis orci molestie sodales.
-                                                        Pellentesque habitant morbi tristique senectus et
-                                                        netus et malesuada fames ac turpis egestas. Nunc id
-                                                        purus vel sapien pretium varius eu id risus. Vivamus
-                                                        sit amet nibh sit amet eros porta iaculis. Ut
-                                                        interdum diam nec imperdiet elementum.</mark> Proin
-                                                    condimentum faucibus placerat. Donec massa justo,
-                                                    porttitor tincidunt eros a, vehicula malesuada tortor.
-
-                                                    Vestibulum maximus
-                                                    ipsum lacus, tempus suscipit augue fermentum ut.
-                                                    Suspendisse posuere mi lacus, vitae fringilla leo
-                                                    gravida eu.<br>
-                                                    Donec bibendum urna quis orci molestie sodales.
-                                                    Pellentesque habitant morbi tristique senectus et netus
-                                                    et malesuada fames ac turpis egestas. Nunc id purus vel
-                                                    sapien pretium varius eu id risus. Vivamus sit amet nibh
-                                                    sit amet eros porta iaculis. Ut interdum diam nec
-                                                    imperdiet elementum. Proin condimentum faucibus
-                                                    placerat. Donec massa justo, porttitor tincidunt eros a,
-                                                    vehicula malesuada tortor. Praesent nec sem ut justo
-                                                    efficitur tempus.<br>
-                                                    <blockquote class="tr_bq fbt-shape-container">
-                                                        <div class="card shadow-lg radius-10 px-5 pt-5 pb-4">
-                                                            <p class="pl-5">
-                                                                Donec dolor elit, pellentesque a massa
-                                                                pellentesque, euismod sagittis ipsum. Nullam
-                                                                a diam ac turpis iaculis vulputate. Nunc
-                                                                tellus libero, tempus id luctus eget,
-                                                                fermentum et quam. Aliquam erat volutpat.
-                                                                Donec sit amet nunc vitae justo dapibus
-                                                                dignissim. Vivamus sagittis dignissim massa,
-                                                                auctor aliquam nibh aliquam ut.
-                                                            </p>
-                                                        </div>
-                                                    </blockquote>
-                                                    Nunc accumsan ex ligula, in malesuada sapien consectetur
-                                                    in. Praesent non lectus sed dolor imperdiet mollis a sit
-                                                    amet sem. Vivamus eu commodo ligula. Phasellus in lacus
-                                                    eu urna ullamcorper lacinia. Duis tincidunt fringilla
-                                                    aliquet. Vivamus id luctus tellus. Vestibulum maximus
-                                                    ipsum lacus, tempus suscipit augue fermentum ut.
-                                                    Suspendisse posuere mi lacus, vitae fringilla leo
-                                                    gravida eu.
+                                                    {{ page.body}}
 
                                                 </div>
                                             </div>
