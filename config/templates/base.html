@@ -33,15 +33,21 @@
     </head>
 
     <body class="{% block body_class %}{% endblock %}">
+    
         {% wagtailuserbar %}
-        {% block b4content %}  {% endblock %}
+        
+        {% block b4content %}{% endblock %}
+        
         {% block content %}{% endblock %}
-        {% block after_content %}  {% endblock %}
+        
+        {% block after_content %}{% endblock %}
+        
         {# Global javascript #}
         <script type="text/javascript" src="{% static 'js/config.js' %}"></script>
 
         {% block extra_js %}
         {# Override this in templates to add extra javascript #}
         {% endblock %}
+    
     </body>
 </html>

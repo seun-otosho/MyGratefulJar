@@ -3,3 +3,4 @@ wagtail>=6.1,<6.2
 psycopg2-binary
 dj_database_url
 django-countries
+django-allauth

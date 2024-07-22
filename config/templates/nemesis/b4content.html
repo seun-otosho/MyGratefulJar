@@ -1,0 +1,15 @@
+<div id="fbt-content-overlay" onclick="closeNav()"></div>
+<form autocomplete="off" id="search" role="search">
+    <div class="input">
+        <input class="search" name="search" placeholder="Search..." type="text" />
+        <button class="submit fa fa-search" type="submit" value=""></button>
+    </div>
+    <button id="close" type="reset" value="">×</button>
+</form><!-- #search -->
+
+<div id="page-wrapper" class="{% block page_wrapper_class %}   {% endblock %}feed-view">
+
+    {% block navigation %}{% include 'nemesis/navigation.html' %}{% endblock navigation %}
+    <div class="outer-wrapper clearfix" id="outer-wrapper">
+        <div class="container fbt-elastic-container">
+            <div class="row justify-content-center">

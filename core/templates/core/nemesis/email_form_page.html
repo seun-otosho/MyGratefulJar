@@ -1,0 +1,166 @@
+{% extends "nemesis/base.html" %}
+{% load wagtailcore_tags %}
+
+{% block body_class %}template-formpage{% endblock %}
+
+{% block content %}
+
+
+
+
+
+
+
+    <!-- Main Wrapper -->
+    <div class="fbt-main-wrapper col-xl-12">
+
+        <div id="main-wrapper">
+            <div class="main-section" id="main_content">
+
+                <div class="blog-posts fbt-item-post-wrap">
+                    <div class="blog-post fbt-item-post">
+
+                        <div class="slider-container">
+                            <div class="row align-items-center">
+                                <div class="col-lg-12">
+                                    <div class="fbt-shape-container card shadow-none">
+                                        <div class="fbt-item-thumbnail radius-10">
+                                            <img alt="Contact Us" class="post-thumbnail" src="./images/page-img-1.jpg">
+                                        </div>
+                                        <div class="card-img-overlay radius-10">
+                                            <div class="fbt-page-shape-title d-table w-100">
+                                                <div class="d-table-cell align-middle">
+                                                    <div class="row justify-content-center">
+                                                        <div class="col-xl-8 col-lg-9 p-0">
+                                                            <h1 class="post-title display-4 text-white text-center">
+                                                                {{ page.title }}</h1>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- .slider-container end-->
+
+                        <div class="row justify-content-center">
+                            <div class="col-xl-8 col-lg-8 order-2 order-lg-1 mt-4 mt-lg-0">
+
+                                <div>{{ page.intro|richtext }}</div>
+
+                                <form id="fbt-contact-form" class="page-form contact-form"
+                                      action="{% pageurl page %}" method="POST">
+                                    {% csrf_token %}
+                                    {{ form.as_div }}
+                                    <button type="Submit">Submit</button>
+                                </form>
+
+                                <form class="contact-form" method="POST" action="index.html">
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            <div class="form-group">
+                                                <label for="name">Name*</label>
+                                                <input class="form-control shadow-none radius-0" id="name" name="name" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="form-group">
+                                                <label for="mail">E-mail*</label>
+                                                <input class="form-control shadow-none radius-0" id="mail" name="mail" type="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div class="form-group">
+                                                <label for="website">Website</label>
+                                                <input class="form-control shadow-none radius-0" id="website" name="website" type="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-4">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="message">Mesage*</label>
+                                                <textarea class="form-control shadow-none radius-0" rows="9" id="message" name="message"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-success radius-0" type="submit" id="submit-contact">
+                                        <i class="fa fa-paper-plane-o mr-2"></i>Submit Message
+                                    </button>
+                                </form>
+
+                            </div>
+
+                            <div class="col-xl-3 col-lg-4 pl-lg-5 order-1 order-lg-2">
+                                <div class="fbt-sep-title">
+                                    <h4 class="title title-heading-left">Contact Us</h4>
+                                    <div class="title-sep-container">
+                                        <div class="title-sep sep-double"></div>
+                                    </div>
+                                </div>
+                                <p class="mb-4">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                    Ut porttitor leo vel nulla posuere accumsan.
+                                    Suspendisse sed tortor eget justo aliquam euismod.
+                                    Morbi ut massa et neque iaculis lacinia a eu...
+                                </p>
+
+                                <div class="fbt-contact-info">
+
+                                    <div class="fbt-contact-info-box">
+                                        <div class="fbt-contact-info-box-content">
+                                            <div class="fbt-sep-title">
+                                                <h4 class="title title-heading-left">Webagency</h4>
+                                                <div class="title-sep-container">
+                                                    <div class="title-sep sep-double"></div>
+                                                </div>
+                                            </div>
+                                            <p>Vouliagmenis Ave 325, <br/>Athens CA 17575</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="fbt-contact-info-box">
+                                        <div class="fbt-contact-info-box-content">
+                                            <div class="fbt-sep-title">
+                                                <h4 class="title title-heading-left">Email Us</h4>
+                                                <div class="title-sep-container">
+                                                    <div class="title-sep sep-double"></div>
+                                                </div>
+                                            </div>
+                                            <p>info@nemesis.com</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="fbt-contact-info-box">
+                                        <div class="fbt-contact-info-box-content">
+                                            <div class="fbt-sep-title">
+                                                <h4 class="title title-heading-left">Call Us</h4>
+                                                <div class="title-sep-container">
+                                                    <div class="title-sep sep-double"></div>
+                                                </div>
+                                            </div>
+                                            <p>+123-456-7890</p>
+                                        </div>
+                                    </div>
+
+                                </div><!-- Widget end -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-center">
+                        <div class="col-xl-8 col-lg-9">
+                            <div class="blog-post-comments">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div><!-- #main-wrapper -->
+
+    </div><!-- .fbt-main-wrapper -->
+{% endblock content %}
+{% block fbt_bottom_section %}{% endblock fbt_bottom_section %}

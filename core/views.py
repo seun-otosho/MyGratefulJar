@@ -1,3 +1,5 @@
 from django.shortcuts import render
 
-# Create your views here.
+
+def not_found(request, exception=None):
+    render(request, 'nemesis/error.html')

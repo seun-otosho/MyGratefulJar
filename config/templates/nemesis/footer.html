@@ -7,7 +7,7 @@
                 <div class="footer-1" id="footer-1">
                     <div class="logoImage">
                         <div class="widget-content">
-                            {% image settings.site_settings.BrandSettings.logo max-37x38 %}
+                            {% image settings.core.BrandSettings.logo max-37x38 %}
                         </div>
                     </div>
                     <div class="widget Text">
@@ -91,38 +91,38 @@
                         <div class="widget socialList">
                             <div class="widget-content">
                                 <ul class="nav">
-                                    {% if settings.site_settings.FooterLinks.facebook %}
+                                    {% if settings.core.SocialMediaLinks.facebook %}
                                     <li class="nav-item">
                                         <a class="nav-link" target="_blank"
-                                           href="{{ settings.site_settings.FooterLinks.facebook }}">
+                                           href="{{ settings.core.SocialMediaLinks.facebook }}">
                                             <i class="fa fa-facebook"></i></a>
                                     </li>
                                     {% endif %}
-                                    {% if settings.site_settings.FooterLinks.x %}
+                                    {% if settings.core.SocialMediaLinks.x %}
                                     <li class="nav-item">
                                         <a class="nav-link" target="_blank"
-                                           href="{{ settings.site_settings.FooterLinks.x }}">
+                                           href="{{ settings.core.SocialMediaLinks.x }}">
                                             <i class="fa fa-twitter"></i></a>
                                     </li>
                                     {% endif %}
-                                    {% if settings.site_settings.FooterLinks.instagram %}
+                                    {% if settings.core.SocialMediaLinks.instagram %}
                                     <li class="nav-item">
                                         <a class="nav-link" target="_blank"
-                                           href="{{ settings.site_settings.FooterLinks.instagram }}">
+                                           href="{{ settings.core.SocialMediaLinks.instagram }}">
                                             <i class="fa fa-instagram"></i></a>
                                     </li>
                                     {% endif %}
-                                    {% if settings.site_settings.FooterLinks.linkedIn %}
+                                    {% if settings.core.SocialMediaLinks.linkedIn %}
                                     <li class="nav-item">
                                         <a class="nav-link" target="_blank"
-                                           href="{{ settings.site_settings.FooterLinks.linkedIn }}">
+                                           href="{{ settings.core.SocialMediaLinks.linkedIn }}">
                                             <i class="fa fa-linkedin"></i></a>
                                     </li>
                                     {% endif %}
-                                    {% if settings.site_settings.FooterLinks.youtube %}
+                                    {% if settings.core.SocialMediaLinks.youtube %}
                                     <li class="nav-item">
                                         <a class="nav-link" target="_blank"
-                                           href="{{ settings.site_settings.FooterLinks.youtube }}">
+                                           href="{{ settings.core.SocialMediaLinks.youtube }}">
                                             <i class="fa fa-youtube-play"></i></a>
                                     </li>
                                     {% endif %}

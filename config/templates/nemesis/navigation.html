@@ -6,7 +6,7 @@
     <div class="container nav-mobile-px clearfix">
         <div class="navbar-brand order-2 order-xl-1 m-auto">
             <a href="/">
-                {% image settings.site_settings.BrandSettings.logo max-44x45 %} {{ current_site.site_name }}</a>
+                {% image settings.core.BrandSettings.logo max-44x45 %} {{ current_site.site_name }}</a>
         </div>
         <button aria-expanded="false" aria-label="Toggle navigation"
                 class="navbar-toggler order-1 order-xl-2" data-target="#navbar-menu" data-toggle="collapse"
@@ -17,9 +17,11 @@
         </div>
         <div class="collapse navbar-collapse order-4 order-xl-3 clearfix" id="navbar-menu">
             <ul class="navbar-nav m-auto clearfix">
-                <li class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown">Home</a>
-                    <div class="dropdown-menu">
+                <li class="nav-item">
+                    <a href="/" class="nav-link" >Home</a>
+                    <!-- dropdown dropdown-toggle 
+                       aria-haspopup="true" aria-expanded="false" data-toggle="dropdown" -->
+                    <!-- div class="dropdown-menu">
                         
                         <a href="./index.html" class="dropdown-item">Home 1</a>
                         <a href="./index-2.html" class="dropdown-item">Home 2</a>
@@ -27,7 +29,7 @@
                         <a href="./index-4.html" class="dropdown-item">Home 4</a>
                         <a href="./index-5.html" class="dropdown-item">Home 5</a>
                         <a href="./blog.html" class="dropdown-item">Home 6</a>
-                    </div>
+                    </div -->
                 </li>
                 {% for nav in navs %}
                 <li class="nav-item">
@@ -35,11 +37,11 @@
                 </li>
                 {%  endfor %}
             
-                <li class="nav-item">
+                <!-- li class="nav-item">
                     <a href="./contact.html" class="nav-link">Contact Us</a>
-                </li>
+                </li -->
                 
-                <li class="nav-item dropdown">
+                <!-- li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown">Features</a>
                     <div class="dropdown-menu">
                         <a href="#" class="dropdown-item">Feature 1</a>
@@ -49,10 +51,13 @@
                         <a href="#" class="dropdown-item">Feature 6</a>
                         <a href="#" class="dropdown-item">Feature 7</a>
                     </div>
-                </li>
-                <li class="nav-item">
+                </li -->
+                <!-- li class="nav-item">
                     <a href="./error.html" class="nav-link">Error Page</a>
-                </li>
+                </li -->
+            
+                {% include "account/auth.html" %}
+            
             </ul>
         </div>
     </div>

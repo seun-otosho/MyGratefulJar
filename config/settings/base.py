@@ -16,7 +16,6 @@ import os
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
@@ -24,50 +23,65 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 # Application definition
 
 INSTALLED_APPS = [
-    "home",
-    "search",
-    "wagtail.contrib.forms",
-    "wagtail.contrib.redirects",
-    "wagtail.contrib.settings",
-    "wagtail.embeds",
-    "wagtail.sites",
-    "wagtail.users",
-    "wagtail.snippets",
-    "wagtail.documents",
-    "wagtail.images",
-    "wagtail.search",
-    "wagtail.admin",
-    "wagtail",
-    "modelcluster",
-    "taggit",
-    "django.contrib.admin",
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.sessions",
-    "django.contrib.messages",
-    "django.contrib.staticfiles",
-]+[
-    "core.apps.CoreConfig",
-    "site_settings",
-]+[
-    "blog",
-]
+                     "home",
+                     "search",
+                     "wagtail.contrib.forms",
+                     "wagtail.contrib.redirects",
+                     "wagtail.contrib.settings",
+                     "wagtail.embeds",
+                     "wagtail.sites",
+                     "wagtail.users",
+                     "wagtail.snippets",
+                     "wagtail.documents",
+                     "wagtail.images",
+                     "wagtail.search",
+                     "wagtail.admin",
+                     "wagtail",
+                     "modelcluster",
+                     "taggit",
+                     "django.contrib.admin",
+                     "django.contrib.auth",
+                     "django.contrib.contenttypes",
+                     "django.contrib.sessions",
+                     "django.contrib.messages",
+                     "django.contrib.staticfiles",
+                 ] + [
+                     "core.apps.CoreConfig",
+                     "site_settings",
+                     "allauth",
+                     "allauth.account",
+                     "allauth.socialaccount",
+                 ] + [
+                     "blog",
+                 ]
 # core settings
 AUTH_USER_MODEL = 'core.User'
 WAGTAIL_USER_EDIT_FORM = 'core.forms.CustomUserEditForm'
 WAGTAIL_USER_CREATION_FORM = 'core.forms.CustomUserCreationForm'
 WAGTAIL_USER_CUSTOM_FIELDS = ['country', ]
+AUTHENTICATION_BACKENDS = [
+    # "django.contrib.auth.backends.ModelBackend"
 
-MIDDLEWARE = [
-    "django.contrib.sessions.middleware.SessionMiddleware",
-    "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
-    "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "django.contrib.messages.middleware.MessageMiddleware",
-    "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "django.middleware.security.SecurityMiddleware",
-    "wagtail.contrib.redirects.middleware.RedirectMiddleware",
+    # `allauth` specific authentication methods, such as login by e-mail
+    "allauth.account.auth_backends.AuthenticationBackend",
 ]
+MIDDLEWARE = [
+                 "django.contrib.sessions.middleware.SessionMiddleware",
+                 "django.middleware.common.CommonMiddleware",
+                 "django.middleware.csrf.CsrfViewMiddleware",
+                 "django.contrib.auth.middleware.AuthenticationMiddleware",
+                 "django.contrib.messages.middleware.MessageMiddleware",
+                 "django.middleware.clickjacking.XFrameOptionsMiddleware",
+                 "django.middleware.security.SecurityMiddleware",
+                 "wagtail.contrib.redirects.middleware.RedirectMiddleware",
+             ] + [
+                 "allauth.account.middleware.AccountMiddleware",
+             ]
+ACCOUNT_AUTHENTICATION_METHOD = "username_email"
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+# ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION (default: False
+ACCOUNT_PRESERVE_USERNAME_CASING = False
 
 ROOT_URLCONF = "config.urls"
 
@@ -92,7 +106,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 
-
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 """
@@ -100,7 +113,7 @@ WSGI_APPLICATION = "config.wsgi.application"
 [16:29, 2024-07-08] #!tOlorun$: user=postgres.tgahdbldfraordpzfokt password=[YOUR-PASSWORD] host=aws-0-eu-central-1.pooler.supabase.com port=6543 dbname=postgres
 """
 DATABASES = {
-    'docker': {
+    'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'grateful',
         'USER': 'xdba',
@@ -108,7 +121,7 @@ DATABASES = {
         'HOST': 'localhost',
         'PORT': '5432',
     },
-    'default': {
+    'superbase': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'postgres',
         'USER': 'postgres.tgahdbldfraordpzfokt',
@@ -121,7 +134,6 @@ DATABASES = {
         "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -141,7 +153,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
@@ -152,7 +163,6 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
@@ -186,7 +196,6 @@ STORAGES = {
         "BACKEND": "django.contrib.staticfiles.storage.ManifestStaticFilesStorage",
     },
 }
-
 
 # Wagtail settings
 
