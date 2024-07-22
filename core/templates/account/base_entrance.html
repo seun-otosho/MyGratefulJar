@@ -1,0 +1,80 @@
+{% extends "allauth/layouts/entrance.html" %}
+{% load i18n static %}
+{% block extra_head %}
+    <link rel="shortcut icon" href="{% static 'my grateful jar favicon.png' %}" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:900%7CNunito:400,700%7COswald%7CRoboto" rel="stylesheet">
+    <link href="{% static 'nemesis/css/animate.min.css' %}" rel="stylesheet" media="screen">
+    <link href="{% static 'nemesis/css/fonts.css' %}" rel="stylesheet" media="screen">
+    <link href="{% static 'nemesis/css/bootstrap.min.css' %}" rel="stylesheet" media="screen">
+    <link href="{% static 'nemesis/css/style.css' %}" rel="stylesheet" media="screen">
+{% endblock extra_head %}
+
+{% block body %}
+    {% if messages %}
+        <div>
+            <strong>{% trans "Messages:" %}</strong>
+            <ul>
+                {% for message in messages %}<li>{{ message }}</li>{% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+
+    {% block b4content %}
+        {% include 'nemesis/b4content.html' %}
+
+
+        <div class="outer-wrapper clearfix" id="outer-wrapper">
+
+        <div class="container fbt-elastic-container">
+        <div class="row justify-content-center">
+
+        <!-- Main Wrapper -->
+        <div class="fbt-main-wrapper col-xl-12">
+
+        <div id="main-wrapper">
+
+
+    {% endblock b4content %}
+
+
+    {% block content %}
+    {% endblock content %}
+
+    {% block after_content %}
+
+        </div><!-- #main-wrapper -->
+
+        </div><!-- .fbt-main-wrapper -->
+
+        </div>
+        </div>
+
+        </div><!-- .outer-wrapper -->
+
+        {% block footer %}
+
+            {% include 'nemesis/sidebar-wrapper.html' %}
+            </div>
+            </div>
+            </div><!-- .outer-wrapper -->
+
+            {% block fbt_bottom_section %}{% endblock fbt_bottom_section %}
+            {% include 'nemesis/bottom-shape.html' %}<!-- .fbt-bottom-shape -->
+            {% include 'nemesis/footer.html' %}
+
+
+            </div>
+            <!-- #page-wrapper end -->
+
+        {% endblock footer %}
+    {% endblock after_content %}
+
+{% endblock body %}
+
+{% block extra_body %}
+    <script src="{% static 'nemesis/js/jquery.min.js' %}"></script>
+    <script src="{% static 'nemesis/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'nemesis/js/plugins.js' %}"></script>
+    <script src="{% static 'nemesis/js/main.js' %}"></script>
+{% endblock extra_body %}

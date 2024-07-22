@@ -1,0 +1,49 @@
+{% load i18n %}
+{% if user.is_authenticated %}
+    {% url 'account_email' as email_url %}
+
+
+    <li class="nav-item dropdown">
+        <a href="#" class="nav-link dropdown-toggle" aria-haspopup="true"
+           aria-expanded="false" data-toggle="dropdown">{{ user }}</a>
+        <div class="dropdown-menu">
+
+            {% if email_url %}
+                    <a class="dropdown-item" href="{{ email_url }}">{% trans "Change Email" %}</a>
+            {% endif %}
+            {% url 'account_change_password' as change_password_url %}
+            {% if change_password_url %}
+                    <a class="dropdown-item" href="{{ change_password_url }}">{% trans "Change Password" %}</a>
+            {% endif %}
+            {% url 'mfa_index' as mfa_url %}
+            {% if mfa_url %}
+                    <a class="dropdown-item" href="{{ mfa_url }}">{% trans "Two-Factor Authentication" %}</a>
+            {% endif %}
+            {% url 'usersessions_list' as usersessions_list_url %}
+            {% if usersessions_list_url %}
+                    <a class="dropdown-item" href="{{ usersessions_list_url }}">{% trans "Sessions" %}</a>
+            {% endif %}
+            {% url 'account_logout' as logout_url %}
+            {% if logout_url %}
+                    <a class="dropdown-item" href="{{ logout_url }}">{% trans "Sign Out" %}</a>
+            {% endif %}
+
+        </div>
+    </li>
+
+
+
+{% else %}
+    {% url 'account_login' as login_url %}
+    {% if login_url %}
+        <li class="nav-item">
+            <a class="nav-link" href="{{ login_url }}">{% trans "Sign In" %}</a>
+        </li>
+    {% endif %}
+    {% url 'account_signup' as signup_url %}
+    {% if signup_url %}
+        <li class="nav-item">
+            <a class="nav-link" href="{{ signup_url }}">{% trans "Sign Up" %}</a>
+        </li>
+    {% endif %}
+{% endif %}
