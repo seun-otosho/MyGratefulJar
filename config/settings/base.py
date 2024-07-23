@@ -51,6 +51,8 @@ INSTALLED_APPS = [
                     #  "allauth",
                     #  "allauth.account",
                     #  "allauth.socialaccount",
+                 ] + [
+                     "blog.apps.BlogConfig",
                  ] 
 # core settings
 AUTH_USER_MODEL = 'core.User'
