@@ -45,7 +45,18 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-]
+]+ [
+                     "core.apps.CoreConfig",
+                    #  "site_settings",
+                    #  "allauth",
+                    #  "allauth.account",
+                    #  "allauth.socialaccount",
+                 ] 
+# core settings
+AUTH_USER_MODEL = 'core.User'
+WAGTAIL_USER_EDIT_FORM = 'core.forms.CustomUserEditForm'
+WAGTAIL_USER_CREATION_FORM = 'core.forms.CustomUserCreationForm'
+WAGTAIL_USER_CUSTOM_FIELDS = ['country', ]
 
 MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -159,7 +170,7 @@ STORAGES = {
 
 # Wagtail settings
 
-WAGTAIL_SITE_NAME = "config"
+WAGTAIL_SITE_NAME = "Feature Rich"
 
 # Search
 # https://docs.wagtail.org/en/stable/topics/search/backends.html
