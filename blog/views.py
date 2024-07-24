@@ -1,10 +1,8 @@
-from django.shortcuts import render
-
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
-from .models import Post
-from .forms import PostForm
+from .models import Post, Comment
+from .forms import PostForm, CommentForm
 
 def home(request):
     posts = Post.objects.all().order_by('-created_date')
@@ -35,6 +33,41 @@ def create_post(request):
     return render(request, 'create_post.html', {'form': form})
 
 def post_detail(request, pk):
-    post = Post.objects.get(pk=pk)
-    return render(request, 'post_detail.html', {'post': post})
+    post = Post.objects.get(pk=pk)    
+    comments = post.comments.filter(parent=None)
+    new_comment = None
+
+    if request.method == 'POST':
+        comment_form = CommentForm(data=request.POST)
+        if comment_form.is_valid():
+            new_comment = comment_form.save(commit=False)
+            new_comment.post = post
+            new_comment.author = request.user
+            new_comment.save()
+            return redirect('post_detail', pk=post.pk)
+    else:
+        comment_form = CommentForm()
+
+    return render(request, 'post_detail.html', {
+        'post': post,
+        'comments': comments,
+        'new_comment': new_comment,
+        'comment_form': comment_form
+    })
+
+@login_required
+def add_comment_to_comment(request, post_pk, comment_pk):
+    parent_comment = get_object_or_404(Comment, pk=comment_pk)
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            new_comment = form.save(commit=False)
+            new_comment.post = parent_comment.post
+            new_comment.author = request.user
+            new_comment.parent = parent_comment
+            new_comment.save()
+            return redirect('post_detail', pk=post_pk)
+    else:
+        form = CommentForm()
+    return render(request, 'add_comment_to_comment.html', {'form': form})
 

@@ -63,9 +63,6 @@ class Post(ClusterableModel, models.Model):
     image = models.ForeignKey(
         "wagtailimages.Image", on_delete=models.SET_NULL, blank=True, null=True, related_name="+", )
     tags = ClusterTaggableManager(through=BlogPageTag, blank=True)
-    # tags = models.ManyToManyField(BlogPageTag, blank=True)
-
-    # date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title

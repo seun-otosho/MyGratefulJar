@@ -1,0 +1,9 @@
+<div class="comment" style="margin-left: {{ comment.level }}em;">
+    <p>{{ comment.author }} said:</p>
+    <p>{{ comment.content }}</p>
+    <p>{{ comment.created_date }}</p>
+    <a href="{% url 'add_comment_to_comment' post_pk=post.pk comment_pk=comment.pk %}">Reply</a>
+    {% for reply in comment.replies.all %}
+        {% include 'comment.html' with comment=reply %}
+    {% endfor %}
+</div>
