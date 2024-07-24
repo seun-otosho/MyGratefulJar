@@ -4,7 +4,7 @@ from .base import *
 DEBUG = True
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-z82b=#(ad!g7pg_r%6b7nynany=6kdo4xfa2*e419k2%3*1+x)"
+SECRET_KEY = "django-insecure-qg!dck!g##no0mz2+xc5^d#t052o#nuf(+5j!g$kk7lq-+byr$"
 
 # SECURITY WARNING: define the correct hosts in production!
 ALLOWED_HOSTS = ["*"]
@@ -16,8 +16,3 @@ try:
     from .local import *
 except ImportError:
     pass
-
-
-INSTALLED_APPS += [
-    # "budgets",
-]
