@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% load wagtailcore_tags %}
+
+{% block content %}
+    <h1>{{ page.title }}</h1>
+    <p class="meta">{{ page.date }}</p>
+
+    <div class="intro">{{ page.intro }}</div>
+
+    {{ page.body|richtext }}
+
+    {% if page.tags.all.count %}
+        <div class="tags">
+            <h3>Tags</h3>
+            {% for tag in page.tags.all %}
+                <a href="{% slugurl 'tags' %}?tag={{ tag }}">{{ tag }}</a>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <p><a href="{{ page.get_parent.url }}">Return to blog</a></p>
+
+    <div class="comments">
+        <h3>Comments</h3>
+        {% for comment in page.comments.all %}
+            <article class="comment">
+                <h4>{{ comment.author }} says:</h4>
+                <p>{{ comment.content }}</p>
+                <p class="meta">Date: {{ comment.created_date }}</p>
+            </article>
+        {% empty %}
+            <p>No comments yet.</p>
+        {% endfor %}
+    </div>
+
+    <div class="comment-form">
+        <h3>Leave a comment</h3>
+        <form method="post" action="{% url 'add_comment' page.id %}">
+            {% csrf_token %}
+            {{ comment_form.as_p }}
+            <button type="submit">Submit comment</button>
+        </form>
+    </div>
+{% endblock %}
