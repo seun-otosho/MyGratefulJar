@@ -26,7 +26,7 @@ class ReplyForm(forms.ModelForm):
 class BlogPostForm(forms.ModelForm):
     class Meta:
         model = BlogPage
-        fields = ('title', 'intro', 'body', )
+        fields = ('title', 'intro', 'body', 'categories', 'tags', )
         widgets = {
             'title': forms.TextInput(attrs={'class': 'w-full p-2 border rounded'}),
             'intro': forms.TextInput(attrs={'class': 'w-full p-2 border rounded'}),
