@@ -11,6 +11,18 @@ class CommentForm(forms.ModelForm):
         }
 
 
+class ReplyForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content']
+        widgets = {
+            'content': forms.Textarea(attrs={
+                'rows': 2,
+                'class': 'w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400'
+            }),
+        }
+
+
 class BlogPostForm(forms.ModelForm):
     class Meta:
         model = BlogPage
