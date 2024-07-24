@@ -2,4 +2,4 @@ Django>=4.2,<5.1
 wagtail>=6.1,<6.2
 django-countries
 django-tailwind[reload]
-
+django-allauth

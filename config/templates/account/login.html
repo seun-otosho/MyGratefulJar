@@ -1,0 +1,23 @@
+{% extends "blog/base.html" %}
+{% load i18n %}
+{% load account socialaccount %}
+
+{% block content %}
+    <div class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col">
+        <h1 class="text-2xl font-bold mb-6">{% trans "Sign In" %}</h1>
+
+        <form class="login" method="POST" action="{% url 'account_login' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            {% if redirect_field_value %}
+                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+            {% endif %}
+            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">{% trans "Sign In" %}</button>
+        </form>
+
+        <p class="mt-4">
+            {% blocktrans %}If you have not created an account yet, then please
+                <a class="text-blue-500 hover:text-blue-700" href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}
+        </p>
+    </div>
+{% endblock %}

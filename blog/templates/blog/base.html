@@ -14,9 +14,10 @@
         <div>
             {% if user.is_authenticated %}
                 <span class="mr-4">Hello, {{ user.username }}</span>
-                <a href="{% url 'logout' %}" class="bg-white text-blue-600 px-4 py-2 rounded">Logout</a>
+                <a href="{% url 'account_logout' %}" class="bg-white text-blue-600 px-4 py-2 rounded">Logout</a>
             {% else %}
-                <a href="{% url 'login' %}" class="bg-white text-blue-600 px-4 py-2 rounded">Login</a>
+                <a href="{% url 'account_login' %}" class="bg-white text-blue-600 px-4 py-2 rounded mr-2">Login</a>
+                <a href="{% url 'account_signup' %}" class="bg-blue-500 text-white px-4 py-2 rounded">Sign Up</a>
             {% endif %}
         </div>
     </nav>
