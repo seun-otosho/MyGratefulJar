@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 ]+ [
                      "core.apps.CoreConfig",
-                    #  "site_settings",
+                     "tailwind",
+                     "theme",
                     #  "allauth",
                     #  "allauth.account",
                     #  "allauth.socialaccount",
@@ -59,6 +60,12 @@ AUTH_USER_MODEL = 'core.User'
 WAGTAIL_USER_EDIT_FORM = 'core.forms.CustomUserEditForm'
 WAGTAIL_USER_CREATION_FORM = 'core.forms.CustomUserCreationForm'
 WAGTAIL_USER_CUSTOM_FIELDS = ['country', ]
+
+# Add these Tailwind-specific settings
+TAILWIND_APP_NAME = 'theme'
+INTERNAL_IPS = [
+    "127.0.0.1",
+]
 
 MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",

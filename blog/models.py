@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.utils import timezone
 
 User = get_user_model()
 
@@ -77,7 +78,7 @@ class BlogPageTag(TaggedItemBase):
 
 
 class BlogPage(Page):
-    date = models.DateField("Post date")
+    date = models.DateField("Post date", default=timezone.now,)
     intro = models.CharField(max_length=250)
     body = RichTextField(blank=True)
     tags = ClusterTaggableManager(through=BlogPageTag, blank=True)

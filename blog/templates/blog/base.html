@@ -1,0 +1,42 @@
+{% load tailwind_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}My Blog{% endblock %}</title>
+    {% tailwind_css %}
+</head>
+<body class="bg-gray-100">
+<header class="bg-blue-600 text-white p-4">
+    <nav class="container mx-auto flex justify-between items-center">
+        <a href="{% url 'blog_index' %}" class="text-2xl font-bold">My Blog</a>
+        <div>
+            {% if user.is_authenticated %}
+                <span class="mr-4">Hello, {{ user.username }}</span>
+                <a href="{% url 'logout' %}" class="bg-white text-blue-600 px-4 py-2 rounded">Logout</a>
+            {% else %}
+                <a href="{% url 'login' %}" class="bg-white text-blue-600 px-4 py-2 rounded">Login</a>
+            {% endif %}
+        </div>
+    </nav>
+</header>
+<main class="container mx-auto mt-8 p-4">
+    {% if messages %}
+        <div class="messages mb-8">
+            {% for message in messages %}
+                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+    {% block content %}{% endblock %}
+</main>
+<footer class="bg-gray-200 p-4 mt-8">
+    <div class="container mx-auto text-center">
+        &copy; {% now "Y" %} {{ current_site.site_name }} | All Rights Reserved
+    </div>
+</footer>
+</body>
+</html>
