@@ -1,22 +1,56 @@
-from django.db import models
-from modelcluster.contrib.taggit import ClusterTaggableManager
-from modelcluster.fields import ParentalKey
-from taggit.models import TaggedItemBase
-from wagtail.admin.panels import FieldPanel, MultiFieldPanel
-from wagtail.fields import RichTextField, StreamField
-from wagtail.models import Page
-from wagtail.search import index
+from django.contrib.auth import get_user_model
+from django.utils import timezone
 
-from blog.blocks import BlogStreamBlock
+User = get_user_model()
+
+from django.db import models
+from taggit.models import TaggedItemBase
+from modelcluster.models import ClusterableModel
+
+from wagtail.models import Page
+from wagtail.fields import RichTextField
+from wagtail.admin.panels import FieldPanel, InlinePanel
+from wagtail.search import index
+from modelcluster.fields import ParentalKey
+from modelcluster.contrib.taggit import ClusterTaggableManager
+from taggit.models import TaggedItemBase
+
+
+class BlogCategory(models.Model):
+    name = models.CharField(max_length=255)
+    icon = models.ForeignKey(
+        'wagtailimages.Image', null=True, blank=True,
+        on_delete=models.SET_NULL, related_name='+'
+    )
+
+    panels = [
+        FieldPanel('name'),
+        FieldPanel('icon'),
+    ]
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        db_table = "blog_categories"
+        verbose_name_plural = "Blog Categories"
 
 
 class BlogIndexPage(Page):
     intro = RichTextField(blank=True)
 
-    content_panels = Page.content_panels + [FieldPanel('intro'), ]
+    content_panels = Page.content_panels + [
+        FieldPanel('intro')
+    ]
+
+    def get_context(self, request):
+        context = super().get_context(request)
+        blogpages = self.get_children().live().order_by('-first_published_at')
+        context['blogpages'] = blogpages
+        return context
 
     class Meta:
-        db_table = "blog"
+        db_table = 'blog_index'
 
 
 class BlogPageTag(TaggedItemBase):
@@ -31,19 +65,19 @@ class BlogPageTag(TaggedItemBase):
 
 
 class BlogPage(Page):
-    intro = models.CharField(max_length=256)
-    # body = RichTextField(blank=True)
-    body = StreamField(
-        BlogStreamBlock(),
+    date = models.DateField("Post date", default=timezone.now, )
+    intro = models.CharField(max_length=250)
+    body = RichTextField(blank=True)
+    tags = ClusterTaggableManager(through=BlogPageTag, blank=True)
+    categories = models.ForeignKey(
+        'blog.BlogCategory',
+        null=True,
         blank=True,
-        use_json_field=True,
-        help_text="Use this section to express your gratefulness.",
+        on_delete=models.SET_NULL,
+        related_name='blog_pages'
     )
     image = models.ForeignKey(
         "wagtailimages.Image", on_delete=models.SET_NULL, blank=True, null=True, related_name="+", )
-    tags = ClusterTaggableManager(through=BlogPageTag, blank=True)
-
-    date = models.DateTimeField(auto_now_add=True)
 
     search_fields = Page.search_fields + [
         index.SearchField('intro'),
@@ -51,18 +85,44 @@ class BlogPage(Page):
     ]
 
     content_panels = Page.content_panels + [
-        MultiFieldPanel([
-            # FieldPanel('date'),
-            # FieldPanel('authors', widget=forms.CheckboxSelectMultiple),
-
-            # Add this:
-            FieldPanel('tags'),
-        ], heading="Blog information"),
+        FieldPanel('date'),
         FieldPanel('intro'),
         FieldPanel('body'),
-        FieldPanel('image'),
+        FieldPanel('categories'),
+        FieldPanel('tags'),
+        InlinePanel('comments', label="Comments"),
     ]
 
+    def get_context(self, request, *args, **kwargs):
+        from .forms import CommentForm
+        context = super().get_context(request, *args, **kwargs)
+        context['comment_form'] = CommentForm()
+        return context
+
     class Meta:
-        db_table = "blog_pages"
-        verbose_name = "Blog Page"
+        db_table = 'blog_pages'
+
+
+class Comment(models.Model):
+    page = ParentalKey(BlogPage, on_delete=models.CASCADE, related_name='comments')
+    author = models.CharField(max_length=255)
+    email = models.EmailField()
+    content = models.TextField()
+    created_date = models.DateTimeField(auto_now_add=True)
+    approved = models.BooleanField(default=False)
+    parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, related_name='replies')
+
+    @property
+    def children(self):
+        return Comment.objects.filter(parent=self).order_by('created_date')
+
+    @property
+    def is_parent(self):
+        return self.parent is None
+
+    def __str__(self):
+        return f'Comment by {self.author} on {self.page}'
+
+    class Meta:
+        db_table = 'blog_comments'
+        ordering = ['created_date']

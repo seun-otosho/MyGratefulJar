@@ -1,0 +1,35 @@
+{% load wagtailcore_tags %}
+
+<div class="space-y-4">
+    {% for comment in comments %}
+        <div class="bg-gray-100 p-4 rounded-lg">
+            <p class="font-semibold">{{ comment.author.username }} said:</p>
+            <p class="text-gray-700">{{ comment.content }}</p>
+            <p class="text-sm text-gray-500">{{ comment.created_date|date:"F d, Y H:i" }}</p>
+
+            {% if user.is_authenticated %}
+                <button onclick="toggleReplyForm('reply-form-{{ comment.id }}')" class="text-blue-500 hover:text-blue-700 text-sm mt-2">Reply</button>
+                <form id="reply-form-{{ comment.id }}" method="post" action="{% url 'add_reply' page.slug comment.id %}" class="mt-2 hidden">
+                    {% csrf_token %}
+                    {{ reply_form.as_p }}
+                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded text-sm focus:outline-none focus:shadow-outline mt-2">
+                        Submit reply
+                    </button>
+                </form>
+            {% endif %}
+
+            {% if comment.children.exists %}
+                <div class="ml-8 mt-4">
+                    {% include 'blog/comments.html' with comments=comment.children %}
+                </div>
+            {% endif %}
+        </div>
+    {% endfor %}
+</div>
+
+<script>
+    function toggleReplyForm(formId) {
+        const form = document.getElementById(formId);
+        form.classList.toggle('hidden');
+    }
+</script>

@@ -1,6 +1,5 @@
 Django>=4.2,<5.1
 wagtail>=6.1,<6.2
-psycopg2-binary
-dj_database_url
 django-countries
+django-tailwind[reload]
 django-allauth

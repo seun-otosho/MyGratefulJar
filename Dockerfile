@@ -1,8 +1,8 @@
 # Use an official Python runtime based on Debian 10 "buster" as a parent image.
-FROM python:3.12.4-slim-bullseye
+FROM python:3.8.1-slim-buster
 
 # Add user that will be used in the container.
-RUN useradd omnio
+RUN useradd wagtail
 
 # Port used by this container to serve HTTP.
 EXPOSE 8000
@@ -37,13 +37,13 @@ WORKDIR /app
 # Set this directory to be owned by the "wagtail" user. This Wagtail project
 # uses SQLite, the folder needs to be owned by the user that
 # will be writing to the database file.
-RUN chown omnio:omnio /app
+RUN chown wagtail:wagtail /app
 
 # Copy the source code of the project into the container.
-COPY --chown=omnio:omnio . .
+COPY --chown=wagtail:wagtail . .
 
 # Use user "wagtail" to run the build commands below and the server itself.
-USER omnio
+USER wagtail
 
 # Collect static files.
 RUN python manage.py collectstatic --noinput --clear

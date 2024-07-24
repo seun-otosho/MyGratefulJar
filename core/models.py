@@ -1,3 +1,4 @@
+from django.db import models
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import AbstractUser, PermissionsMixin
 from django.core.validators import RegexValidator
@@ -92,61 +93,3 @@ class User(AbstractUser, AbstractBaseUser, PermissionsMixin):
     class Meta:
         db_table = 'users'
 
-
-class FormField(AbstractFormField):
-    page = ParentalKey('ContactPage', on_delete=models.DO_NOTHING, related_name='form_fields')
-
-
-class ContactPage(AbstractEmailForm):
-    intro = RichTextField(blank=True)
-    thank_you_text = RichTextField(blank=True)
-
-    content_panels = AbstractEmailForm.content_panels + [
-        FormSubmissionsPanel(),
-        FieldPanel('intro'),
-        InlinePanel('form_fields', label="Form fields"),
-        FieldPanel('thank_you_text'),
-        MultiFieldPanel([
-            FieldRowPanel([
-                FieldPanel('from_address'),
-                FieldPanel('to_address'),
-            ]),
-            FieldPanel('subject'),
-        ], "Email"),
-    ]
-
-    template = "core/nemesis/email_form_page.html"
-
-    def get_landing_page_template(self, *args, **kwargs):
-        return "core/nemesis/email_form_page_landing.html"
-
-
-@register_setting
-class SocialMediaLinks(BaseGenericSetting):
-    facebook = models.URLField(blank=True, null=True)
-    github = models.URLField(blank=True, null=True)
-    instagram = models.URLField(blank=True, null=True)
-    linkedIn = models.URLField(blank=True, null=True)
-    x = models.URLField(blank=True, null=True)
-    youtube = models.URLField(blank=True, null=True)
-
-    panels = [
-        FieldPanel('github'),
-        FieldPanel('linkedIn'),
-        FieldPanel('x'),
-        FieldPanel('youtube'),
-    ]
-
-    class Meta:
-        db_table = "social_media"
-        verbose_name = "Social Media"
-
-
-@register_setting
-class BrandSettings(BaseGenericSetting):
-    # name = models.CharField(max_length=256)
-    logo = models.ForeignKey(
-        "wagtailimages.Image", on_delete=models.SET_NULL, null=True, blank=True, related_name="+",)
-
-    class Meta:
-        db_table = "brand"
