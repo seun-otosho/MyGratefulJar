@@ -57,7 +57,7 @@ class BlogPageTag(TaggedItemBase):
 class Post(ClusterableModel, models.Model):
     title = models.CharField(max_length=200)
     content = models.TextField()
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, on_delete=models.DO_NOTHING)
     created_date = models.DateTimeField(auto_now_add=True)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
     image = models.ForeignKey(
@@ -70,3 +70,13 @@ class Post(ClusterableModel, models.Model):
     def __str__(self):
         return self.title
 
+
+class Comment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.DO_NOTHING, related_name='comments')
+    author = models.ForeignKey(User, on_delete=models.DO_NOTHING)
+    content = models.TextField()
+    created_date = models.DateTimeField(auto_now_add=True)
+    parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.DO_NOTHING, related_name='replies')
+
+    def __str__(self):
+        return f'Comment by {self.author} on {self.post}'
