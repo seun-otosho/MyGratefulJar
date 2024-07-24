@@ -1,11 +1,8 @@
 from wagtail import hooks
-
 from wagtail.admin.viewsets.model import ModelViewSet, ModelViewSetGroup
 
-from .models import Category
-
-
 from .models import BlogCategory
+
 
 class BlogCategoryAdmin(ModelViewSet):
     model = BlogCategory
@@ -16,6 +13,7 @@ class BlogCategoryAdmin(ModelViewSet):
     exclude_from_explorer = False
     list_display = ('name',)
     search_fields = ('name',)
+
 
 # class UserProfileAdmin(ModelAdmin):
 #     model = UserProfile
@@ -32,23 +30,14 @@ class BlogCategoryAdmin(ModelViewSet):
 #     following_count.short_description = 'Following'
 
 
-category_viewset = BlogCategoryAdmin("category") 
+category_viewset = BlogCategoryAdmin("category")
+
 
 class BlogGroup(ModelViewSetGroup):
     menu_label = 'Blog Management'
     icon = 'folder-open-inverse'
     menu_order = 200
-    items = (BlogCategoryAdmin, )
-
-
-class CategoryViewSet(ModelViewSet):
-    add_to_admin_menu = True
-    model = Category
-    form_fields = ["name", ]
-    menu_label = "Category"
-    menu_name = "category"
-    icon = "pilcrow"
-
+    items = (BlogCategoryAdmin,)
 
 
 @hooks.register("register_admin_viewset")

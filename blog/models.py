@@ -4,16 +4,6 @@ from django.utils import timezone
 
 User = get_user_model()
 
-class Category(models.Model):
-    name = models.CharField(max_length=100)
-
-    def __str__(self):
-        return self.name
-    
-    class Meta:
-        verbose_name_plural = "Categories"
-
-
 from django.db import models
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey
@@ -43,7 +33,7 @@ class BlogCategory(models.Model):
 
     def __str__(self):
         return self.name
-    
+
     class Meta:
         db_table = "blog_categories"
         verbose_name_plural = "Blog Categories"
@@ -78,7 +68,7 @@ class BlogPageTag(TaggedItemBase):
 
 
 class BlogPage(Page):
-    date = models.DateField("Post date", default=timezone.now,)
+    date = models.DateField("Post date", default=timezone.now, )
     intro = models.CharField(max_length=250)
     body = RichTextField(blank=True)
     tags = ClusterTaggableManager(through=BlogPageTag, blank=True)
@@ -114,20 +104,6 @@ class BlogPage(Page):
 
     class Meta:
         db_table = 'blog_pages'
-
-
-class Post(ClusterableModel, models.Model):
-    title = models.CharField(max_length=200)
-    content = models.TextField()
-    author = models.ForeignKey(User, on_delete=models.DO_NOTHING)
-    created_date = models.DateTimeField(auto_now_add=True)
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
-    image = models.ForeignKey(
-        "wagtailimages.Image", on_delete=models.SET_NULL, blank=True, null=True, related_name="+", )
-    tags = ClusterTaggableManager(through=BlogPageTag, blank=True)
-
-    def __str__(self):
-        return self.title
 
 
 class Comment(models.Model):
