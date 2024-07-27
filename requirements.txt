@@ -3,3 +3,5 @@ wagtail>=6.1,<6.2
 django-countries
 django-tailwind[reload]
 django-allauth
+python-dotenv
+dj-database-url
