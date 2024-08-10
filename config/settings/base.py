@@ -15,10 +15,10 @@ import os
 
 import dj_database_url
 from dotenv import load_dotenv
+
 load_dotenv()
 PROJECT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 BASE_DIR = os.path.dirname(PROJECT_DIR)
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -27,29 +27,29 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 # Application definition
 
 INSTALLED_APPS = [
-    "home",
-    "search",
-    "wagtail.contrib.forms",
-    "wagtail.contrib.redirects",
-    "wagtail.embeds",
-    "wagtail.sites",
-    "wagtail.users",
-    "wagtail.snippets",
-    "wagtail.documents",
-    "wagtail.images",
-    "wagtail.search",
-    "wagtail.admin",
-    "wagtail",
-    "modelcluster",
-    "taggit",
-    "django.contrib.admin",
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.sessions",
-    "django.contrib.messages",
-    "django.contrib.staticfiles",
-]+ [
-                     "core.apps.CoreConfig",
+                     "home",
+                     "search",
+                     "wagtail.contrib.forms",
+                     "wagtail.contrib.redirects",
+                     "wagtail.embeds",
+                     "wagtail.sites",
+                     "core",
+                     # "wagtail.users",
+                     "wagtail.snippets",
+                     "wagtail.documents",
+                     "wagtail.images",
+                     "wagtail.search",
+                     "wagtail.admin",
+                     "wagtail",
+                     "modelcluster",
+                     "taggit",
+                     "django.contrib.admin",
+                     "django.contrib.auth",
+                     "django.contrib.contenttypes",
+                     "django.contrib.sessions",
+                     "django.contrib.messages",
+                     "django.contrib.staticfiles",
+                 ] + [
                      "tailwind",
                      "theme",
                      "allauth",
@@ -57,11 +57,12 @@ INSTALLED_APPS = [
                      "allauth.socialaccount",
                  ] + [
                      "blog.apps.BlogConfig",
-                 ] 
+                 ]
 # core settings
 AUTH_USER_MODEL = 'core.User'
-WAGTAIL_USER_EDIT_FORM = 'core.forms.CustomUserEditForm'
-WAGTAIL_USER_CREATION_FORM = 'core.forms.CustomUserCreationForm'
+# WAGTAIL_USER_EDIT_FORM = 'core.forms.CustomUserEditForm'
+# WAGTAIL_USER_CREATION_FORM = 'core.forms.CustomUserCreationForm'
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 WAGTAIL_USER_CUSTOM_FIELDS = ['country', ]
 
 # Add these Tailwind-specific settings
@@ -86,20 +87,19 @@ ACCOUNT_USERNAME_MIN_LENGTH = 4
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/blog/'
 
-
 MIDDLEWARE = [
-    "django.contrib.sessions.middleware.SessionMiddleware",
-    "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
-    "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "django.contrib.messages.middleware.MessageMiddleware",
-    "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "django.middleware.security.SecurityMiddleware",
-    "wagtail.contrib.redirects.middleware.RedirectMiddleware",
-]+[
-    # AllAuth settings
-    "allauth.account.middleware.AccountMiddleware"
-]
+                 "django.contrib.sessions.middleware.SessionMiddleware",
+                 "django.middleware.common.CommonMiddleware",
+                 "django.middleware.csrf.CsrfViewMiddleware",
+                 "django.contrib.auth.middleware.AuthenticationMiddleware",
+                 "django.contrib.messages.middleware.MessageMiddleware",
+                 "django.middleware.clickjacking.XFrameOptionsMiddleware",
+                 "django.middleware.security.SecurityMiddleware",
+                 "wagtail.contrib.redirects.middleware.RedirectMiddleware",
+             ] + [
+                 # AllAuth settings
+                 "allauth.account.middleware.AccountMiddleware"
+             ]
 
 ROOT_URLCONF = "config.urls"
 
@@ -123,7 +123,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 
-
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
@@ -134,7 +133,6 @@ DATABASES = {
         "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
@@ -154,7 +152,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
 
@@ -165,7 +162,6 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
@@ -200,10 +196,9 @@ STORAGES = {
     },
 }
 
-
 # Wagtail settings
 
-WAGTAIL_SITE_NAME = "Feature Rich"
+WAGTAIL_SITE_NAME = "My Grateful Jar"
 
 # Search
 # https://docs.wagtail.org/en/stable/topics/search/backends.html
@@ -215,7 +210,7 @@ WAGTAILSEARCH_BACKENDS = {
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
-WAGTAILADMIN_BASE_URL = "http://example.com"
+WAGTAILADMIN_BASE_URL = "https://mygratefuljar.com"
 
 # Allowed file extensions for documents in the document library.
 # This can be omitted to allow all files, but note that this may present a security risk
