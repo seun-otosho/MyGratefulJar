@@ -19,5 +19,10 @@
             {% blocktrans %}If you have not created an account yet, then please
                 <a class="text-blue-500 hover:text-blue-700" href="{{ signup_url }}">sign up</a> first.{% endblocktrans %}
         </p>
+
+        <p>Or</p>
+        <a href="{% provider_login_url 'google' %}">Sign in with Google</a>
+    
+    
     </div>
 {% endblock %}

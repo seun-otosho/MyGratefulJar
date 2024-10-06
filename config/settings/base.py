@@ -57,7 +57,9 @@ INSTALLED_APPS = [
                      "allauth.socialaccount",
                  ] + [
                      "blog.apps.BlogConfig",
-                 ] 
+                 ]  + [
+                     "allauth.socialaccount.providers.google",
+                 ]
 # core settings
 AUTH_USER_MODEL = 'core.User'
 WAGTAIL_USER_EDIT_FORM = 'core.forms.CustomUserEditForm'
@@ -85,6 +87,13 @@ ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_USERNAME_MIN_LENGTH = 4
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/blog/'
+
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'FETCH_USERINFO' : True
+    }
+}
 
 
 MIDDLEWARE = [
