@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "nemesis/rebase.html" %}
 {% load static %}
 
 {% block body_class %}template-homepage{% endblock %}
@@ -15,7 +15,120 @@ Delete the line below if you're just getting started and want to remove the welc
 
 {% comment %}
 Delete the line below if you're just getting started and want to remove the welcome screen!
-{% endcomment %}
 {% include 'home/welcome_page.html' %}
+{% endcomment %}
+
+    <div class="outer-wrapper clearfix" id="outer-wrapper">
+        <div class="container fbt-elastic-container">
+            <div class="row justify-content-center">
+
+                <!-- Main Wrapper -->
+                <div class="fbt-main-wrapper col-xl-12">
+
+                    <div id="main-wrapper">
+                        <div class="main-section" id="main_content">
+
+                            <div class="blog-posts fbt-index-post-wrap card-columns">
+
+                                <div class="blog-post fbt-index-post card radius-10">
+                                    <div class="fbt-post-thumbnail">
+                                        <a href="./single.html">
+                                            <img alt="" class="post-thumbnail lazyloaded" data-src="./images/img-2.jpg"
+                                                 src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==">
+                                        </a>
+                                    </div>
+                                    <div class="fbt-post-caption card-body">
+                                        <h3 class="post-title h4 card-title">
+                                            <a href="./single.html">
+                                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                            </a>
+                                        </h3>
+                                        <div class="post-meta">
+                                            <span class="post-author"><a href="#">fbtemplates</a></span>
+                                            <span class="post-date published">June 19, 2019</span>
+                                        </div>
+                                        <p class="post-excerpt card-text">
+                                            Lorem ipsum dolor sit amet,
+                                            consectetur adipiscing elit. Donec facilisis leo et bibendum
+                                            pretium. Suspendisse li…
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="blog-post hentry fbt-index-post card radius-10">
+                                    <div class="fbt-post-thumbnail">
+                                        <a href="./single.html">
+                                            <img alt="" class="post-thumbnail lazyloaded" data-src="./images/img-3.jpg"
+                                                 src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==">
+                                        </a>
+                                    </div>
+                                    <div class="fbt-post-caption card-body">
+                                        <h3 class="post-title h4 card-title">
+                                            <a href="./single.html">
+                                                Nunc tellus libero, tempus id luctus eget, fermentum.
+                                            </a>
+                                        </h3>
+                                        <div class="post-meta">
+                                            <span class="post-author"><a href="#">fbtemplates</a></span>
+                                            <span class="post-date published">June 05, 2019</span>
+                                        </div>
+                                        <p class="post-excerpt card-text">
+                                            Donec dolor elit, pellentesque a massa
+                                            pellentesque, euismod sagittis ipsum. Nullam a diam ac turpis
+                                            iaculis vu…
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="blog-post hentry fbt-index-post card radius-10">
+                                    <div class="fbt-post-thumbnail">
+                                        <a href="./video_post.html">
+                                            <img alt="" class="post-thumbnail lazyloaded"  data-src="./images/img-4.jpg"
+                                                 src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==">
+                                        </a>
+                                        <span class="video-icon"><i class="fa fa-play"></i></span>
+                                    </div>
+                                    <div class="fbt-post-caption card-body">
+                                        <h3 class="post-title h4 card-title">
+                                            <a href="./video_post.html">
+                                                The
+                                                future of news blogger themes. Custom post carousel.
+                                            </a>
+                                        </h3>
+                                        <div class="post-meta">
+                                            <span class="post-author"><a href="#">fbtemplates</a></span>
+                                            <span class="post-date published">September 13, 2018</span>
+                                        </div>
+                                        <p class="post-excerpt card-text">
+                                            Fames dictumst massa massa, qui sapien
+                                            per, mauris id sed cubilia suspendisse neque. Proin natoque
+                                            consectetuer…
+                                        </p>
+                                    </div>
+                                </div>
+
+                                ............................
+
+                            </div>
+
+                            <div class="blog-pager" id="blog-pager">
+                                <div class="list-inline">
+                                    <a class="blog-pager-older-link list-inline-item" href="#" title="More posts">
+                                        <div class="fbt-bp-message text-uppercase font-weight-bold">More posts</div>
+                                        <span aria-hidden="true" class="fa fa-angle-down"></span>
+                                    </a>
+                                </div>
+                            </div><!-- #blog-pager -->
+
+                        </div>
+                    </div><!-- #main-wrapper -->
+
+                </div><!-- .fbt-main-wrapper -->
+
+                ..............................
+
+            </div>
+        </div>
+    </div>
 
 {% endblock content %}

@@ -62,9 +62,9 @@ INSTALLED_APPS = [
                  ]
 # core settings
 AUTH_USER_MODEL = 'core.User'
-WAGTAIL_USER_EDIT_FORM = 'core.forms.CustomUserEditForm'
-WAGTAIL_USER_CREATION_FORM = 'core.forms.CustomUserCreationForm'
-WAGTAIL_USER_CUSTOM_FIELDS = ['country', ]
+# WAGTAIL_USER_EDIT_FORM = 'core.forms.CustomUserEditForm'
+# WAGTAIL_USER_CREATION_FORM = 'core.forms.CustomUserCreationForm'
+# WAGTAIL_USER_CUSTOM_FIELDS = ['country', ]
 
 # Add these Tailwind-specific settings
 TAILWIND_APP_NAME = 'theme'
@@ -87,6 +87,7 @@ ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
 ACCOUNT_USERNAME_MIN_LENGTH = 4
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/blog/'
+ACCOUNT_LOGOUT_ON_GET = True
 
 
 SOCIALACCOUNT_PROVIDERS = {

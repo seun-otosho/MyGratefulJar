@@ -15,6 +15,26 @@ from modelcluster.fields import ParentalKey
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from taggit.models import TaggedItemBase
 
+# models.py
+from django.contrib.auth import get_user_model
+from django.utils import timezone
+
+User = get_user_model()
+
+from django.db import models
+from taggit.models import TaggedItemBase
+from modelcluster.models import ClusterableModel
+
+from wagtail.models import Page
+from wagtail.fields import RichTextField
+from wagtail.admin.panels import FieldPanel, InlinePanel
+from wagtail.search import index
+from modelcluster.fields import ParentalKey
+from modelcluster.contrib.taggit import ClusterTaggableManager
+from taggit.models import TaggedItemBase
+
+
+User = get_user_model()
 
 class BlogCategory(models.Model):
     name = models.CharField(max_length=255)
@@ -105,7 +125,7 @@ class BlogPage(Page):
 
 class Comment(models.Model):
     page = ParentalKey(BlogPage, on_delete=models.CASCADE, related_name='comments')
-    author = models.CharField(max_length=255)
+    author = models.ForeignKey(User, models.DO_NOTHING, related_name='comments')
     email = models.EmailField()
     content = models.TextField()
     created_date = models.DateTimeField(auto_now_add=True)
@@ -126,3 +146,5 @@ class Comment(models.Model):
     class Meta:
         db_table = 'blog_comments'
         ordering = ['created_date']
+
+

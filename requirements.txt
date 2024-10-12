@@ -1,8 +1,11 @@
 Django>=4.2,<5.2
 wagtail>6.1,<6.3
 django-countries
-django-tailwind[reload]
+# django-tailwind[reload]
 django-allauth
 python-dotenv
 dj-database-url
+cryptography
 PyJWT
+
+factory_boy
