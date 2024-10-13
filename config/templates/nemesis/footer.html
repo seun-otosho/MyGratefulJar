@@ -1,5 +1,4 @@
-{% load static wagtailcore_tags wagtailimages_tags %}
-{% wagtail_site as current_site %}
+{% load static %}
 <div class="footer-dark pt-4" id="footer-content">
     <div class="container pb-4">
         <div class="row clearfix">
@@ -7,7 +6,7 @@
                 <div class="footer-1" id="footer-1">
                     <div class="logoImage">
                         <div class="widget-content">
-                            {% image settings.core.BrandSettings.logo max-37x38 %}
+                            <img alt="" src="{% static 'nemesis/images/logo-light.png' %}">
                         </div>
                     </div>
                     <div class="widget Text">
@@ -82,8 +81,7 @@
             <div class="row divider py-4">
                 <div class="col-lg-6">
                     <div class="copyright-section text-center text-lg-left">
-                        <!-- © <script>document.write(new Date().getFullYear());</script> -->
-                        &copy; {% now "Y" %} {{ current_site.site_name }} | All Rights Reserved
+                        © <script>document.write(new Date().getFullYear());</script> Nemesis | All Rights Reserved
                     </div>
                 </div>
                 <div class="col-lg-6">
@@ -91,41 +89,21 @@
                         <div class="widget socialList">
                             <div class="widget-content">
                                 <ul class="nav">
-                                    {% if settings.core.SocialMediaLinks.facebook %}
                                     <li class="nav-item">
-                                        <a class="nav-link" target="_blank"
-                                           href="{{ settings.core.SocialMediaLinks.facebook }}">
-                                            <i class="fa fa-facebook"></i></a>
+                                        <a class="nav-link" href="#"><i class="fa fa-facebook"></i></a>
                                     </li>
-                                    {% endif %}
-                                    {% if settings.core.SocialMediaLinks.x %}
                                     <li class="nav-item">
-                                        <a class="nav-link" target="_blank"
-                                           href="{{ settings.core.SocialMediaLinks.x }}">
-                                            <i class="fa fa-twitter"></i></a>
+                                        <a class="nav-link" href="#"><i class="fa fa-twitter"></i></a>
                                     </li>
-                                    {% endif %}
-                                    {% if settings.core.SocialMediaLinks.instagram %}
                                     <li class="nav-item">
-                                        <a class="nav-link" target="_blank"
-                                           href="{{ settings.core.SocialMediaLinks.instagram }}">
-                                            <i class="fa fa-instagram"></i></a>
+                                        <a class="nav-link" href="#"><i class="fa fa-instagram"></i></a>
                                     </li>
-                                    {% endif %}
-                                    {% if settings.core.SocialMediaLinks.linkedIn %}
                                     <li class="nav-item">
-                                        <a class="nav-link" target="_blank"
-                                           href="{{ settings.core.SocialMediaLinks.linkedIn }}">
-                                            <i class="fa fa-linkedin"></i></a>
+                                        <a class="nav-link" href="#"><i class="fa fa-linkedin"></i></a>
                                     </li>
-                                    {% endif %}
-                                    {% if settings.core.SocialMediaLinks.youtube %}
                                     <li class="nav-item">
-                                        <a class="nav-link" target="_blank"
-                                           href="{{ settings.core.SocialMediaLinks.youtube }}">
-                                            <i class="fa fa-youtube-play"></i></a>
+                                        <a class="nav-link" href="#"><i class="fa fa-youtube-play"></i></a>
                                     </li>
-                                    {% endif %}
                                 </ul>
                             </div>
                         </div>

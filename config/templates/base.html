@@ -34,7 +34,18 @@
     <body class="{% block body_class %}{% endblock %}">
         {% wagtailuserbar %}
 
-        {% block content %}{% endblock %}
+        {% block body %}
+            {% block wrapper %}
+                {% block nav %}{% endblock %}
+                {% block slider %}{% endblock %}
+                {% block outer %}
+                    {% block content %}{% endblock %}
+                    {% block sidebar %}{% endblock %}
+                {% endblock %}
+                {% block bottom %}{% endblock %}
+                {% block footer %}{% endblock %}
+            {% endblock %}
+        {% endblock %}
 
         {# Global javascript #}
         <script type="text/javascript" src="{% static 'js/config.js' %}"></script>

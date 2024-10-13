@@ -1,32 +1,61 @@
-{% extends "blog/base.html" %}
+{% extends "nemesis/base.html" %}
 {% load wagtailcore_tags %}
-
+{% block wrapper_class %}item-view{% endblock %}
+{% block slider %}{% endblock %}
 {% block content %}
-    <article class="bg-white rounded-lg shadow-md p-8 mb-8">
-        <h1 class="text-3xl font-bold mb-4">{{ page.title }}</h1>
-        <p class="text-gray-600 mb-4">{{ page.date }}</p>
-        <div class="prose max-w-none">
-            {{ page.body|richtext }}
+    <div class="blog-posts fbt-item-post-wrap">
+        <div class="blog-post fbt-item-post">
+            <article class="bg-white rounded-lg shadow-md p-8 mb-8">
+                <h1 class="text-3xl font-bold mb-4">{{ page.title }}</h1>
+                <p class="text-gray-600 mb-4">{{ page.date }}</p>
+                <div class="prose max-w-none">
+                    {{ page.body|richtext }}
+                </div>
+            </article>
         </div>
-    </article>
 
-    <div class="bg-white rounded-lg shadow-md p-8">
-        <h3 class="text-2xl font-bold mb-4">Comments</h3>
-        {% include 'blog/comments.html' with comments=comments %}
+        <div class="row justify-content-center">
+            <div class="col-xl-8 col-lg-9">
+                <div class="blog-post-comments">
+                    <section class="comments embed" id="comments">
+                        <div class="fbt-comment-button--section list-inline text-center">
+                            <div class="fbt-comment-button list-inline-item">
+                                {% with comments.count as num_comments %}
+                                    <h3 class="h4 title fbt-comment-title">
+                                        {{ num_comments }} Comment{{ num_comments|pluralize:"s" }}
+                                    </h3>
+                                {% endwith %}
+                                <span class="fa comment_toogle_button"></span>
+                            </div>
+                        </div>
 
-        {% if user.is_authenticated %}
-            <div class="mt-8">
-                <h4 class="text-xl font-bold mb-4">Leave a comment</h4>
-                <form method="post">
-                    {% csrf_token %}
-                    {{ comment_form.as_p }}
-                    <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
-                        Submit comment
-                    </button>
-                </form>
+                        <div class="comment-list--form">
+                            <div class="bg-white rounded-lg shadow-md p-8">
+{#                                <h3 class="text-2xl font-bold mb-4">Comment{{ num_comments|pluralize:"s" }}</h3>#}
+                                <div class="comment-list">
+                                    {% include 'blog/comments.html' with comments=comments comment_class="media comment mb-4 border" %}
+                                </div>
+                                {% if user.is_authenticated %}
+                                    <div class="mt-8">
+                                        <h4 class="text-xl font-bold mb-4">Leave a comment</h4>
+                                        <form class="comment-form" method="post">
+                                            {% csrf_token %}
+                                            {{ comment_form.as_p }}
+                                            <button class="btn btn-primary radius-0" type="submit" id="submit-contact">
+                                                <i class="fa fa-comment"></i> Submit Comment
+                                            </button>
+                                        </form>
+                                    </div>
+                                {% else %}
+                                    <p class="mt-8 text-gray-600">
+                                        Please <a href="{% url 'account_login' %}?next={{ request.path }}"
+                                                  class="text-blue-500 hover:text-blue-700">log in</a> to leave a comment.</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </section>
+                </div>
             </div>
-        {% else %}
-            <p class="mt-8 text-gray-600">Please <a href="{% url 'account_login' %}?next={{ request.path }}" class="text-blue-500 hover:text-blue-700">log in</a> to leave a comment.</p>
-        {% endif %}
+        </div>
     </div>
 {% endblock %}

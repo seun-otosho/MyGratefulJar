@@ -50,8 +50,6 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 ]+ [
                      "core.apps.CoreConfig",
-                     "tailwind",
-                     "theme",
                      "allauth",
                      "allauth.account",
                      "allauth.socialaccount",
