@@ -1,8 +1,8 @@
 on:
   push:    
     branches:
-      - main
-name: 🚀 Deploy website on push
+      - wip
+name: 🚀 Deploy wip on push
 jobs:
   web-deploy:
     name: 🎉 Deploy
@@ -15,5 +15,5 @@ jobs:
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:        
         server: ftp.mygratefuljar.com
-        username: tech@mygratefuljar.com
+        username: dev@wip.mygratefuljar.com
         password: ${{ secrets.ftp_password }}
