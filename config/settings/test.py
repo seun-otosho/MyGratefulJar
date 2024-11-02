@@ -11,9 +11,10 @@ ALLOWED_HOSTS = ["*"]
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
-
-try:
-    from .auth import *
-    from .mail import *
-except Exception or ImportError as e:
-    print(f"{e}")
+DATABASES = {
+    # 'default': dj_database_url.config(default=str(os.getenv('DATABASE_URL'))),
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": os.path.join(BASE_DIR, "test.sqlite3"),
+    }
+}

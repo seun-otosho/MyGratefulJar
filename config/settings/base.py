@@ -50,11 +50,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 ]+ [
                      "core.apps.CoreConfig",
-                     "tailwind",
-                     "theme",
-                     "allauth",
-                     "allauth.account",
-                     "allauth.socialaccount",
+
                  ] + [
                      "blog.apps.BlogConfig",
                  ]  + [
@@ -62,9 +58,9 @@ INSTALLED_APPS = [
                  ]
 # core settings
 AUTH_USER_MODEL = 'core.User'
-WAGTAIL_USER_EDIT_FORM = 'core.forms.CustomUserEditForm'
-WAGTAIL_USER_CREATION_FORM = 'core.forms.CustomUserCreationForm'
-WAGTAIL_USER_CUSTOM_FIELDS = ['country', ]
+# WAGTAIL_USER_EDIT_FORM = 'core.forms.CustomUserEditForm'
+# WAGTAIL_USER_CREATION_FORM = 'core.forms.CustomUserCreationForm'
+# WAGTAIL_USER_CUSTOM_FIELDS = ['country', ]
 
 # Add these Tailwind-specific settings
 TAILWIND_APP_NAME = 'theme'
@@ -72,28 +68,6 @@ INTERNAL_IPS = [
     "127.0.0.1",
 ]
 
-# AllAuth settings
-SITE_ID = 1
-
-AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
-]
-
-# AllAuth settings
-ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
-ACCOUNT_USERNAME_MIN_LENGTH = 4
-LOGIN_URL = '/login/'
-LOGIN_REDIRECT_URL = '/blog/'
-
-
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'FETCH_USERINFO' : True
-    }
-}
 
 
 MIDDLEWARE = [
@@ -105,9 +79,6 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
-]+[
-    # AllAuth settings
-    "allauth.account.middleware.AccountMiddleware"
 ]
 
 ROOT_URLCONF = "config.urls"

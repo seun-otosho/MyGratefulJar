@@ -1,20 +1,16 @@
 from django.contrib.auth import get_user_model
+from django.db import models
 from django.utils import timezone
+from modelcluster.contrib.taggit import ClusterTaggableManager
+from modelcluster.fields import ParentalKey
+from modelcluster.models import ClusterableModel
+from taggit.models import TaggedItemBase
+from wagtail.admin.panels import FieldPanel, InlinePanel
+from wagtail.fields import RichTextField
+from wagtail.models import Page
+from wagtail.search import index
 
 User = get_user_model()
-
-from django.db import models
-from taggit.models import TaggedItemBase
-from modelcluster.models import ClusterableModel
-
-from wagtail.models import Page
-from wagtail.fields import RichTextField
-from wagtail.admin.panels import FieldPanel, InlinePanel
-from wagtail.search import index
-from modelcluster.fields import ParentalKey
-from modelcluster.contrib.taggit import ClusterTaggableManager
-from taggit.models import TaggedItemBase
-
 
 class BlogCategory(models.Model):
     name = models.CharField(max_length=255)
@@ -87,6 +83,7 @@ class BlogPage(Page):
     content_panels = Page.content_panels + [
         FieldPanel('date'),
         FieldPanel('intro'),
+        FieldPanel('image'),
         FieldPanel('body'),
         FieldPanel('categories'),
         FieldPanel('tags'),
@@ -99,18 +96,27 @@ class BlogPage(Page):
         context['comment_form'] = CommentForm()
         return context
 
+    # def save(self, *args, **kwargs):
+    #     # self.owner = request.user
+    #     super().save(*args, **kwargs)
+
     class Meta:
         db_table = 'blog_pages'
 
+    # def save(self, clean=True, user=None, log_action=False, **kwargs):
+    #     if not self.slug:
+    #         self.slug = self.title.replace(" ", "-")
+    #     return super().save(self, clean=True, user=None, log_action=False, **kwargs)
+
 
 class Comment(models.Model):
-    page = ParentalKey(BlogPage, on_delete=models.CASCADE, related_name='comments')
-    author = models.CharField(max_length=255)
+    page = ParentalKey(BlogPage, on_delete=models.DO_NOTHING, related_name='comments')
+    author = models.ForeignKey(User, models.DO_NOTHING, related_name='comments')
     email = models.EmailField()
     content = models.TextField()
     created_date = models.DateTimeField(auto_now_add=True)
     approved = models.BooleanField(default=False)
-    parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, related_name='replies')
+    parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.DO_NOTHING, related_name='replies')
 
     @property
     def children(self):
@@ -126,3 +132,5 @@ class Comment(models.Model):
     class Meta:
         db_table = 'blog_comments'
         ordering = ['created_date']
+
+
