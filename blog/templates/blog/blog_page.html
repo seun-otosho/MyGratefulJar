@@ -33,7 +33,7 @@
                             <div class="bg-white rounded-lg shadow-md p-8">
 {#                                <h3 class="text-2xl font-bold mb-4">Comment{{ num_comments|pluralize:"s" }}</h3>#}
                                 <div class="comment-list">
-                                    {% include 'blog/comments.html' with comments=comments comment_class="media comment mb-4 border" %}
+                                    {% include 'blog/comments.html' with comments=comments comment_class="media comment mb-4 border" lvl=0 %}
                                 </div>
                                 {% if user.is_authenticated %}
                                     <div class="mt-8">

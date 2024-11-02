@@ -50,9 +50,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 ]+ [
                      "core.apps.CoreConfig",
-                     "allauth",
-                     "allauth.account",
-                     "allauth.socialaccount",
+
                  ] + [
                      "blog.apps.BlogConfig",
                  ]  + [
@@ -70,29 +68,6 @@ INTERNAL_IPS = [
     "127.0.0.1",
 ]
 
-# AllAuth settings
-SITE_ID = 1
-
-AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
-]
-
-# AllAuth settings
-ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
-ACCOUNT_USERNAME_MIN_LENGTH = 4
-LOGIN_URL = '/login/'
-LOGIN_REDIRECT_URL = '/blog/'
-ACCOUNT_LOGOUT_ON_GET = True
-
-
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'FETCH_USERINFO' : True
-    }
-}
 
 
 MIDDLEWARE = [
@@ -104,9 +79,6 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
-]+[
-    # AllAuth settings
-    "allauth.account.middleware.AccountMiddleware"
 ]
 
 ROOT_URLCONF = "config.urls"

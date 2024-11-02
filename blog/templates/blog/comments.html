@@ -1,4 +1,4 @@
-{% load wagtailcore_tags %}
+{% load reply_levels wagtailcore_tags %}
 
 
 {% for comment in comments %}
@@ -9,10 +9,8 @@
         </a>
         <div class="media-body">
             <h5 class="mb-2">{{ comment.author.username}}</h5>
-            <p>
-                {{ comment.content }}
-            </p>
-            <p class="text-sm text-gray-500">{{ comment.created_date|date:"F d, Y H:i" }}</p>
+            <p>{{ comment.content }}</p>
+            <p class="text-sm text-gray-500">{{ lvl }} | {{ comment.created_date|date:"F d, Y H:i" }}</p>
             {% if user.is_authenticated %}
                 <div class="comments__actions">
                     <span onclick="toggleCommentReplyForm('reply-form-{{ comment.id }}')" class="button">
@@ -29,11 +27,15 @@
                         <i class="fa fa-comment"></i> Submit Reply
                     </button>
                 </form>
-
+            {% else %}
+                <p class="mt-8 text-gray-600">
+                    Please <a href="{% url 'account_login' %}?next={{ request.path }}"
+                    class="text-blue-500 hover:text-blue-700">log in</a> to leave a reply.</p>
             {% endif %}
 
             {% if comment.children.exists %}
-                {%  include "blog/comments.html" with comments=comment.children comment_class="comment-reply media mt-4" %}
+                {% reply_level lvl as re_comment %}
+                {%  include "blog/comments.html" with comments=comment.children comment_class=re_comment.0 lvl=re_comment.1 %}
                 <!-- .comment-reply -->
             {% endif %}
         </div>
