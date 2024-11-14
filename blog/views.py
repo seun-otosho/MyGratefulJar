@@ -1,10 +1,13 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.mail import send_mail
 from django.http import HttpResponseForbidden, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
+from django.template.loader import render_to_string
+from django.views.generic import CreateView
 
-from .forms import CommentForm, BlogPostForm, ReplyForm
-from .models import BlogPage, BlogIndexPage, Comment, PostAnalytics
+from .forms import CommentForm, BlogPostForm, ReplyForm, NewsletterSubscriptionForm
+from .models import BlogPage, BlogIndexPage, Comment, PostAnalytics, NewsletterSubscriber
 
 
 def blog_index(request):
@@ -145,3 +148,28 @@ def add_comment(request, page_id):
         else:
             messages.error(request, 'There was an error with your comment. Please try again.')
     return redirect(blog_page.url)
+
+
+class NewsletterSubscriptionView(CreateView):
+    model = NewsletterSubscriber
+    form_class = NewsletterSubscriptionForm
+    template_name = 'blog/newsletter_subscription.html'
+    success_url = '/'
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+
+        # Send welcome email
+        context = {
+            'subscriber_name': form.instance.name or 'Subscriber',
+        }
+        send_mail(
+            'Welcome to Our Newsletter!',
+            render_to_string('blog/emails/welcome_newsletter.txt', context),
+            'from@yourdomain.com',
+            [form.instance.email],
+            html_message=render_to_string('blog/emails/welcome_newsletter.html', context),
+        )
+
+        messages.success(self.request, 'Thank you for subscribing to our newsletter!')
+        return response

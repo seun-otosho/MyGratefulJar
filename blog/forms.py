@@ -1,5 +1,5 @@
 from django import forms
-from .models import Comment, BlogPage
+from .models import Comment, BlogPage, NewsletterSubscriber
 
 
 class CommentForm(forms.ModelForm):
@@ -31,4 +31,13 @@ class BlogPostForm(forms.ModelForm):
             'title': forms.TextInput(attrs={'class': 'w-full p-2 border rounded'}),
             'intro': forms.TextInput(attrs={'class': 'w-full p-2 border rounded'}),
             'body': forms.Textarea(attrs={'rows': 10, 'class': 'w-full p-2 border rounded'}),
+        }
+
+class NewsletterSubscriptionForm(forms.ModelForm):
+    class Meta:
+        model = NewsletterSubscriber
+        fields = ['email', 'name']
+        widgets = {
+            'email': forms.EmailInput(attrs={'placeholder': 'Enter your email'}),
+            'name': forms.TextInput(attrs={'placeholder': 'Enter your name (optional)'}),
         }
