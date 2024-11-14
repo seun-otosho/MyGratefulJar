@@ -1,6 +1,5 @@
 from django import forms
 from django.conf import settings
-from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils import timezone
 from modelcluster.contrib.taggit import ClusterTaggableManager
@@ -101,7 +100,7 @@ class BlogPage(Page):
     tags = ClusterTaggableManager(through=BlogPageTag, blank=True)
     categories = models.ManyToManyField(
         'blog.BlogCategory',
-        null=True,
+        # null=True,
         blank=True,
         # on_delete=models.SET_NULL,
         related_name='blog_pages'
