@@ -1,7 +1,9 @@
+# from django.contrib.admin import ModelAdmin
 from wagtail import hooks
+from wagtail.admin.views.generic import CreateView
 from wagtail.admin.viewsets.model import ModelViewSet, ModelViewSetGroup
 
-from .models import BlogCategory
+from .models import BlogCategory, BlogPage
 
 
 class BlogCategoryAdmin(ModelViewSet):
@@ -33,11 +35,35 @@ class BlogCategoryAdmin(ModelViewSet):
 category_viewset = BlogCategoryAdmin("category")
 
 
+class BlogPageCreateView(CreateView):
+    def form_valid(self, form):
+        instance = form.save(commit=False)
+        instance.moderation_status = 'pending'
+        return super().form_valid(form)
+
+
+class BlogPageAdmin(ModelViewSet):
+    model = BlogPage
+    create_view_class = BlogPageCreateView
+    menu_label = 'Blog Posts'
+    exclude_form_fields = ('id',)
+    menu_icon = 'doc-full'
+    list_display = ('title', 'moderation_status', 'date')
+    list_filter = ('moderation_status', 'owner')
+    search_fields = ('title', 'intro', 'body')
+
+    # def get_queryset(self, request):
+    #     qs = super().get_queryset(request)
+    #     if request.user.is_superuser:
+    #         return qs
+    #     return qs.filter(author=request.user)
+
 class BlogGroup(ModelViewSetGroup):
     menu_label = 'Blog Management'
     icon = 'folder-open-inverse'
     menu_order = 200
-    items = (BlogCategoryAdmin,)
+    items = (BlogCategoryAdmin, BlogPageAdmin, )
+
 
 
 @hooks.register("register_admin_viewset")
