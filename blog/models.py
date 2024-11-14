@@ -1,4 +1,5 @@
 from django import forms
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils import timezone
@@ -11,7 +12,37 @@ from wagtail.fields import RichTextField
 from wagtail.models import Page
 from wagtail.search import index
 
-User = get_user_model()
+# User = get_user_model()
+
+class PostAnalytics(models.Model):
+    post = models.OneToOneField('BlogPage', on_delete=models.CASCADE, related_name='analytics')
+    views = models.PositiveIntegerField(default=0)
+    likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='liked_posts', blank=True)
+    shares = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        verbose_name_plural = 'Post analytics'
+
+    def __str__(self):
+        return f'Analytics for {self.post.title}'
+
+class Share(models.Model):
+    PLATFORM_CHOICES = (
+        ('facebook', 'Facebook'),
+        ('twitter', 'Twitter'),
+        ('instagram', 'Instagram'),
+        ('whatsapp', 'WhatsApp'),
+        ('tiktok', 'TikTok'),
+        ('threads', 'Threads'),
+    )
+
+    post = models.ForeignKey('BlogPage', on_delete=models.CASCADE, related_name='share_records')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    platform = models.CharField(max_length=20, choices=PLATFORM_CHOICES)
+    shared_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('post', 'user', 'platform')
 
 class BlogCategory(models.Model):
     name = models.CharField(max_length=256)
@@ -133,7 +164,7 @@ class BlogPage(Page):
 
 class Comment(models.Model):
     page = ParentalKey(BlogPage, on_delete=models.DO_NOTHING, related_name='comments')
-    author = models.ForeignKey(User, models.DO_NOTHING, related_name='comments')
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, models.DO_NOTHING, related_name='comments')
     email = models.EmailField()
     content = models.TextField()
     created_date = models.DateTimeField(auto_now_add=True)
