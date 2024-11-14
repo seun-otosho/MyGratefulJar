@@ -1,7 +1,9 @@
 from django import forms
+from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 from django_countries.fields import CountryField
 from allauth.account.forms import SignupForm
+User = get_user_model()
 
 from wagtail.users.forms import UserEditForm, UserCreationForm
 
@@ -25,3 +27,15 @@ class CustomSignupForm(SignupForm):
         # user.last_name = self.cleaned_data['last_name']
         # user.save()
         return super(CustomSignupForm, self).save(request)
+
+class SocialMediaSettingsForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = [
+            'auto_share',
+            'facebook_profile',
+            'twitter_profile',
+            'instagram_profile',
+            'tiktok_profile',
+            'threads_profile',
+        ]

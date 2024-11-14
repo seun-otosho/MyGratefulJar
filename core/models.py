@@ -1,17 +1,11 @@
-from django.db import models
 from django.contrib.auth.base_user import AbstractBaseUser, BaseUserManager
 from django.contrib.auth.models import AbstractUser, PermissionsMixin
 from django.core.validators import RegexValidator
 from django.db import models
-from django_countries.fields import CountryField
 from django.utils.translation import gettext_lazy as _
-from modelcluster.fields import ParentalKey
-from wagtail.admin.panels import FieldPanel, FieldRowPanel, InlinePanel, MultiFieldPanel
+from django_countries.fields import CountryField
 from wagtail.contrib.forms.models import AbstractFormField, AbstractEmailForm
-from wagtail.contrib.forms.panels import FormSubmissionsPanel
 from wagtail.contrib.settings.models import BaseGenericSetting
-from wagtail.contrib.settings.registry import register_setting
-from wagtail.fields import RichTextField
 
 USERNAME_REGEX = '^[a-zA-Z0-9.@_]*$'
 
@@ -70,6 +64,29 @@ class User(AbstractUser, AbstractBaseUser, PermissionsMixin):
     is_admin = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False, db_index=True, )
     is_superuser = models.BooleanField(default=False, db_index=True, )
+
+
+    # Additional fields for user profile
+    bio = models.TextField(max_length=500, blank=True)
+    profile_image = models.ImageField(upload_to='profile_images/', blank=True, null=True)
+    website = models.URLField(max_length=200, blank=True)
+
+    # Social media fields
+    facebook_profile = models.URLField(blank=True)
+    twitter_profile = models.URLField(blank=True)
+    instagram_profile = models.URLField(blank=True)
+    tiktok_profile = models.URLField(blank=True)
+    threads_profile = models.URLField(blank=True)
+
+    # Sharing preferences
+    auto_share = models.BooleanField(default=False)
+
+    # Social media tokens (encrypted)
+    facebook_token = models.CharField(max_length=255, blank=True)
+    twitter_token = models.CharField(max_length=255, blank=True)
+    instagram_token = models.CharField(max_length=255, blank=True)
+    tiktok_token = models.CharField(max_length=255, blank=True)
+
     country = CountryField()
 
     def __str__(self):
