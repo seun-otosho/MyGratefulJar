@@ -1,3 +1,4 @@
+from django import forms
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils import timezone
@@ -5,7 +6,7 @@ from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey
 from modelcluster.models import ClusterableModel
 from taggit.models import TaggedItemBase
-from wagtail.admin.panels import FieldPanel, InlinePanel
+from wagtail.admin.panels import FieldPanel, InlinePanel, MultiFieldPanel
 from wagtail.fields import RichTextField
 from wagtail.models import Page
 from wagtail.search import index
@@ -13,7 +14,8 @@ from wagtail.search import index
 User = get_user_model()
 
 class BlogCategory(models.Model):
-    name = models.CharField(max_length=255)
+    name = models.CharField(max_length=256)
+    slug = models.SlugField(unique=True, max_length=88)
     icon = models.ForeignKey(
         'wagtailimages.Image', null=True, blank=True,
         on_delete=models.SET_NULL, related_name='+'
@@ -21,6 +23,7 @@ class BlogCategory(models.Model):
 
     panels = [
         FieldPanel('name'),
+        FieldPanel('slug'),
         FieldPanel('icon'),
     ]
 
@@ -62,18 +65,28 @@ class BlogPageTag(TaggedItemBase):
 
 class BlogPage(Page):
     date = models.DateField("Post date", default=timezone.now, )
-    intro = models.CharField(max_length=250)
+    intro = models.CharField(max_length=256)
     body = RichTextField(blank=True)
     tags = ClusterTaggableManager(through=BlogPageTag, blank=True)
-    categories = models.ForeignKey(
+    categories = models.ManyToManyField(
         'blog.BlogCategory',
         null=True,
         blank=True,
-        on_delete=models.SET_NULL,
+        # on_delete=models.SET_NULL,
         related_name='blog_pages'
     )
     image = models.ForeignKey(
         "wagtailimages.Image", on_delete=models.SET_NULL, blank=True, null=True, related_name="+", )
+
+    # Draft-publish workflow
+    is_published = models.BooleanField(default=False)
+
+    # Social media sharing settings
+    share_to_facebook = models.BooleanField(default=False)
+    share_to_twitter = models.BooleanField(default=False)
+    share_to_instagram = models.BooleanField(default=False)
+    share_to_tiktok = models.BooleanField(default=False)
+    share_to_threads = models.BooleanField(default=False)
 
     search_fields = Page.search_fields + [
         index.SearchField('intro'),
@@ -81,12 +94,21 @@ class BlogPage(Page):
     ]
 
     content_panels = Page.content_panels + [
-        FieldPanel('date'),
+        MultiFieldPanel([
+            FieldPanel('date'),
+            # FieldPanel('author'),
+            FieldPanel('categories', widget=forms.CheckboxSelectMultiple),
+            FieldPanel('tags'),
+        ], heading="Blog information"),
+        # FieldPanel('featured_image'),
         FieldPanel('intro'),
-        FieldPanel('image'),
         FieldPanel('body'),
-        FieldPanel('categories'),
-        FieldPanel('tags'),
+        MultiFieldPanel([
+            FieldPanel('share_to_facebook'),
+            FieldPanel('share_to_twitter'),
+            FieldPanel('share_to_instagram'),
+            FieldPanel('share_to_tiktok'),
+        ], heading="Social Media Sharing"),
         InlinePanel('comments', label="Comments"),
     ]
 
