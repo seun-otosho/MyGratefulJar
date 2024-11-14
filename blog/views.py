@@ -1,10 +1,10 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseForbidden
+from django.http import HttpResponseForbidden, JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 
 from .forms import CommentForm, BlogPostForm, ReplyForm
-from .models import BlogPage, BlogIndexPage, Comment
+from .models import BlogPage, BlogIndexPage, Comment, PostAnalytics
 
 
 def blog_index(request):
@@ -87,6 +87,28 @@ def blog_post(request, slug):
         'comments': comments,
         'comment_form': comment_form,
         'reply_form': ReplyForm(),
+    })
+
+
+# @login_required
+def like_post(request, post_id):
+    if not request.user.is_authenticated:
+        return JsonResponse({'status': 'error', 'message': 'Login required'}, status=401)
+
+    post = get_object_or_404(BlogPage, id=post_id)
+    analytics, created = PostAnalytics.objects.get_or_create(post=post)
+
+    if request.user in analytics.likes.all():
+        analytics.likes.remove(request.user)
+        liked = False
+    else:
+        analytics.likes.add(request.user)
+        liked = True
+
+    return JsonResponse({
+        'status': 'success',
+        'liked': liked,
+        'like_count': analytics.likes.count()
     })
 
 

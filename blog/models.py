@@ -10,7 +10,7 @@ from wagtail.admin.panels import FieldPanel, InlinePanel, MultiFieldPanel
 from wagtail.fields import RichTextField
 from wagtail.models import Page
 from wagtail.search import index
-
+from mptt.models import MPTTModel, TreeForeignKey
 # User = get_user_model()
 
 class PostAnalytics(models.Model):
@@ -194,28 +194,34 @@ class BlogPage(Page):
     #     return super().save(self, clean=True, user=None, log_action=False, **kwargs)
 
 
-class Comment(models.Model):
-    page = ParentalKey(BlogPage, on_delete=models.DO_NOTHING, related_name='comments')
+class Comment(MPTTModel):
+    post = ParentalKey(BlogPage, on_delete=models.DO_NOTHING, related_name='comments')
     author = models.ForeignKey(settings.AUTH_USER_MODEL, models.DO_NOTHING, related_name='comments')
-    email = models.EmailField()
     content = models.TextField()
-    created_date = models.DateTimeField(auto_now_add=True)
-    approved = models.BooleanField(default=False)
-    parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.DO_NOTHING, related_name='replies')
+    # created_date = models.DateTimeField(auto_now_add=True)
+    # approved = models.BooleanField(default=False)
+    # parent = models.ForeignKey('self', null=True, blank=True, on_delete=models.DO_NOTHING, related_name='replies')
+    parent = TreeForeignKey('self', on_delete=models.DO_NOTHING, null=True, blank=True, related_name='replies')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    is_approved = models.BooleanField(default=False)
+
+    class MPTTMeta:
+        order_insertion_by = ['created_at']
 
     @property
     def children(self):
-        return Comment.objects.filter(parent=self).order_by('created_date')
+        return Comment.objects.filter(parent=self).order_by('created_at')
 
     @property
     def is_parent(self):
         return self.parent is None
 
     def __str__(self):
-        return f'Comment by {self.author} on {self.page}'
+        return f'Comment by {self.author} on {self.post}'
 
     class Meta:
         db_table = 'blog_comments'
-        ordering = ['created_date']
+        ordering = ['created_at']
 
 
