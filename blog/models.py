@@ -118,6 +118,39 @@ class BlogPage(Page):
     share_to_tiktok = models.BooleanField(default=False)
     share_to_threads = models.BooleanField(default=False)
 
+    moderation_status = models.CharField(
+        max_length=20,
+        choices=[
+            ('draft', 'Draft'),
+            ('pending', 'Pending Moderation'),
+            ('approved', 'Approved'),
+            ('rejected', 'Rejected'),
+        ],
+        default='draft'
+    )
+
+    moderation_notes = models.TextField(blank=True)
+    moderated_by = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name='moderated_posts'
+    )
+
+    @property
+    def like_count(self):
+        return self.analytics.likes.count() if hasattr(self, 'analytics') else 0
+
+    @property
+    def share_count(self):
+        return self.analytics.shares if hasattr(self, 'analytics') else 0
+
+    def increase_view_count(self):
+        analytics, created = PostAnalytics.objects.get_or_create(post=self)
+        analytics.views += 1
+        analytics.save()
+
     search_fields = Page.search_fields + [
         index.SearchField('intro'),
         index.SearchField('body'),
