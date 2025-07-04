@@ -109,6 +109,28 @@ sample_posts = [
     }
 ]
 
+# Extended sample data for full post content
+def get_full_post_content(post_id):
+    """Get full content for a specific post"""
+    content_map = {
+        1: {
+            "content": """Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut porttitor leo vel nulla posuere accumsan. Suspendisse sed tortor eget justo aliquam euismod. Morbi ut massa et neque iaculis lacinia a eu est. Etiam nec enim id mi maximus consequat sed ut tortor. Nullam velit ipsum, ornare id leo a, cursus mollis nunc. Etiam dignissim nulla vel ante mollis, lobortis aliquam lectus egestas.
+
+Vivamus sit amet libero sit amet lorem dignissim varius. Nam id dictum sem. Maecenas eget nulla bibendum, accumsan arcu ac, vehicula risus. Nulla laoreet elit in lectus cursus, at tristique diam fringilla. Donec blandit, lacus sed mollis molestie, lorem lacus feugiat tortor, nec tincidunt libero dolor sit amet nulla.""",
+            "highlighted_text": "Donec bibendum urna quis orci molestie sodales. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc id purus vel sapien pretium varius eu id risus.",
+            "quote": "Donec dolor elit, pellentesque a massa pellentesque, euismod sagittis ipsum. Nullam a diam ac turpis iaculis vulputate. Nunc tellus libero, tempus id luctus eget, fermentum et quam. Aliquam erat volutpat.",
+            "categories": ["Design", "Lifestyle", "Technology"],
+            "tags": ["blog", "design", "web"]
+        }
+    }
+    return content_map.get(post_id, {
+        "content": "This is a sample blog post content. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "highlighted_text": "This is highlighted content for emphasis.",
+        "quote": "This is a sample quote from the blog post.",
+        "categories": ["General"],
+        "tags": ["sample"]
+    })
+
 def search_overlay():
     """Search overlay component"""
     return Div(
@@ -624,6 +646,278 @@ def contact_info_sidebar():
         )
     )
 
+def single_post_hero(post):
+    """Single post hero section with image, title, meta, and social sharing"""
+    return Div(cls="slider-container")(
+        Div(cls="row align-items-center slider-width")(
+            Div(cls="col-lg-7")(
+                Div(cls="fbt-shape-container")(
+                    Div(cls="fbt-item-thumbnail radius-10")(
+                        Img(alt="", cls="post-thumbnail lazyloaded", src=post['image'])
+                    )
+                )
+            ),
+            Div(cls="col-lg-5 mt-4 mt-lg-0")(
+                Div(cls="fbt-shape-title pl-xl-5 pl-lg-4")(
+                    H1(cls="post-title display-4")(post['title']),
+                    Div(cls="item-post-meta mt-4")(
+                        Div(cls="post-meta")(
+                            Span(cls="post-author")(
+                                A(href="#", target="_blank", title=post['author'])(post['author'])
+                            ),
+                            Span(cls="post-date published")(post['date'])
+                        )
+                    ),
+                    Div(cls="mt-4")(
+                        social_share_buttons()
+                    )
+                )
+            )
+        )
+    )
+
+def social_share_buttons():
+    """Social sharing buttons component"""
+    return Div(cls="sharepost clearfix")(
+        Div(cls="post-share clearfix")(
+            Ul(
+                Li(A(cls="facebook fbt-share", href="#", rel="nofollow", target="_blank")(I(cls="fa fa-facebook"))),
+                Li(A(cls="twitter fbt-share", href="#", rel="nofollow", target="_blank")(I(cls="fa fa-twitter"))),
+                Li(A(cls="linkedin fbt-linkedin", href="#", rel="nofollow", target="_blank")(I(cls="fa fa-linkedin"))),
+                Li(A(cls="pinterest fbt-pinterest", href="#", target="_blank")(I(cls="fa fa-pinterest-p"))),
+                Li(A(cls="email fbt-email", href="#", rel="nofollow")(I(cls="fa fa-envelope-o")))
+            )
+        )
+    )
+
+def post_content_body(content_data):
+    """Post content body with formatted text, highlights, and quotes"""
+    return Div(cls="post-body post-content")(
+        P(content_data.get('content', 'Sample post content...')),
+        Br(),
+        Mark(content_data.get('highlighted_text', 'Highlighted content here.')),
+        P("Proin condimentum faucibus placerat. Donec massa justo, porttitor tincidunt eros a, vehicula malesuada tortor. Praesent nec sem ut justo efficitur tempus."),
+        Br(),
+        Blockquote(cls="tr_bq fbt-shape-container")(
+            Div(cls="card shadow-lg radius-10 px-5 pt-5 pb-4")(
+                P(cls="pl-5")(content_data.get('quote', 'Sample quote content.'))
+            )
+        ),
+        P("Nunc accumsan ex ligula, in malesuada sapien consectetur in. Praesent non lectus sed dolor imperdiet mollis a sit amet sem. Vivamus eu commodo ligula. Phasellus in lacus eu urna ullamcorper lacinia.")
+    )
+
+def post_footer_section(post, content_data):
+    """Post footer with categories and social sharing"""
+    return Div(cls="post-footer")(
+        Div(cls="row justify-content-center")(
+            Div(cls="col-xl-8 col-lg-9")(
+                Div(cls="row align-items-center my-4")(
+                    Div(cls="col-lg-8 text-center text-lg-left mb-3 mb-lg-0")(
+                        Div(cls="post-labels")(
+                            Span(cls="mr-2")("Categories:"),
+                            Span(cls="label-head Label")(
+                                *[A(cls="label-link badge badge-secondary py-1 px-3 mr-1", href="#")(cat) 
+                                  for cat in content_data.get('categories', [post.get('category', 'General')])]
+                            )
+                        )
+                    ),
+                    Div(cls="col-lg-4 text-center text-lg-right")(
+                        social_share_buttons()
+                    )
+                )
+            )
+        )
+    )
+
+def post_navigation(current_post_id):
+    """Previous/Next post navigation"""
+    # Find previous and next posts
+    current_index = next((i for i, post in enumerate(sample_posts) if post['id'] == current_post_id), 0)
+    prev_post = sample_posts[current_index - 1] if current_index > 0 else None
+    next_post = sample_posts[current_index + 1] if current_index < len(sample_posts) - 1 else None
+    
+    return Div(cls="fbt-item-post-pager")(
+        Div(cls="card shadow-lg radius-10 mt-3 mb-5")(
+            Div(cls="post-pager row")(
+                Div(cls="previous col-lg-6 bg-primary px-5 py-5 text-left")(
+                    A(cls="fbt-newer-link text-white", href=f"/post/{prev_post['id']}" if prev_post else "#")(
+                        Strong(cls="lead text-left pl-3")(I(cls="fa fa-angle-left"), " Previous"),
+                        Div(cls="h2 text-white fbt-np-title mt-2 pl-3")(
+                            prev_post['title'][:50] + "..." if prev_post and len(prev_post['title']) > 50 
+                            else prev_post['title'] if prev_post else "No previous post"
+                        )
+                    ) if prev_post else Div(cls="text-white pl-3")("No previous post")
+                ),
+                Div(cls="next col-lg-6 bg-warning px-5 py-5 text-right")(
+                    A(cls="fbt-older-link text-white", href=f"/post/{next_post['id']}" if next_post else "#")(
+                        Strong(cls="lead text-right pr-3")("Next ", I(cls="fa fa-angle-right")),
+                        Div(cls="h2 text-white text-right fbt-np-title mt-2 pr-3")(
+                            next_post['title'][:50] + "..." if next_post and len(next_post['title']) > 50 
+                            else next_post['title'] if next_post else "No next post"
+                        )
+                    ) if next_post else Div(cls="text-white pr-3")("No next post")
+                )
+            )
+        )
+    )
+
+def related_posts_section(current_post_id):
+    """Related posts section"""
+    # Get 3 random posts excluding current one
+    related = [post for post in sample_posts if post['id'] != current_post_id][:3]
+    
+    return Div(cls="fbt-rel-post-wrapper mb-5")(
+        Div(cls="row justify-content-center align-items-center")(
+            Div(cls="col-xl-3 mb-4 mb-xl-0")(
+                Div(cls="title-wrap fbt-shape-title")(
+                    H3(cls="display-4")("You may like these posts")
+                )
+            ),
+            Div(cls="col-xl-9 pl-xl-5")(
+                Div(id="related-posts")(
+                    Div(cls="row")(
+                        *[related_post_card(post) for post in related]
+                    )
+                )
+            )
+        )
+    )
+
+def related_post_card(post):
+    """Individual related post card"""
+    video_icon = Span(cls="video-icon")(I(cls="fa fa-play")) if post.get('is_video') else ""
+    
+    return Div(cls="col-lg-4 col-md-12 mb-5 mb-lg-0 rp-item")(
+        Div(cls="card radius-10")(
+            Div(cls="fbt-post-thumbnail")(
+                A(href=f"/post/{post['id']}")(
+                    Div(cls="fbt-resize lazyloaded", style=f"background-image: url({post['image']})")
+                ),
+                video_icon
+            ),
+            Div(cls="fbt-post-caption card-body")(
+                H5(
+                    A(href=f"/post/{post['id']}")(
+                        post['title'][:40] + "..." if len(post['title']) > 40 else post['title']
+                    )
+                )
+            )
+        )
+    )
+
+def comments_section(post_id):
+    """Comments section with existing comments and comment form"""
+    # Sample comments data
+    comments = [
+        {"id": 1, "author": "John Doe", "avatar": "./images/user-1.jpg", "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut porttitor leo vel nulla posuere accumsan. Suspendisse sed tortor eget justo aliquam euismod.", "replies": [
+            {"id": 2, "author": "Jane Smith", "avatar": "./images/user-2.jpg", "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut porttitor leo vel nulla posuere accumsan."}
+        ]},
+        {"id": 3, "author": "Bob Wilson", "avatar": "./images/user-4.jpg", "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut porttitor leo vel nulla posuere accumsan. Suspendisse sed tortor eget justo aliquam euismod.", "replies": []},
+        {"id": 4, "author": "Alice Brown", "avatar": "./images/user-3.jpg", "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut porttitor leo vel nulla posuere accumsan. Suspendisse sed tortor eget justo aliquam euismod.", "replies": [
+            {"id": 5, "author": "Charlie Davis", "avatar": "./images/user-4.jpg", "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut porttitor leo vel nulla posuere accumsan."}
+        ]}
+    ]
+    
+    return Div(cls="blog-post-comments")(
+        Section(cls="comments embed", id="comments")(
+            Div(cls="fbt-comment-button--section list-inline text-center")(
+                Div(cls="fbt-comment-button list-inline-item")(
+                    H3(cls="h4 title fbt-comment-title")(f"{len(comments)} Comments"),
+                    Span(cls="fa comment_toogle_button")
+                )
+            ),
+            Div(cls="comment-list--form")(
+                Div(cls="comment-list")(
+                    *[comment_item(comment) for comment in comments],
+                    Div(cls="nav pt-4 mt-n5 mb-5 justify-content-end fbt_bottom_toogle")(
+                        Span("Hide Comments")
+                    ),
+                    comment_form(post_id)
+                )
+            )
+        )
+    )
+
+def comment_item(comment):
+    """Individual comment item"""
+    return Div(cls="media comment mb-4 border")(
+        A(cls="mr-4", href="#")(
+            Img(src=comment['avatar'], alt="")
+        ),
+        Div(cls="media-body")(
+            H5(cls="mb-2")(comment['author']),
+            P(comment['content']),
+            Div(cls="comments__actions")(
+                Span(cls="button")(
+                    A(href="#")(I(cls="fa fa-comments"), "Reply")
+                )
+            ),
+            *[comment_reply(reply) for reply in comment.get('replies', [])]
+        )
+    )
+
+def comment_reply(reply):
+    """Comment reply item"""
+    return Div(cls="comment-reply media mt-4")(
+        A(cls="mr-4", href="#")(
+            Img(src=reply['avatar'], alt="")
+        ),
+        Div(cls="media-body")(
+            H5(cls="mb-2")(reply['author']),
+            P(reply['content']),
+            Div(cls="comments__actions")(
+                Span(cls="button")(
+                    A(href="#")(I(cls="fa fa-comments"), "Reply")
+                )
+            )
+        )
+    )
+
+def comment_form(post_id):
+    """Comment submission form"""
+    return Div(
+        Div(cls="fbt-sep-title")(
+            H4(cls="title title-heading-left")("Leave Your Comment"),
+            Div(cls="title-sep-container")(
+                Div(cls="title-sep sep-double")
+            )
+        ),
+        Form(cls="comment-form", method="POST", action=f"/post/{post_id}/comment")(
+            Div(cls="row")(
+                Div(cls="col-md-4")(
+                    Div(cls="form-group")(
+                        Label(**{"for": "comment-name"})("Name*"),
+                        Input(cls="form-control shadow-none radius-0", id="comment-name", name="name", type="text", required=True)
+                    )
+                ),
+                Div(cls="col-md-4")(
+                    Div(cls="form-group")(
+                        Label(**{"for": "comment-email"})("E-mail*"),
+                        Input(cls="form-control shadow-none radius-0", id="comment-email", name="email", type="email", required=True)
+                    )
+                ),
+                Div(cls="col-md-4")(
+                    Div(cls="form-group")(
+                        Label(**{"for": "comment-website"})("Website"),
+                        Input(cls="form-control shadow-none radius-0", id="comment-website", name="website", type="url")
+                    )
+                )
+            ),
+            Div(cls="row")(
+                Div(cls="col-md-12")(
+                    Div(cls="form-group")(
+                        Label(**{"for": "comment-message"})("Comment*"),
+                        Textarea(cls="form-control shadow-none radius-0", rows="5", id="comment-message", name="comment", required=True)
+                    )
+                )
+            ),
+            Button(cls="btn btn-success radius-0", type="submit")(
+                I(cls="fa fa-paper-plane-o mr-2"),
+                "Submit Comment"
+            )
+        )
+    )
+
 def pagination_nav(current_page=2, total_pages=3):
     """Pagination navigation"""
     return Div(cls="pagenav", id="blog-pager")(
@@ -906,22 +1200,91 @@ def contact_form_submit(name: str, email: str, website: str = "", message: str =
 
 @rt("/post/{post_id}")
 def post_detail(post_id: int):
-    """Individual post page (placeholder for now)"""
+    """Individual post page with full template"""
     post = next((post for post in sample_posts if post['id'] == post_id), None)
     if not post:
         return "Post not found", 404
     
+    # Get full content for this post
+    content_data = get_full_post_content(post_id)
+    
     return (
         Title(f"{post['title']} - Nemesis Blog"),
         Meta(name="viewport", content="width=device-width, initial-scale=1.0"),
+        search_overlay(),
+        search_form(),
+        Div(id="page-wrapper", cls="item-view")(
+            navbar(),
+            Div(cls="outer-wrapper clearfix", id="outer-wrapper")(
+                Div(cls="container fbt-elastic-container")(
+                    Div(cls="row justify-content-center")(
+                        Div(cls="fbt-main-wrapper col-xl-12")(
+                            Div(id="main-wrapper")(
+                                Div(cls="main-section", id="main_content")(
+                                    Div(cls="blog-posts fbt-item-post-wrap")(
+                                        Div(cls="blog-post fbt-item-post")(
+                                            # Hero section
+                                            single_post_hero(post),
+                                            # Post content
+                                            Div(cls="row justify-content-center")(
+                                                Div(cls="col-xl-8 col-lg-9")(
+                                                    Div(cls="mt-n5")(
+                                                        post_content_body(content_data)
+                                                    )
+                                                )
+                                            ),
+                                            # Post footer with categories and sharing
+                                            post_footer_section(post, content_data),
+                                            # Post navigation (prev/next)
+                                            post_navigation(post_id),
+                                            # Related posts
+                                            related_posts_section(post_id)
+                                        )
+                                    ),
+                                    # Comments section
+                                    Div(cls="row justify-content-center")(
+                                        Div(cls="col-xl-8 col-lg-9")(
+                                            comments_section(post_id)
+                                        )
+                                    )
+                                )
+                            )
+                        ),
+                        sidebar()
+                    )
+                )
+            ),
+            Div(cls="fbt-bottom-shape")(
+                NotStr('''<svg class="fbt-footer-wave-big" preserveAspectRatio="none" version="1.1" viewBox="5 0 1366 222" width="100%">
+                    <path d="M-2.19,238H1366v-4.27c-67.87-24-146.44-43.08-230.75-53.19-253.33-27.78-293.94,51.64-541.13,29.89C318.08,186.31,289.49,32.92,6.9,11.73c-5.21-.42-10.56-.7-15.9-1V238Z" transform="translate(9.5 -10.22)"></path>
+                </svg>''')
+            ),
+            footer()
+        )
+    )
+
+@rt("/post/{post_id}/comment", methods=["POST"])
+def post_comment_submit(post_id: int, name: str, email: str, website: str = "", comment: str = ""):
+    """Handle comment submission for a post"""
+    post = next((post for post in sample_posts if post['id'] == post_id), None)
+    if not post:
+        return "Post not found", 404
+    
+    # Here you would typically save the comment to database
+    # For now, we'll just return a success message
+    
+    return (
+        Title("Comment Submitted - Nemesis Blog"),
+        Meta(name="viewport", content="width=device-width, initial-scale=1.0"),
         Div(cls="container mt-5")(
-            H1(post['title']),
-            P(f"By {post['author']} on {post['date']} | Category: {post.get('category', 'General')}"),
-            Img(src=post['image'], cls="img-fluid mb-3"),
-            P(post['excerpt']),
-            Hr(),
-            A(href="/", cls="btn btn-primary mr-2")("← Back to Home"),
-            A(href="/blog", cls="btn btn-secondary")("← Back to Blog")
+            Div(cls="alert alert-success", role="alert")(
+                H4(cls="alert-heading")("Comment Submitted Successfully!"),
+                P(f"Thank you {name}, your comment on '{post['title']}' has been submitted for review."),
+                Hr(),
+                P(cls="mb-0")("Your comment: ", Em(comment[:100] + "..." if len(comment) > 100 else comment))
+            ),
+            A(href=f"/post/{post_id}", cls="btn btn-primary mt-3")("← Back to Post"),
+            A(href="/blog", cls="btn btn-secondary mt-3 ml-2")("← Back to Blog")
         )
     )
 
