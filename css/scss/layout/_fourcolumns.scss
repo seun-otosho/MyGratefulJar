@@ -1,0 +1,126 @@
+ /* Four Columns */
+ .four_columns {
+    margin-top: 20px;
+    @media (min-width: 1200px) {
+        .card-columns {
+            -moz-column-count: 4;
+            column-count: 4;
+        }
+    }
+    
+    .fbt-post-thumbnail {
+        height: $four_column_main-thumbnail_height;
+    }
+
+    .blog-post {
+        &:nth-child(6) {
+            .fbt-post-thumbnail {
+                height: $four_column_big-thumbnail_height;
+            }
+        }
+        &:nth-child(10) {
+            .fbt-post-thumbnail {
+                height: $four_column_big-thumbnail_height;
+            }
+        }
+    }    
+
+    .fbt-index-post {
+        .post-title.h4 {
+            font-size: 1rem;
+            line-height: calc(1rem + 4px);
+        }
+    }
+
+    .blog-post {
+        &:nth-child(2n+2) {
+            .card-body {
+                .post-excerpt {
+                    display: none;
+                }
+            }
+        }
+    }    
+
+    .radius-10 {
+        border-radius: 0!important;
+    }
+
+    .footer-light.pt-4 {
+        padding-top: 25px !important;
+        background: $four_columns_footer_background;
+    }
+
+    .fbt-bottom-shape {
+        svg {
+            fill: $four_columns_footer_background;
+        }
+    }
+
+    .fbt-index-post.card.blog-post:nth-child(1n+2),
+    .fbt-index-post.card {
+        background-color: $white-color;
+        h3 {
+            color: $four_column_index_text_color;
+            a {
+                color: $four_column_index_text_color;
+            }
+        }
+        .post-meta {
+            color: $four_column_index_text_color;
+
+            a {
+                color: $four_column_index_text_color;
+            }
+
+            .post-author {
+                color: $four_column_index_text_color;
+            }
+        }
+
+        .card-text {
+            color: $four_column_index_text_color;
+        }
+
+        &:nth-child(2n+2) {
+            &:hover {
+                h3 {
+                    text-decoration: underline;
+                    a {
+                        text-decoration: underline;
+                    }
+                }
+            }
+
+            h3 {
+                color: $overlay-post-color !important;
+                a {
+                    color: $overlay-post-color !important;
+                }
+            }
+
+            .post-meta {
+                color: $overlay-post-color !important;
+                a {
+                    color: $overlay-post-color !important;
+                }
+                .post-author {
+                    color: $overlay-post-color !important;
+                }
+            }
+            
+            .card-text {
+                color: $overlay-post-color !important;
+            }
+        }
+    }
+
+    .card {
+        box-shadow: 0 15px 25px -5px rgba(23,16,159,.15);
+    }
+
+ }
+
+
+
+    

@@ -1,0 +1,51 @@
+/* Headline
+===================================== */
+#headline {
+	background-image: linear-gradient(90deg,$headline_bg_1,$headline_bg_2);
+	color: $white-color;
+}
+.fbt-headline {
+	a {
+		color: $white-color;
+		&:hover {
+			color: rgba($white-color, .8);;
+		}
+	}
+	.nav-link {
+		padding: .5rem .7rem !important;
+		line-height: 100%;
+	}
+	li {
+		&:first-child {
+			.nav-link {
+				padding-left: 0 !important;
+			}
+		}
+		&:last-child {
+			.nav-link {
+				padding-right: 0 !important;
+			}
+		}
+	}
+	.fbt-left-headline {
+		.nav-link {
+			padding: .5rem .3rem !important;
+			line-height: 100%;
+		}
+    }
+    a .fa,a .fab,a .fad,a .fal,a .far,a .fas {
+        font-size: calc(14px + 3px);
+    }
+}
+.fbt-left-headline {
+	li {
+		&:not(:first-child) {
+			.nav-link {
+				&:before {
+					content: '/';
+					padding: 0 .6rem 0 0;
+				}
+			}
+		}
+	}
+}

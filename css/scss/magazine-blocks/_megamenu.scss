@@ -1,0 +1,67 @@
+/* Megamenu
+===================================== */
+.dropdown.fbt-megamenu {
+    position: static;
+    .fullwidth {
+        width: 100%;
+        margin: 0;
+        border-top-color: rgba($black-color, .05)!important;
+        background-color: $mm_bg_color;
+    }
+}
+
+.fbt-megamenu {
+	.fbt-mega-item {
+    .title-caption{
+      text-align: center;
+    }
+		.fbt-post-thumbnail {
+			height: $mm_thumb_height_1;
+		}
+		.title-caption {
+			h3 {
+				font-size: calc(#{$h4-font-size} - 3.5px) !important;
+        line-height: calc(#{$h4-font-size} - 3.5px) !important;
+			}
+		}
+	}
+	.sub-mega-category {
+		.fbt-childs-cats {
+			background: $mm_categories_bg;
+			.nav-link.fbt-childs-cat {
+				color: $black-color !important;
+			}
+		}
+	}
+}
+
+.mega-category {
+  .fbt-mega-item {
+    .fbt-post-thumbnail {
+      height: $mm_thumb_height_2;
+    }
+  }
+}
+
+.navbar {
+  .navbar-nav {
+    .fbt-child-cat {
+      color: rgba($black-color, 0.85);
+      border-radius: 0;
+      text-align: right;
+      padding-top: 0.6rem !important;
+      padding-bottom: 0.5rem !important;
+      &:hover {
+        color: $black-color;
+      }
+    }
+    .fbt-child-cat.active {
+      background: $white-color;
+      color: $black-color;
+      margin-right: -1px;
+      border-top: 1px solid #dee2e6;
+      border-bottom: 1px solid #dee2e6;
+    }
+  }
+}
+  

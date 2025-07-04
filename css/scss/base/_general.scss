@@ -1,0 +1,260 @@
+/* General
+===================================== */
+html,
+body {
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+@media (min-width: 1442px) {
+  .container {
+    max-width: $container-width;
+  }
+  .slider-width {
+    margin-left: -$slider-width;
+    margin-right: -$slider-width;
+  }
+}
+
+.card {
+  border: 0;
+  border-radius: 0;
+  -webkit-box-shadow: $post-card-shadow;
+  box-shadow: $post-card-shadow;
+}
+
+body {
+  background: $body-bg;
+  color: $body-color;
+  font-size: $body-font-size;
+  font-family: $body-font;
+  font-weight: $base-title-font-weight-regular;
+  overflow-x: hidden;
+}
+
+a {
+  color: $link-color;
+}
+
+a .fa,a .fab,a .fad,a .fal,a .far,a .fas {
+  font-size: calc(14px + 5px);
+}
+
+a:hover {
+  color: $link-hover-color;
+  text-decoration: none;
+}
+
+p {
+  line-height: $p-line-height;
+}
+
+button:focus,
+button:active:focus,
+button.active {
+  outline: none;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.btn:focus,
+.btn.focus {
+  box-shadow: none;
+}
+
+.btn:not(:disabled):not(.disabled):active:focus,
+.btn:not(:disabled):not(.disabled).active:focus {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+a.badge:focus {
+  outline: 0;
+  box-shadow: none;
+}
+
+.radius-0 {
+  border-radius: 0;
+}
+
+.radius-10 {
+  border-radius: $border-radius;
+  overflow: hidden!important;
+}
+
+.radius-25 {
+  border-radius: 25px!important;
+  overflow: hidden!important;
+}
+
+.o-visible {
+  overflow: visible!important;
+}
+
+.list-unstyled li a {
+  padding: .25rem 0;
+  display: block;
+}
+
+.fbt-resize {
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  max-height: 100%;
+  position: relative;
+  background-position: center;
+  background-size: cover;
+}
+
+:focus {
+  outline: 0;
+}
+
+.divider {
+  position: relative;
+}
+
+.divider:before {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  display: block;
+  width: 80%;
+  height: 2px;
+  margin-left: -40%;
+  content: '';
+  background: radial-gradient(ellipse at center, $white-color 0, rgba($white-color, 0) 75%);
+  opacity: .6;
+}
+
+#page-wrapper {
+  background: transparent;
+  max-width: $page-wrapper-width;
+  margin-top: $page-wrapper-margin-top;
+  margin-bottom: $page-wrapper-margin-bottom;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 0 $page-wrapper-shadow-width rgba(23,16,159,.15);
+  position: relative;
+}
+
+#page-wrapper {
+  &.full-page {
+    margin-top: 0;
+  }
+  &.four_columns {
+    margin-top: 20px;
+  }
+}
+
+@media (max-width: 1365.98px) {
+  .text-responsive {
+    font-size: calc(150% + 1vw + 1vh)!important;
+  }
+}
+
+.btn:hover {
+  opacity: .9;
+}
+
+blockquote {
+  font-style: italic;
+  font-weight: normal;
+  font-family: Georgia, Serif;
+  font-size: 17px;
+  line-height: 1.6em;
+  margin: 10px 0;
+}
+
+blockquote .card {
+  background-color: var(--dark);
+}
+
+blockquote p {
+  position: relative;
+  font-family: Georgia;
+  color: var(--white);
+}
+
+blockquote p:before {
+  content: '\201C';
+  color: var(--white);
+  font-size: 10em;
+  font-weight: 700;
+  opacity: .3;
+  position: absolute;
+  top: 20px;
+  left: -55px;
+}
+
+blockquote.fbt-shape-container:before {
+  display: none;
+}
+
+blockquote.fbt-shape-container:after {
+  width: 350px;
+  height: 350px;
+  border-radius: 2000px;
+  background: linear-gradient(45deg,rgba(0,201,255,0) 45%,rgba(0,201,255,.25) 100%);
+  right: -110px;
+  top: -110px;
+}
+
+mark {
+  background-color: var(--success);
+  color: $white-color;
+}
+
+@media (min-width: 1200px) {
+	.fbt-sticky-content {
+		top: 70px;
+	}
+}
+@media (max-width: 1199.98px) {
+	.fbt-sticky-content {
+		top: 10px;
+	}
+}
+
+.fbt-bg-white {
+  margin: 5px 5px 0 0;
+  display: inline;
+  box-decoration-break: clone;
+  padding: .198em .4em .55em;
+  line-height: 1.4em;
+  background-size: 100% 80%;
+  background-repeat: no-repeat;
+  background-image: linear-gradient(transparent calc(13%),$white-color 1px);
+  position: relative;
+  color: $title-color;
+  transition: all 0.2s ease-in-out;
+}
+
+a {
+  .fbt-bg-white {
+    color: $title-color!important;
+  }
+  &:hover {
+    .fbt-bg-white {
+      background-image: linear-gradient(transparent calc(13%),$red-color 1px);
+      color: $white-color!important;
+    }
+  }
+}
+
+.border {
+      border: 1px solid $gray-light-color !important;
+    &-top {
+        border-top: 1px solid $gray-light-color !important;
+    }
+    &-right {
+        border-right: 1px solid $gray-light-color !important;
+    }
+    &-bottom {
+       border-bottom: 1px solid $gray-light-color !important;
+    }
+    &-left {
+        border-left: 1px solid $gray-light-color !important;
+    }
+}

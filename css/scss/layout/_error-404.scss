@@ -1,0 +1,45 @@
+
+/* Error 404
+===================================== */
+.error-view {
+	#main-wrapper {
+		position: relative;
+		&:before {
+			content: "";
+			display: block;
+			position: absolute;
+			width: $pseudo-circle-2_width_height;
+			height: $pseudo-circle-2_width_height;
+			border-radius: 2000px;
+			background: $pseudo-circle-2_bg;
+			left: 40px;
+			top: -25px;
+		}
+	}
+	#main_content {
+		&:before {
+			content: "";
+			display: block;
+			position: absolute;
+			width: $pseudo-circle-3_width_height;
+			height: $pseudo-circle-3_width_height;
+			border-radius: 2000px;
+			background: -webkit-linear-gradient(120deg,rgba($pseudo-circle-3_bg,0) 45%,rgba($pseudo-circle-3_bg,.25) 100%);
+			background: linear-gradient(120deg,rgba($pseudo-circle-3_bg,0) 45%,rgba($pseudo-circle-3_bg,.25) 100%);
+			right: -50px;
+			top: -80px;
+		}
+	}
+}
+.errorWrap {
+	.display-4 {
+		font-size: 4.5rem;
+		font-weight: 700;
+	}
+}
+.errorWrap.mt-5 {
+	margin-top: 4.5rem !important;
+}
+.errorWrap.p-5 {
+	padding: 3.5rem !important;
+}
