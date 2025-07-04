@@ -507,6 +507,123 @@ def popular_post_item(post):
         )
     )
 
+def contact_hero_section():
+    """Contact page hero section with background image"""
+    return Div(cls="slider-container")(
+        Div(cls="row align-items-center")(
+            Div(cls="col-lg-12")(
+                Div(cls="fbt-shape-container card shadow-none")(
+                    Div(cls="fbt-item-thumbnail radius-10")(
+                        Img(alt="Contact Us", cls="post-thumbnail", src="./images/page-img-1.jpg")
+                    ),
+                    Div(cls="card-img-overlay radius-10")(
+                        Div(cls="fbt-page-shape-title d-table w-100")(
+                            Div(cls="d-table-cell align-middle")(
+                                Div(cls="row justify-content-center")(
+                                    Div(cls="col-xl-8 col-lg-9 p-0")(
+                                        H1(cls="post-title display-4 text-white text-center")("Contact Us")
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    )
+
+def contact_form():
+    """Contact form component"""
+    return Form(id="fbt-contact-form", cls="contact-form", method="POST", action="/contact")(
+        Div(cls="row")(
+            Div(cls="col-md-9")(
+                Div(cls="form-group")(
+                    Label(**{"for": "name"})("Name*"),
+                    Input(cls="form-control shadow-none radius-0", id="name", name="name", type="text", required=True)
+                )
+            ),
+            Div(cls="col-md-9")(
+                Div(cls="form-group")(
+                    Label(**{"for": "email"})("E-mail*"),
+                    Input(cls="form-control shadow-none radius-0", id="email", name="email", type="email", required=True)
+                )
+            ),
+            Div(cls="col-md-9")(
+                Div(cls="form-group")(
+                    Label(**{"for": "website"})("Website"),
+                    Input(cls="form-control shadow-none radius-0", id="website", name="website", type="url")
+                )
+            )
+        ),
+        Div(cls="row mb-4")(
+            Div(cls="col-md-12")(
+                Div(cls="form-group")(
+                    Label(**{"for": "message"})("Message*"),
+                    Textarea(cls="form-control shadow-none radius-0", rows="9", id="message", name="message", required=True)
+                )
+            )
+        ),
+        Button(cls="btn btn-success radius-0", type="submit", id="submit-contact")(
+            I(cls="fa fa-paper-plane-o mr-2"),
+            "Submit Message"
+        )
+    )
+
+def contact_info_sidebar():
+    """Contact information sidebar"""
+    return Div(cls="col-xl-3 col-lg-4 pl-lg-5 order-1 order-lg-2")(
+        Div(cls="fbt-sep-title")(
+            H4(cls="title title-heading-left")("Contact Us"),
+            Div(cls="title-sep-container")(
+                Div(cls="title-sep sep-double")
+            )
+        ),
+        P(cls="mb-4")(
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. "
+            "Ut porttitor leo vel nulla posuere accumsan. "
+            "Suspendisse sed tortor eget justo aliquam euismod. "
+            "Morbi ut massa et neque iaculis lacinia a eu..."
+        ),
+        Div(cls="fbt-contact-info")(
+            # Address
+            Div(cls="fbt-contact-info-box")(
+                Div(cls="fbt-contact-info-box-content")(
+                    Div(cls="fbt-sep-title")(
+                        H4(cls="title title-heading-left")("Webagency"),
+                        Div(cls="title-sep-container")(
+                            Div(cls="title-sep sep-double")
+                        )
+                    ),
+                    P("Vouliagmenis Ave 325,", Br(), "Athens CA 17575")
+                )
+            ),
+            # Email
+            Div(cls="fbt-contact-info-box")(
+                Div(cls="fbt-contact-info-box-content")(
+                    Div(cls="fbt-sep-title")(
+                        H4(cls="title title-heading-left")("Email Us"),
+                        Div(cls="title-sep-container")(
+                            Div(cls="title-sep sep-double")
+                        )
+                    ),
+                    P("info@nemesis.com")
+                )
+            ),
+            # Phone
+            Div(cls="fbt-contact-info-box")(
+                Div(cls="fbt-contact-info-box-content")(
+                    Div(cls="fbt-sep-title")(
+                        H4(cls="title title-heading-left")("Call Us"),
+                        Div(cls="title-sep-container")(
+                            Div(cls="title-sep sep-double")
+                        )
+                    ),
+                    P("+123-456-7890")
+                )
+            )
+        )
+    )
+
 def pagination_nav(current_page=2, total_pages=3):
     """Pagination navigation"""
     return Div(cls="pagenav", id="blog-pager")(
@@ -720,6 +837,70 @@ def blog_listing():
                 </svg>''')
             ),
             footer()
+        )
+    )
+
+@rt("/contact")
+def contact_page():
+    """Contact page with form and information"""
+    return (
+        Title("Contact Us - Nemesis Blog"),
+        Meta(name="viewport", content="width=device-width, initial-scale=1.0"),
+        search_overlay(),
+        search_form(),
+        Div(id="page-wrapper", cls="page-view")(
+            navbar(),
+            Div(cls="outer-wrapper clearfix", id="outer-wrapper")(
+                Div(cls="container fbt-elastic-container")(
+                    Div(cls="row justify-content-center")(
+                        Div(cls="fbt-main-wrapper col-xl-12")(
+                            Div(id="main-wrapper")(
+                                Div(cls="main-section", id="main_content")(
+                                    Div(cls="blog-posts fbt-item-post-wrap")(
+                                        Div(cls="blog-post fbt-item-post")(
+                                            contact_hero_section(),
+                                            Div(cls="row justify-content-center")(
+                                                Div(cls="col-xl-8 col-lg-8 order-2 order-lg-1 mt-4 mt-lg-0")(
+                                                    contact_form()
+                                                ),
+                                                contact_info_sidebar()
+                                            )
+                                        )
+                                    )
+                                )
+                            )
+                        ),
+                        sidebar()
+                    )
+                )
+            ),
+            Div(cls="fbt-bottom-shape")(
+                NotStr('''<svg class="fbt-footer-wave-big" preserveAspectRatio="none" version="1.1" viewBox="5 0 1366 222" width="100%">
+                    <path d="M-2.19,238H1366v-4.27c-67.87-24-146.44-43.08-230.75-53.19-253.33-27.78-293.94,51.64-541.13,29.89C318.08,186.31,289.49,32.92,6.9,11.73c-5.21-.42-10.56-.7-15.9-1V238Z" transform="translate(9.5 -10.22)"></path>
+                </svg>''')
+            ),
+            footer()
+        )
+    )
+
+@rt("/contact", methods=["POST"])
+def contact_form_submit(name: str, email: str, website: str = "", message: str = ""):
+    """Handle contact form submission"""
+    # Here you would typically save to database, send email, etc.
+    # For now, we'll just return a success message
+    
+    return (
+        Title("Message Sent - Nemesis Blog"),
+        Meta(name="viewport", content="width=device-width, initial-scale=1.0"),
+        Div(cls="container mt-5")(
+            Div(cls="alert alert-success", role="alert")(
+                H4(cls="alert-heading")("Message Sent Successfully!"),
+                P(f"Thank you {name}, your message has been received. We'll get back to you at {email} soon."),
+                Hr(),
+                P(cls="mb-0")("Your message: ", Em(message[:100] + "..." if len(message) > 100 else message))
+            ),
+            A(href="/contact", cls="btn btn-primary mt-3")("← Back to Contact"),
+            A(href="/", cls="btn btn-secondary mt-3 ml-2")("← Back to Home")
         )
     )
 
