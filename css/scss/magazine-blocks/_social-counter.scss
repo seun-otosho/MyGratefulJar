@@ -1,0 +1,127 @@
+/* Social Counter
+===================================== */
+.social-list {
+	list-style: none;
+	margin: 0;
+    padding: 0;
+    a .fa, a .fab, a .fad, a .fal, a .far, a .fas {
+        font-size: 14px;
+    }
+	li {
+		color: $white-color;
+		font-size: 12px;
+		line-height: 16px;
+		margin: 0 0 9px;
+		&:last-child {
+			margin: 0;
+		}
+	}
+	li.fb {
+		background: #516fc2;
+		.soc-ic {
+			background: #4c68b3;
+		}
+	}
+	li.tw {
+		background: #09b2f4;
+		.soc-ic {
+			background: #00abed;
+		}
+	}
+	li.gp {
+		background: #f73232;
+		.soc-ic {
+			background: #eb1212;
+		}
+	}
+	li.instg {
+		background: radial-gradient(circle at 33% 100%, #fed373 4%, #f15245 30%, #d92e7f 62%, #9b36b7 85%, #515ecf);
+		.soc-ic {
+			background: rgba(0,0,0,0.1);
+		}
+	}
+	li.frss {
+		background: #f0771e;
+		.soc-ic {
+			background: rgba(0,0,0,0.1);
+		}
+	}
+	a {
+		color: inherit;
+		display: block;
+		height: 33px;
+		padding: 8px 14px 8px 46px;
+		position: relative;
+		text-decoration: none;
+	}
+	.soc-btn {
+		border-left: 1px solid rgba(255, 255, 255, 0.3);
+		display: block;
+		float: right;
+		padding: 0 0 0 16px;
+	}
+	.soc-ic {
+		display: block;
+		position: absolute;
+		left: 0;
+		top: 0;
+		height: 100%;
+		width: 33px;
+		line-height: 35px;
+        text-align: center;
+	}
+	li.dl {
+		background: #285da7;
+		.soc-ic {
+			background: rgba(0,0,0,0.1);
+		}
+	}
+	li.fbt-dribble {
+		background: #d97aa5;
+		.soc-ic {
+			background: rgba(0,0,0,0.1);
+		}
+	}
+	li.fbt-github {
+		background: #666666;
+		.soc-ic {
+			background: rgba(0,0,0,0.1);
+		}
+	}
+	li.fbt-youtube {
+		background: #bb0000;
+		.soc-ic {
+			background: rgba(0,0,0,0.1);
+		}
+	}
+	li.fbt-linkedin {
+		background: #006699;
+		.soc-ic {
+			background: rgba(0,0,0,0.1);
+		}
+	}
+	li.fbt-behance {
+		background: #1769ff;
+		.soc-ic {
+			background: rgba(0,0,0,0.1);
+		}
+	}
+	li.fbt-foursquare {
+		background: #f94877;
+		.soc-ic {
+			background: rgba(0,0,0,0.1);
+		}
+	}
+	li.fbt-pinterest {
+		background: #c8232c;
+		.soc-ic {
+			background: rgba(0,0,0,0.1);
+		}
+	}
+	li.fbt-flickr {
+		background: #ff0084;
+		.soc-ic {
+			background: rgba(0,0,0,0.05);
+		}
+	}
+}

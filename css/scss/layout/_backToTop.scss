@@ -1,0 +1,36 @@
+/* Back to Top
+===================================== */
+#toTop {
+	border-radius: 2000px;
+	background-color: $back_to_top_background_color;
+	bottom: 10px;
+	color: $back_to_top_color;
+	display: none;
+	height: $back_to_top_height;
+	position: fixed;
+	cursor: pointer;
+	right: 10px;
+	text-align: center;
+	text-decoration: none;
+	width: $back_to_top_width;
+	opacity: 1;
+	transition: 0.3s ease-in-out;
+	&:hover {
+		background: $back_to_top_hover_background_color;
+		color: $back_to_top_color;
+	}
+	&:before {
+		line-height: calc(#{$back_to_top_height} - 4px);
+		content: '\f106';
+		-webkit-font-smoothing: antialiased;
+		font-family: $font_awesome;
+		font-size: 22px;
+		color: $back_to_top_color;
+	}
+}
+#toTopHover {
+	display: block;
+	overflow: hidden;
+	float: left;
+	opacity: 0;
+}

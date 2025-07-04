@@ -1,0 +1,59 @@
+/* Magazine Block 2
+===================================== */
+.fbt-block-2 {
+    margin-bottom: 2rem;
+    .large {
+        position: relative;
+        .fbt-post-thumbnail {
+            height: calc(#{$list_thumbnail_height} * 4 + 3rem);
+        }
+
+        .fbt-post-caption {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.05);
+            pointer-events: none;
+            transition: all 0.3s ease-in-out;
+            .title-caption {
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                pointer-events: auto;
+                background-image: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 100%);
+                span,
+                a,
+                p {
+                    color: $white-color;
+                }
+                a:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+
+        .post-tag {
+            position: absolute;
+            left: 1.5rem;
+            top: 1.5rem;
+            color: #fff;
+            background-color: $background_tag_color_3;
+            pointer-events: auto;
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+        }
+
+        &:hover {
+            .post-tag {
+                color: $white-color;
+                background-color: $black-color!important;
+            }
+
+            .fbt-post-caption {
+                background-color: rgba($black-color, 0);
+            }
+        }
+    }
+}

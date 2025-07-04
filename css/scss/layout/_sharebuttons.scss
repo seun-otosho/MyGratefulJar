@@ -1,0 +1,66 @@
+/* Share Buttons
+===================================== */
+.post-share {
+    float: left;
+    width: 100%;
+    margin: 0;
+    li {
+        margin: 0 2px 2px 0;
+        display: inline-block;
+        border-radius: 2px;
+        a {
+            position: relative;
+            margin: 0 0 0 1px;
+            text-align: center;
+            vertical-align: middle;
+            color: $white-color;
+            font-size: 15px;
+            display: inline-block;
+            border-radius: 2px;
+            transition: all 0.3s ease-in-out;
+            &:hover {
+                color: $white-color;
+                opacity: .8;
+            }
+        }
+    }
+    .fa {
+        font-size: 16px;
+        position: relative;
+        height: 35px;
+        width: 35px;
+        line-height: 35px;
+    }
+    ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    .facebook-share {
+        background-color: #516eab;
+    }
+    .twitter-share {
+        background-color: #29c5f6;
+    }
+    .linkedin-share {
+        background-color: #0077b5;
+    }
+    .pinterest-share {
+        background-color: #ca212a;
+    }
+    .email.fbt-email {
+        background-color: #676869;
+    }
+}
+a.facebook.fbt-share {
+    background-color: #516eab;
+}
+a.twitter.fbt-share {
+    background-color: #29c5f6;
+}
+a.linkedin.fbt-linkedin {
+    background-color: #0077b5;
+}
+a.pinterest.fbt-pinterest {
+    background-color: #ca212a;
+}

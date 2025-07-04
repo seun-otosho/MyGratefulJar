@@ -1,0 +1,87 @@
+/* Bottom Popular Posts 
+===================================== */
+.fbt-bottom-section {
+	.PopularPosts {
+		margin-top: $pp_margin-top;
+		margin-bottom: 0;
+		.fbt-ppFull-width {
+			.fbt-item-thumbnail {
+				width: 100%;
+				height: $pp_thumbnail_height;
+			}
+			.fbt-post-title-content {
+				height: calc(#{$pp_thumbnail_height} - 2.5rem);
+			}
+			.card {
+				&:hover {
+					h3 {
+						a {
+							text-decoration: underline;
+						}
+					}
+				}
+			}
+		}
+		.card-img-overlay {
+			pointer-events: none;
+		}
+	}
+}
+
+.fbt-big-title-text {
+    font: $title-font-weight-extra-bold 36px $montserrat-title-font;
+	text-transform: uppercase;
+	white-space: nowrap;
+	color: $title_color_light;
+	position: relative;
+	.main-title {
+		position: relative;
+		.title-sec-text {
+			font: $base-title-font-weight-regular 36px $oswald-title-font;
+			font-size: calc(65px - 20px);
+			color: $title_color_dark;
+			position: absolute;
+			left: 0;
+			top: 50%;
+			transform: translateY(-50%);
+		}
+	}
+}
+
+
+@media (min-width: 576px) {
+	.fbt-big-title-text {
+		font-size: 65px;
+	}
+}
+@media (min-width: 768px) {
+	.fbt-big-title-text {
+		font-size: 80px;
+	}
+}
+@media (min-width: 992px) {
+	.fbt-big-title-text {
+		font-size: 95px;
+	}
+}
+@media (min-width: 1200px) {
+	.fbt-big-title-text {
+		font-size: 120px;
+	}
+}
+@media (min-width: 1440px) {
+	.fbt-big-title-text {
+		font-size: 130px;
+	}
+}
+@media (max-width: 575.98px) {
+	.fbt-big-title-text {
+		.main-title {
+			.title-sec-text {
+				font-size: calc(65px - 40px);
+				top: -10px;
+			}
+		}
+	}
+}
+

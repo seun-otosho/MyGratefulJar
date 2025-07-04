@@ -1,0 +1,44 @@
+@import "scss/base/theme-variables";
+@import "scss/base/table_of_content";
+@import "scss/base/root";
+@import "scss/base/typography";
+@import "scss/base/general";
+
+@import "scss/layout/navbar";
+@import "scss/layout/slider";
+@import "scss/layout/error-404";
+@import "scss/layout/search";
+@import "scss/layout/fullpage";
+@import "scss/layout/fourcolumns";
+@import "scss/layout/fourcolumns-wide";
+@import "scss/layout/posts";
+@import "scss/layout/pagination";
+@import "scss/layout/footer";
+@import "scss/layout/backToTop";
+@import "scss/layout/sidebar";
+@import "scss/layout/relatedposts";
+@import "scss/layout/sharebuttons";
+@import "scss/layout/comments";
+@import "scss/layout/magazine";
+@import "scss/layout/headline";
+
+@import "scss/widgets/popularposts";
+@import "scss/widgets/subscribeform";
+@import "scss/widgets/sidebarmenu";
+@import "scss/widgets/footermenu";
+@import "scss/widgets/widgetssettings";
+@import "scss/widgets/contactform";
+
+@import "scss/magazine-blocks/magazineslider";
+@import "scss/magazine-blocks/slider-2";
+@import "scss/magazine-blocks/magnewsletter";
+@import "scss/magazine-blocks/block-1";
+@import "scss/magazine-blocks/block-2";
+@import "scss/magazine-blocks/block-3";
+@import "scss/magazine-blocks/block-4";
+@import "scss/magazine-blocks/block-5";
+@import "scss/magazine-blocks/social-counter";
+@import "scss/magazine-blocks/gallery";
+@import "scss/magazine-blocks/video-gallery";
+@import "scss/magazine-blocks/related-posts";
+@import "scss/magazine-blocks/megamenu";

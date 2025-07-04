@@ -1,0 +1,27 @@
+/* Related Posts
+===================================== */
+.fbt-rel-post-wrapper {
+	.fbt-shape-title {
+		&::before {
+			right: -30px;
+			top: -30px;
+			background-color: $rp_shape_background_color;
+		}
+	}
+}
+#related-posts {
+	.fbt-post-thumbnail {
+		height: $rp_thumbnail_height;
+	}
+	.card {
+		box-shadow: 0 8px 20px rgba(0,31,52,.15);
+	}
+	h5 {
+		a {
+			&:hover {
+				color: $rp_hover_color;
+				text-decoration: underline;
+			}
+		}
+	}
+}
