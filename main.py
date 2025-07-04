@@ -27,7 +27,8 @@ sample_posts = [
         "date": "March 08, 2017",
         "image": "./images/img-1.jpg",
         "is_featured": True,
-        "is_video": False
+        "is_video": False,
+        "category": "Design"
     },
     {
         "id": 2,
@@ -37,7 +38,8 @@ sample_posts = [
         "date": "June 19, 2019",
         "image": "./images/img-2.jpg",
         "is_featured": False,
-        "is_video": False
+        "is_video": False,
+        "category": "Lifestyle"
     },
     {
         "id": 3,
@@ -47,7 +49,8 @@ sample_posts = [
         "date": "June 05, 2019",
         "image": "./images/img-3.jpg",
         "is_featured": False,
-        "is_video": False
+        "is_video": False,
+        "category": "Friends"
     },
     {
         "id": 4,
@@ -57,7 +60,8 @@ sample_posts = [
         "date": "September 13, 2018",
         "image": "./images/img-4.jpg",
         "is_featured": False,
-        "is_video": True
+        "is_video": True,
+        "category": "Technology"
     },
     {
         "id": 5,
@@ -67,7 +71,41 @@ sample_posts = [
         "date": "May 26, 2018",
         "image": "./images/img-5.jpg",
         "is_featured": False,
-        "is_video": False
+        "is_video": False,
+        "category": "Lifestyle"
+    },
+    {
+        "id": 6,
+        "title": "Mihi vero, inquit, placet agi subtilius et pressius.",
+        "excerpt": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec facilisis leo et bibendum pretium...",
+        "author": "fbtemplates",
+        "date": "June 19, 2019",
+        "image": "./images/mag-img-18.jpg",
+        "is_featured": False,
+        "is_video": True,
+        "category": "Sport"
+    },
+    {
+        "id": 7,
+        "title": "Ne amores quidem sanctos alienos esse.",
+        "excerpt": "Donec dolor elit, pellentesque a massa pellentesque, euismod sagittis ipsum...",
+        "author": "fbtemplates",
+        "date": "June 19, 2019",
+        "image": "./images/mag-img-19.jpg",
+        "is_featured": False,
+        "is_video": False,
+        "category": "Business"
+    },
+    {
+        "id": 8,
+        "title": "Suspendisse sed tortor eget justo aliquam.",
+        "excerpt": "Phasellus deserunt. Convallis perspiciatis fusce fermentum accumsan, arcu aliquam...",
+        "author": "fbtemplates",
+        "date": "June 19, 2019",
+        "image": "./images/mag-img-21.jpg",
+        "is_featured": False,
+        "is_video": False,
+        "category": "Design"
     }
 ]
 
@@ -266,6 +304,230 @@ def newsletter_section():
         )
     )
 
+def headline_section():
+    """Top headline section with navigation and social links"""
+    return Div(cls="fbt-headline clearfix", id="headline")(
+        Div(cls="container")(
+            Div(cls="row align-items-center justify-content-between py-1 py-md-0")(
+                Div(cls="col-md-7 left-headline-content")(
+                    Div(cls="fbt-left-headline", id="left-headline")(
+                        Ul(cls="nav justify-content-center justify-content-md-start")(
+                            Li(cls="nav-item")(A(cls="nav-link", href="#")("About")),
+                            Li(cls="nav-item")(A(cls="nav-link", href="#")("Services")),
+                            Li(cls="nav-item")(A(cls="nav-link", href="/contact")("Contact"))
+                        )
+                    )
+                ),
+                Div(cls="col-md-5 right-headline-content")(
+                    Div(cls="fbt-right-headline", id="right-headline")(
+                        Ul(cls="nav justify-content-center justify-content-md-end social-icons")(
+                            Li(cls="nav-item")(A(cls="nav-link", href="#")(I(cls="fa fa-facebook"))),
+                            Li(cls="nav-item")(A(cls="nav-link", href="#")(I(cls="fa fa-twitter"))),
+                            Li(cls="nav-item")(A(cls="nav-link", href="#")(I(cls="fa fa-instagram"))),
+                            Li(cls="nav-item")(A(cls="nav-link", href="#")(I(cls="fa fa-linkedin"))),
+                            Li(cls="nav-item")(A(cls="nav-link", href="#")(I(cls="fa fa-youtube-play")))
+                        )
+                    )
+                )
+            )
+        )
+    )
+
+def magazine_navbar():
+    """Magazine-style navigation with mega menus"""
+    return Nav(cls="navbar navbar-expand-xl navbar-fbt fbt-nav-skin fbt_sticky_nav m-0")(
+        Div(cls="container nav-mobile-px clearfix")(
+            Div(cls="navbar-brand order-2 order-xl-1 m-auto")(
+                A(href="/blog")(
+                    Img(alt="Nemesis", src="./images/logo_nemesis.png")
+                )
+            ),
+            Button(
+                cls="navbar-toggler order-1 order-xl-2",
+                aria_expanded="false", aria_label="Toggle navigation", 
+                data_target="#navbar-menu", data_toggle="collapse",
+                type="button"
+            )("☰"),
+            Div(cls="header-buttons order-3 order-lg-4")(
+                Span(cls="fa fa-search navbar-search search-trigger"),
+                Span(cls="fbt-sidenav ml-1 active", onclick="openNav()")("☰")
+            ),
+            Div(cls="collapse navbar-collapse order-4 order-xl-3 clearfix", id="navbar-menu")(
+                Ul(cls="navbar-nav m-auto clearfix")(
+                    Li(cls="nav-item dropdown")(
+                        A(href="#", cls="nav-link dropdown-toggle", aria_haspopup="true", aria_expanded="false", data_toggle="dropdown")("Home"),
+                        Div(cls="dropdown-menu")(
+                            A(href="/", cls="dropdown-item")("Home 1"),
+                            A(href="/blog", cls="dropdown-item")("Blog"),
+                        )
+                    ),
+                    Li(cls="nav-item")(
+                        A(href="/contact", cls="nav-link")("Contact")
+                    ),
+                    Li(cls="nav-item")(
+                        A(href="/blog", cls="nav-link")("Blog")
+                    ),
+                    Li(cls="nav-item")(
+                        A(href="#", cls="nav-link")("Policy")
+                    )
+                )
+            )
+        )
+    )
+
+def gallery_section(featured_posts):
+    """Gallery section with featured posts"""
+    return Div(cls="fbt-gallery bg-light py-5 mt-n5 mb-5")(
+        Div(cls="container-fluid fbt-elastic-container fbt-gallery-1 px-lg-5")(
+            Div(cls="row px-2")(
+                *[gallery_post_card(post) for post in featured_posts[:5]]
+            )
+        )
+    )
+
+def gallery_post_card(post):
+    """Individual gallery post card"""
+    video_icon = Span(cls="video-icon")(I(cls="fa fa-play")) if post.get('is_video') else ""
+    
+    return Div(cls="col-lg col-md-6 mb-4 mb-lg-0 px-2")(
+        Div(cls="post-item card")(
+            Div(cls="fbt-post-thumbnail")(
+                A(href=f"/post/{post['id']}")(
+                    Img(alt="", cls="post-thumbnail lazyloaded", src=post['image'])
+                ),
+                video_icon
+            ),
+            Div(cls="fbt-post-caption")(
+                Div(cls="title-caption text-center p-4")(
+                    Div(cls="post-meta mb-2")(
+                        Span(cls="post-author")(A(href="#")(post['author'])),
+                        Span(cls="post-date published")(post['date'])
+                    ),
+                    H3(cls="post-title")(
+                        A(href=f"/post/{post['id']}")(post['title'])
+                    )
+                )
+            )
+        )
+    )
+
+def magazine_post_card(post):
+    """Magazine-style post card for main listing"""
+    video_icon = Span(cls="video-icon")(I(cls="fa fa-play")) if post.get('is_video') else ""
+    
+    return Div(cls="fbt_magazine-blog-post fbt-index-post row align-items-center justify-content-between")(
+        Div(cls="col-xl-6 col-md-5")(
+            Div(cls="fbt-post-thumbnail")(
+                A(href=f"/post/{post['id']}")(
+                    Img(alt="", cls="post-thumbnail lazyloaded", src=post['image'])
+                ),
+                video_icon
+            )
+        ),
+        Div(cls="col-xl-6 col-md-7")(
+            Div(cls="fbt-post-caption mt-3 mt-md-0")(
+                Span(cls="post-tag index-post-tag")(post.get('category', 'General')),
+                H3(cls="post-title")(
+                    A(href=f"/post/{post['id']}")(post['title'])
+                ),
+                Div(cls="post-meta mb-2")(
+                    Span(cls="post-author")(A(href="#")(post['author'])),
+                    Span(cls="post-date published")(post['date'])
+                ),
+                P(cls="post-excerpt")(post['excerpt'])
+            )
+        )
+    )
+
+def blog_sidebar(featured_post, popular_posts):
+    """Blog sidebar with featured post and popular posts"""
+    return Div(cls="fbt-main-sidebar col-lg-4")(
+        Div(cls="fbt-main-sidebar__content h-100 pl-lg-3")(
+            # Featured Post Widget
+            Div(cls="widget FeaturedPost mb-5")(
+                Div(cls="fbt-sep-title")(
+                    H4(cls="title title-heading-left")("Featured Post"),
+                    Div(cls="title-sep-container")(
+                        Div(cls="title-sep sep-double")
+                    )
+                ),
+                Div(cls="widget-content")(
+                    Div(cls="FeaturedPostContainer")(
+                        Div(cls="fbt-item-thumbnail")(
+                            A(cls="post-image-link", href=f"/post/{featured_post['id']}")(
+                                Img(alt="", cls="post-thumbnail lazyloaded", src=featured_post['image'])
+                            )
+                        ),
+                        Div(cls="fbt-title-section mt-3")(
+                            Div(cls="post-meta mb-2")(
+                                Span(cls="post-author")(featured_post['author']),
+                                Span(cls="post-date published")(featured_post['date'])
+                            ),
+                            H3(cls="post-title")(
+                                A(href=f"/post/{featured_post['id']}")(featured_post['title'])
+                            ),
+                            P(cls="post-excerpt")(featured_post['excerpt'])
+                        )
+                    )
+                )
+            ),
+            # Popular Posts Widget
+            Div(cls="widget fbt_list_posts mb-5")(
+                Div(cls="fbt-sep-title")(
+                    H4(cls="title title-heading-left")("Popular Posts"),
+                    Div(cls="title-sep-container")(
+                        Div(cls="title-sep sep-double")
+                    )
+                ),
+                Div(cls="widget-content")(
+                    *[popular_post_item(post) for post in popular_posts]
+                )
+            )
+        )
+    )
+
+def popular_post_item(post):
+    """Individual popular post item"""
+    return Article(cls="post mb-3")(
+        Div(cls="post-content media align-items-center")(
+            Div(cls="fbt-item-thumbnail clearfix")(
+                A(href=f"/post/{post['id']}")(
+                    Img(alt="", cls="post-thumbnail lazyloaded", src=post['image'])
+                )
+            ),
+            Div(cls="ml-3 fbt-title-caption media-body")(
+                Span(cls="pp-post-tag")(post.get('category', 'General')),
+                H3(cls="post-title")(
+                    A(href=f"/post/{post['id']}")(post['title'])
+                ),
+                Div(cls="post-meta")(
+                    Span(cls="post-date published")(post['date'])
+                )
+            )
+        )
+    )
+
+def pagination_nav(current_page=2, total_pages=3):
+    """Pagination navigation"""
+    return Div(cls="pagenav", id="blog-pager")(
+        Span(cls="showpageOf")(f"{current_page} / {total_pages}"),
+        Span(cls="showpage firstpage")(
+            A(href="#")(I(cls="fa fa-angle-double-left"))
+        ),
+        Span(cls="showpage")(
+            A(href="#")(I(cls="fa fa-angle-left"))
+        ),
+        Span(cls="displaypageNum")(A(href="#")("1")),
+        Span(cls="page current")("2"),
+        Span(cls="displaypageNum")(A(href="#")("3")),
+        Span(cls="displaypageNum")(
+            A(href="#")(I(cls="fa fa-angle-right"))
+        ),
+        Span(cls="displaypageNum lastpage")(
+            A(href="#")(I(cls="fa fa-angle-double-right"))
+        )
+    )
+
 def footer():
     """Footer component"""
     return Div(cls="footer-dark pt-4", id="footer-content")(
@@ -395,6 +657,72 @@ def homepage():
         )
     )
 
+@rt("/blog")
+def blog_listing():
+    """Blog listing page with magazine layout"""
+    # Get posts for different sections
+    featured_post = next((post for post in sample_posts if post['is_featured']), sample_posts[0])
+    gallery_posts = sample_posts[1:6]  # Posts for gallery section
+    main_posts = sample_posts[2:]  # Posts for main listing
+    popular_posts = sample_posts[:4]  # Popular posts for sidebar
+    
+    return (
+        Title("Nemesis | Magazine Blog HTML Template"),
+        Meta(name="viewport", content="width=device-width, initial-scale=1.0"),
+        search_overlay(),
+        search_form(),
+        Div(id="page-wrapper", cls="magazine-view feed-view")(
+            headline_section(),
+            magazine_navbar(),
+            Div(cls="outer-wrapper my-5", id="outer-wrapper")(
+                gallery_section(gallery_posts),
+                # Ad Block
+                Div(cls="container fbt-elastic-container mb-5")(
+                    Div(cls="widget fbt-ad-block")(
+                        Div(cls="fbt_ad text-center")(
+                            Div(cls="widget-content")(
+                                A(href="#")(
+                                    Img(alt="", cls="img-fluid lazyloaded", src="./images/horizontal_ad.jpg")
+                                )
+                            )
+                        )
+                    )
+                ),
+                # Main Content Area
+                Div(cls="container fbt-elastic-container")(
+                    Div(cls="row justify-content-center")(
+                        # Main Content
+                        Div(cls="fbt-main-wrapper col-lg-8 mb-5 mb-lg-0")(
+                            Div(id="main-wrapper")(
+                                Div(cls="main-section", id="main_content")(
+                                    Div(cls="fbt-sep-title")(
+                                        H4(cls="title title-heading-left")("Recent posts"),
+                                        Div(cls="title-sep-container")(
+                                            Div(cls="title-sep sep-double")
+                                        )
+                                    ),
+                                    Div(cls="blog-posts fbt-index-post-wrap")(
+                                        *[magazine_post_card(post) for post in main_posts]
+                                    ),
+                                    pagination_nav()
+                                )
+                            )
+                        ),
+                        # Sidebar
+                        blog_sidebar(featured_post, popular_posts)
+                    )
+                )
+            ),
+            newsletter_section(),
+            Div(cls="fbt-bottom-shape")(
+                NotStr('''<svg class="fbt-footer-wave-big" preserveAspectRatio="none" version="1.1" viewBox="5 0 1366 222" width="100%">
+                    <path d="M-2.19,238H1366v-4.27c-67.87-24-146.44-43.08-230.75-53.19-253.33-27.78-293.94,51.64-541.13,29.89C318.08,186.31,289.49,32.92,6.9,11.73c-5.21-.42-10.56-.7-15.9-1V238Z" transform="translate(9.5 -10.22)"></path>
+                </svg>''')
+            ),
+            footer()
+        )
+    )
+
 @rt("/post/{post_id}")
 def post_detail(post_id: int):
     """Individual post page (placeholder for now)"""
@@ -402,13 +730,17 @@ def post_detail(post_id: int):
     if not post:
         return "Post not found", 404
     
-    return Html()(
-        Head(Title(f"{post['title']} - Nemesis Blog")),
-        Body(
+    return (
+        Title(f"{post['title']} - Nemesis Blog"),
+        Meta(name="viewport", content="width=device-width, initial-scale=1.0"),
+        Div(cls="container mt-5")(
             H1(post['title']),
-            P(f"By {post['author']} on {post['date']}"),
+            P(f"By {post['author']} on {post['date']} | Category: {post.get('category', 'General')}"),
+            Img(src=post['image'], cls="img-fluid mb-3"),
             P(post['excerpt']),
-            A(href="/")("← Back to Home")
+            Hr(),
+            A(href="/", cls="btn btn-primary mr-2")("← Back to Home"),
+            A(href="/blog", cls="btn btn-secondary")("← Back to Blog")
         )
     )
 
