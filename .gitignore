@@ -2,4 +2,7 @@
 .idea
 .vscode
 .vercel
-.sesskey__pycache__/
+.sesskey
+
+__pycache__
+*.pyc
