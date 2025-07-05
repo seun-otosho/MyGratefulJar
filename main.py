@@ -3,16 +3,16 @@ from datetime import datetime
 
 # Custom CSS and JS headers to match the original template
 custom_hdrs = [
-    Link(rel="shortcut icon", href="favicon.ico", type="image/x-icon"),
+    Link(rel="shortcut icon", href="/favicon.ico", type="image/x-icon"),
     Link(href="https://fonts.googleapis.com/css?family=Montserrat:900%7CNunito:400,700%7COswald%7CRoboto", rel="stylesheet"),
-    Link(href="./css/animate.min.css", rel="stylesheet", media="screen"),
-    Link(href="./css/fonts.css", rel="stylesheet", media="screen"),
-    Link(href="./css/bootstrap.min.css", rel="stylesheet", media="screen"),
-    Link(href="./css/style.css", rel="stylesheet", media="screen"),
-    Script(src="./js/jquery.min.js"),
-    Script(src="./js/bootstrap.bundle.min.js"),
-    Script(src="./js/plugins.js"),
-    Script(src="./js/main.js"),
+    Link(href="/css/animate.min.css", rel="stylesheet", media="screen"),
+    Link(href="/css/fonts.css", rel="stylesheet", media="screen"),
+    Link(href="/css/bootstrap.min.css", rel="stylesheet", media="screen"),
+    Link(href="/css/style.css", rel="stylesheet", media="screen"),
+    Script(src="/js/jquery.min.js"),
+    Script(src="/js/bootstrap.bundle.min.js"),
+    Script(src="/js/plugins.js"),
+    Script(src="/js/main.js"),
 ]
 
 app, rt = fast_app(hdrs=custom_hdrs)
@@ -25,7 +25,7 @@ sample_posts = [
         "excerpt": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec facilisis leo et bibendum pretium. Suspendisse li...",
         "author": "fbtemplates",
         "date": "March 08, 2017",
-        "image": "./images/img-1.jpg",
+        "image": "/images/img-1.jpg",
         "is_featured": True,
         "is_video": False,
         "category": "Design"
@@ -36,7 +36,7 @@ sample_posts = [
         "excerpt": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec facilisis leo et bibendum pretium. Suspendisse li...",
         "author": "fbtemplates",
         "date": "June 19, 2019",
-        "image": "./images/img-2.jpg",
+        "image": "/images/img-2.jpg",
         "is_featured": False,
         "is_video": False,
         "category": "Lifestyle"
@@ -47,7 +47,7 @@ sample_posts = [
         "excerpt": "Donec dolor elit, pellentesque a massa pellentesque, euismod sagittis ipsum. Nullam a diam ac turpis iaculis vu...",
         "author": "fbtemplates",
         "date": "June 05, 2019",
-        "image": "./images/img-3.jpg",
+        "image": "/images/img-3.jpg",
         "is_featured": False,
         "is_video": False,
         "category": "Friends"
@@ -58,7 +58,7 @@ sample_posts = [
         "excerpt": "Fames dictumst massa massa, qui sapien per, mauris id sed cubilia suspendisse neque. Proin natoque consectetuer...",
         "author": "fbtemplates",
         "date": "September 13, 2018",
-        "image": "./images/img-4.jpg",
+        "image": "/images/img-4.jpg",
         "is_featured": False,
         "is_video": True,
         "category": "Technology"
@@ -69,7 +69,7 @@ sample_posts = [
         "excerpt": "Phasellus deserunt. Convallis perspiciatis fusce fermentum accumsan, arcu aliquam, velit venenatis augue proin...",
         "author": "fbtemplates",
         "date": "May 26, 2018",
-        "image": "./images/img-5.jpg",
+        "image": "/images/img-5.jpg",
         "is_featured": False,
         "is_video": False,
         "category": "Lifestyle"
@@ -80,7 +80,7 @@ sample_posts = [
         "excerpt": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec facilisis leo et bibendum pretium...",
         "author": "fbtemplates",
         "date": "June 19, 2019",
-        "image": "./images/mag-img-18.jpg",
+        "image": "/images/mag-img-18.jpg",
         "is_featured": False,
         "is_video": True,
         "category": "Sport"
@@ -91,7 +91,7 @@ sample_posts = [
         "excerpt": "Donec dolor elit, pellentesque a massa pellentesque, euismod sagittis ipsum...",
         "author": "fbtemplates",
         "date": "June 19, 2019",
-        "image": "./images/mag-img-19.jpg",
+        "image": "/images/mag-img-19.jpg",
         "is_featured": False,
         "is_video": False,
         "category": "Business"
@@ -102,7 +102,7 @@ sample_posts = [
         "excerpt": "Phasellus deserunt. Convallis perspiciatis fusce fermentum accumsan, arcu aliquam...",
         "author": "fbtemplates",
         "date": "June 19, 2019",
-        "image": "./images/mag-img-21.jpg",
+        "image": "/images/mag-img-21.jpg",
         "is_featured": False,
         "is_video": False,
         "category": "Design"
@@ -158,7 +158,7 @@ def navbar():
         Div(cls="container nav-mobile-px clearfix")(
             Div(cls="navbar-brand order-2 order-xl-1 m-auto")(
                 A(href="/")(
-                    Img(alt="Nemesis", src="./images/logo_nemesis.png")
+                    Img(alt="Nemesis", src="/images/logo_nemesis.png")
                 )
             ),
             Button(
@@ -361,7 +361,7 @@ def magazine_navbar():
         Div(cls="container nav-mobile-px clearfix")(
             Div(cls="navbar-brand order-2 order-xl-1 m-auto")(
                 A(href="/blog")(
-                    Img(alt="Nemesis", src="./images/logo_nemesis.png")
+                    Img(alt="Nemesis", src="/images/logo_nemesis.png")
                 )
             ),
             Button(
@@ -536,7 +536,7 @@ def contact_hero_section():
             Div(cls="col-lg-12")(
                 Div(cls="fbt-shape-container card shadow-none")(
                     Div(cls="fbt-item-thumbnail radius-10")(
-                        Img(alt="Contact Us", cls="post-thumbnail", src="./images/page-img-1.jpg")
+                        Img(alt="Contact Us", cls="post-thumbnail", src="/images/page-img-1.jpg")
                     ),
                     Div(cls="card-img-overlay radius-10")(
                         Div(cls="fbt-page-shape-title d-table w-100")(
@@ -809,12 +809,12 @@ def comments_section(post_id):
     """Comments section with existing comments and comment form"""
     # Sample comments data
     comments = [
-        {"id": 1, "author": "John Doe", "avatar": "./images/user-1.jpg", "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut porttitor leo vel nulla posuere accumsan. Suspendisse sed tortor eget justo aliquam euismod.", "replies": [
-            {"id": 2, "author": "Jane Smith", "avatar": "./images/user-2.jpg", "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut porttitor leo vel nulla posuere accumsan."}
+        {"id": 1, "author": "John Doe", "avatar": "/images/user-1.jpg", "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut porttitor leo vel nulla posuere accumsan. Suspendisse sed tortor eget justo aliquam euismod.", "replies": [
+            {"id": 2, "author": "Jane Smith", "avatar": "/images/user-2.jpg", "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut porttitor leo vel nulla posuere accumsan."}
         ]},
-        {"id": 3, "author": "Bob Wilson", "avatar": "./images/user-4.jpg", "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut porttitor leo vel nulla posuere accumsan. Suspendisse sed tortor eget justo aliquam euismod.", "replies": []},
-        {"id": 4, "author": "Alice Brown", "avatar": "./images/user-3.jpg", "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut porttitor leo vel nulla posuere accumsan. Suspendisse sed tortor eget justo aliquam euismod.", "replies": [
-            {"id": 5, "author": "Charlie Davis", "avatar": "./images/user-4.jpg", "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut porttitor leo vel nulla posuere accumsan."}
+        {"id": 3, "author": "Bob Wilson", "avatar": "/images/user-4.jpg", "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut porttitor leo vel nulla posuere accumsan. Suspendisse sed tortor eget justo aliquam euismod.", "replies": []},
+        {"id": 4, "author": "Alice Brown", "avatar": "/images/user-3.jpg", "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut porttitor leo vel nulla posuere accumsan. Suspendisse sed tortor eget justo aliquam euismod.", "replies": [
+            {"id": 5, "author": "Charlie Davis", "avatar": "/images/user-4.jpg", "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut porttitor leo vel nulla posuere accumsan."}
         ]}
     ]
     
@@ -948,7 +948,7 @@ def footer():
                     Div(cls="footer-1", id="footer-1")(
                         Div(cls="logoImage")(
                             Div(cls="widget-content")(
-                                Img(alt="", src="./images/logo-light.png")
+                                Img(alt="", src="/images/logo-light.png")
                             )
                         ),
                         Div(cls="widget Text")(
@@ -1093,7 +1093,7 @@ def blog_listing():
                         Div(cls="fbt_ad text-center")(
                             Div(cls="widget-content")(
                                 A(href="#")(
-                                    Img(alt="", cls="img-fluid lazyloaded", src="./images/horizontal_ad.jpg")
+                                    Img(alt="", cls="img-fluid lazyloaded", src="/images/horizontal_ad.jpg")
                                 )
                             )
                         )
