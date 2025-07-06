@@ -2,6 +2,6 @@ python-fasthtml
 sqlite_minutils
 uvicorn
 supabase
-pydantic
-python-dotenv
 pydantic[email]
+python-dotenv
+email-validator
