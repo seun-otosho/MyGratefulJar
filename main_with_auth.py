@@ -9,6 +9,8 @@ import asyncio
 import os
 from dotenv import load_dotenv
 
+from main import footer, newsletter_section, hero_slider
+
 # Load environment variables
 load_dotenv()
 
@@ -461,29 +463,29 @@ def blog_post_card(post, auth_ctx: AuthContext = None):
         )
     )
 
-# Import and reuse existing components from main_integrated.py
-from main_integrated import (
-    hero_slider,
-    newsletter_section,
-    footer,
-    # Blog listing components
-    headline_section,
-    magazine_navbar,
-    gallery_section,
-    magazine_post_card,
-    blog_sidebar,
-    pagination_nav,
-    # Contact components
-    contact_hero_section,
-    contact_form,
-    contact_info_sidebar,
-    # Single post components
-    single_post_hero,
-    post_content_body,
-    post_footer_section,
-    related_posts_section,
-    comments_section
-)
+# # Import and reuse existing components from main_integrated.py
+# from main_integrated import (
+#     hero_slider,
+#     newsletter_section,
+#     footer,
+#     # Blog listing components
+#     headline_section,
+#     magazine_navbar,
+#     gallery_section,
+#     magazine_post_card,
+#     blog_sidebar,
+#     pagination_nav,
+#     # Contact components
+#     contact_hero_section,
+#     contact_form,
+#     contact_info_sidebar,
+#     # Single post components
+#     single_post_hero,
+#     post_content_body,
+#     post_footer_section,
+#     related_posts_section,
+#     comments_section
+# )
 
 # =====================================================
 # PROTECTED ADMIN ROUTES
