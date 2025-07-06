@@ -1,7 +1,6 @@
 python-fasthtml
 sqlite_minutils
 uvicorn
-
 supabase
 pydantic
 python-dotenv
