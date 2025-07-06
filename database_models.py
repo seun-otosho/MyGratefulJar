@@ -95,7 +95,7 @@ class CategoryModel(BaseModel):
     name: str = Field(..., max_length=100)
     slug: str = Field(..., max_length=100)
     description: Optional[str] = None
-    color: Optional[str] = Field(None, regex=r'^#[0-9A-Fa-f]{6}$')  # Hex color
+    color: Optional[str] = Field(None, pattern=r'^#[0-9A-Fa-f]{6}$')  # Hex color
     icon: Optional[str] = None  # FontAwesome icon class
     post_count: int = 0
     is_active: bool = True
@@ -251,7 +251,7 @@ class SiteSettingModel(BaseModel):
     id: Optional[str] = None
     setting_key: str = Field(..., max_length=100)
     setting_value: Optional[str] = None
-    setting_type: str = Field(default="text", regex=r'^(text|number|boolean|json)$')
+    setting_type: str = Field(default="text", pattern=r'^(text|number|boolean|json)$')
     description: Optional[str] = None
     is_public: bool = False
     created_at: Optional[datetime] = None

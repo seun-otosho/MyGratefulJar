@@ -429,13 +429,21 @@ WHERE p.status = 'published'
 ORDER BY p.published_at DESC;
 
 -- View for comment threads with user info
-CREATE VIEW comment_threads_view AS
-SELECT 
-    c.*,
+CREATE VIEW comment_threads_view WITH (security_invoker=on) AS
+SELECT
+    c.id,
+    c.parent_id,
+    c.content,
+    c.created_at,
+    c.updated_at,
+    c.status,
+    c.guest_name,
+    c.guest_email,
+    -- c.page_path,
+    c.user_id,
     COALESCE(u.display_name, c.guest_name) as commenter_name,
-    COALESCE(u.avatar_url, '') as commenter_avatar,
-    u.id as user_id
+    COALESCE(u.avatar_url, '') as commenter_avatar
 FROM comments c
-LEFT JOIN users u ON c.user_id = u.id
+         LEFT JOIN users u ON c.user_id = u.id
 WHERE c.status = 'approved'
 ORDER BY c.created_at ASC;
