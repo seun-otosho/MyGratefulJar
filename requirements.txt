@@ -5,3 +5,4 @@ supabase
 pydantic[email]
 python-dotenv
 email-validator
+PyJWT

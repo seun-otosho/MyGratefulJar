@@ -1,135 +1,47 @@
+"""
+FastHTML Nemesis Blog with Supabase Database Integration
+Connects the existing FastHTML templates to live Supabase database
+"""
+
 from fasthtml.common import *
 from datetime import datetime
+import asyncio
+import os
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
+
+# Import database integration
+from database_integration import (
+    get_homepage_data,
+    get_blog_listing_data, 
+    get_post_data,
+    search_posts,
+    submit_contact_form,
+    submit_comment,
+    subscribe_newsletter
+)
 
 # Custom CSS and JS headers to match the original template
 custom_hdrs = [
-    Link(rel="shortcut icon", href="/favicon.ico", type="image/x-icon"),
+    Link(rel="shortcut icon", href="favicon.ico", type="image/x-icon"),
     Link(href="https://fonts.googleapis.com/css?family=Montserrat:900%7CNunito:400,700%7COswald%7CRoboto", rel="stylesheet"),
-    Link(href="/css/animate.min.css", rel="stylesheet", media="screen"),
-    Link(href="/css/fonts.css", rel="stylesheet", media="screen"),
-    Link(href="/css/bootstrap.min.css", rel="stylesheet", media="screen"),
-    Link(href="/css/style.css", rel="stylesheet", media="screen"),
-    Script(src="/js/jquery.min.js"),
-    Script(src="/js/bootstrap.bundle.min.js"),
-    Script(src="/js/plugins.js"),
-    Script(src="/js/main.js"),
+    Link(href="./css/animate.min.css", rel="stylesheet", media="screen"),
+    Link(href="./css/fonts.css", rel="stylesheet", media="screen"),
+    Link(href="./css/bootstrap.min.css", rel="stylesheet", media="screen"),
+    Link(href="./css/style.css", rel="stylesheet", media="screen"),
+    Script(src="./js/jquery.min.js"),
+    Script(src="./js/bootstrap.bundle.min.js"),
+    Script(src="./js/plugins.js"),
+    Script(src="./js/main.js"),
 ]
 
 app, rt = fast_app(hdrs=custom_hdrs)
 
-# Sample blog post data (we'll replace this with database later)
-sample_posts = [
-    {
-        "id": 1,
-        "title": "Etiam nec enim id mi maximus consequat sed ut tortor.",
-        "excerpt": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec facilisis leo et bibendum pretium. Suspendisse li...",
-        "author": "fbtemplates",
-        "date": "March 08, 2017",
-        "image": "/images/img-1.jpg",
-        "is_featured": True,
-        "is_video": False,
-        "category": "Design"
-    },
-    {
-        "id": 2,
-        "title": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        "excerpt": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec facilisis leo et bibendum pretium. Suspendisse li...",
-        "author": "fbtemplates",
-        "date": "June 19, 2019",
-        "image": "/images/img-2.jpg",
-        "is_featured": False,
-        "is_video": False,
-        "category": "Lifestyle"
-    },
-    {
-        "id": 3,
-        "title": "Nunc tellus libero, tempus id luctus eget, fermentum.",
-        "excerpt": "Donec dolor elit, pellentesque a massa pellentesque, euismod sagittis ipsum. Nullam a diam ac turpis iaculis vu...",
-        "author": "fbtemplates",
-        "date": "June 05, 2019",
-        "image": "/images/img-3.jpg",
-        "is_featured": False,
-        "is_video": False,
-        "category": "Friends"
-    },
-    {
-        "id": 4,
-        "title": "The future of news blogger themes. Custom post carousel.",
-        "excerpt": "Fames dictumst massa massa, qui sapien per, mauris id sed cubilia suspendisse neque. Proin natoque consectetuer...",
-        "author": "fbtemplates",
-        "date": "September 13, 2018",
-        "image": "/images/img-4.jpg",
-        "is_featured": False,
-        "is_video": True,
-        "category": "Technology"
-    },
-    {
-        "id": 5,
-        "title": "Lorem ipsum dolor sit amet. Custom Post Gallery.",
-        "excerpt": "Phasellus deserunt. Convallis perspiciatis fusce fermentum accumsan, arcu aliquam, velit venenatis augue proin...",
-        "author": "fbtemplates",
-        "date": "May 26, 2018",
-        "image": "/images/img-5.jpg",
-        "is_featured": False,
-        "is_video": False,
-        "category": "Lifestyle"
-    },
-    {
-        "id": 6,
-        "title": "Mihi vero, inquit, placet agi subtilius et pressius.",
-        "excerpt": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec facilisis leo et bibendum pretium...",
-        "author": "fbtemplates",
-        "date": "June 19, 2019",
-        "image": "/images/mag-img-18.jpg",
-        "is_featured": False,
-        "is_video": True,
-        "category": "Sport"
-    },
-    {
-        "id": 7,
-        "title": "Ne amores quidem sanctos alienos esse.",
-        "excerpt": "Donec dolor elit, pellentesque a massa pellentesque, euismod sagittis ipsum...",
-        "author": "fbtemplates",
-        "date": "June 19, 2019",
-        "image": "/images/mag-img-19.jpg",
-        "is_featured": False,
-        "is_video": False,
-        "category": "Business"
-    },
-    {
-        "id": 8,
-        "title": "Suspendisse sed tortor eget justo aliquam.",
-        "excerpt": "Phasellus deserunt. Convallis perspiciatis fusce fermentum accumsan, arcu aliquam...",
-        "author": "fbtemplates",
-        "date": "June 19, 2019",
-        "image": "/images/mag-img-21.jpg",
-        "is_featured": False,
-        "is_video": False,
-        "category": "Design"
-    }
-]
-
-# Extended sample data for full post content
-def get_full_post_content(post_id):
-    """Get full content for a specific post"""
-    content_map = {
-        1: {
-            "content": """Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut porttitor leo vel nulla posuere accumsan. Suspendisse sed tortor eget justo aliquam euismod. Morbi ut massa et neque iaculis lacinia a eu est. Etiam nec enim id mi maximus consequat sed ut tortor. Nullam velit ipsum, ornare id leo a, cursus mollis nunc. Etiam dignissim nulla vel ante mollis, lobortis aliquam lectus egestas.
-
-Vivamus sit amet libero sit amet lorem dignissim varius. Nam id dictum sem. Maecenas eget nulla bibendum, accumsan arcu ac, vehicula risus. Nulla laoreet elit in lectus cursus, at tristique diam fringilla. Donec blandit, lacus sed mollis molestie, lorem lacus feugiat tortor, nec tincidunt libero dolor sit amet nulla.""",
-            "highlighted_text": "Donec bibendum urna quis orci molestie sodales. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Nunc id purus vel sapien pretium varius eu id risus.",
-            "quote": "Donec dolor elit, pellentesque a massa pellentesque, euismod sagittis ipsum. Nullam a diam ac turpis iaculis vulputate. Nunc tellus libero, tempus id luctus eget, fermentum et quam. Aliquam erat volutpat.",
-            "categories": ["Design", "Lifestyle", "Technology"],
-            "tags": ["blog", "design", "web"]
-        }
-    }
-    return content_map.get(post_id, {
-        "content": "This is a sample blog post content. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        "highlighted_text": "This is highlighted content for emphasis.",
-        "quote": "This is a sample quote from the blog post.",
-        "categories": ["General"],
-        "tags": ["sample"]
-    })
+# =====================================================
+# TEMPLATE COMPONENTS (REUSED FROM ORIGINAL)
+# =====================================================
 
 def search_overlay():
     """Search overlay component"""
@@ -143,10 +55,12 @@ def search_form():
     return Form(
         autocomplete="off",
         id="search",
-        role="search"
+        role="search",
+        method="GET",
+        action="/search"
     )(
         Div(cls="input")(
-            Input(cls="search", name="search", placeholder="Search...", type="text"),
+            Input(cls="search", name="q", placeholder="Search...", type="text"),
             Button(cls="submit fa fa-search", type="submit", value="")
         ),
         Button(id="close", type="reset", value="×")
@@ -158,12 +72,13 @@ def navbar():
         Div(cls="container nav-mobile-px clearfix")(
             Div(cls="navbar-brand order-2 order-xl-1 m-auto")(
                 A(href="/")(
-                    Img(alt="Nemesis", src="/images/logo_nemesis.png")
+                    Img(alt="Nemesis", src="./images/logo_nemesis.png")
                 )
             ),
             Button(
                 cls="navbar-toggler order-1 order-xl-2",
-                aria_expanded="false", aria_label="Toggle navigation", data_target="#navbar-menu", data_toggle="collapse",
+                aria_expanded="false", aria_label="Toggle navigation", 
+                data_target="#navbar-menu", data_toggle="collapse",
                 type="button"
             )("☰"),
             Div(cls="header-buttons order-3 order-lg-4")(
@@ -198,6 +113,9 @@ def navbar():
 
 def hero_slider(featured_post):
     """Hero slider component with featured post"""
+    if not featured_post:
+        return Div()  # Return empty div if no featured post
+    
     return Div(cls="slider-container")(
         Div(cls="slider-container-row", id="slider-posts")(
             Div(cls="widget fbt_fp-slider")(
@@ -236,7 +154,7 @@ def hero_slider(featured_post):
 
 def blog_post_card(post):
     """Individual blog post card component"""
-    video_icon = Span(cls="video-icon")(I(cls="fa fa-play")) if post['is_video'] else ""
+    video_icon = Span(cls="video-icon")(I(cls="fa fa-play")) if post.get('is_video') else ""
     
     return Div(cls="blog-post fbt-index-post card radius-10")(
         Div(cls="fbt-post-thumbnail")(
@@ -257,8 +175,11 @@ def blog_post_card(post):
         )
     )
 
-def sidebar():
-    """Sidebar component"""
+def sidebar(categories=None):
+    """Sidebar component with dynamic categories"""
+    if not categories:
+        categories = []
+    
     return Div(cls="sidebar-wrapper", id="sidebar-wrapper")(
         Div(cls="sidebar-wrapper__content")(
             Div(cls="navigation-container clearfix")(
@@ -269,6 +190,7 @@ def sidebar():
                     Div(cls="widget-content fbt-sidebar--menu")(
                         Ul(cls="list-group")(
                             Li(cls="list-group-item")(A(href="/")("HOME")),
+                            Li(cls="list-group-item")(A(href="/blog")("BLOG")),
                             Li(cls="list-group-item")(A(href="#")("ABOUT")),
                             Li(cls="list-group-item")(A(href="#")("SERVICES")),
                             Li(cls="list-group-item")(A(href="/contact")("CONTACT")),
@@ -286,12 +208,9 @@ def sidebar():
                         )
                     ),
                     Div(cls="widget-content cloud-label--widget-content")(
-                        A(href="#")(Span(cls="badge badge-success py-1 px-2 mb-1")("Business")),
-                        A(href="#")(Span(cls="badge badge-success py-1 px-2 mb-1")("Design")),
-                        A(href="#")(Span(cls="badge badge-success py-1 px-2 mb-1")("Entertainment")),
-                        A(href="#")(Span(cls="badge badge-success py-1 px-2 mb-1")("Lifestyle")),
-                        A(href="#")(Span(cls="badge badge-success py-1 px-2 mb-1")("Technology")),
-                        A(href="#")(Span(cls="badge badge-success py-1 px-2 mb-1")("Sport"))
+                        *[A(href=f"/category/{cat['slug']}")(
+                            Span(cls="badge badge-success py-1 px-2 mb-1", style=f"background-color: {cat.get('color', '#28a745')}")(cat['name'])
+                        ) for cat in categories]
                     )
                 )
             )
@@ -312,8 +231,8 @@ def newsletter_section():
                                         H2(cls="title h1 mb-4 mb-lg-0 text-center text-lg-left")("Subscribe to our Newsletter")
                                     ),
                                     Div(cls="col-lg-8 pl-lg-4")(
-                                        Form(action="#", cls="fbt-email-form", method="post")(
-                                            Input(autocomplete="off", cls="follow-by-email-address", name="email", placeholder="Enter your Email", type="email"),
+                                        Form(action="/newsletter", cls="fbt-email-form", method="post")(
+                                            Input(autocomplete="off", cls="follow-by-email-address", name="email", placeholder="Enter your Email", type="email", required=True),
                                             Input(cls="follow-by-email-submit", type="submit", value="Subscribe")
                                         )
                                     )
@@ -325,6 +244,157 @@ def newsletter_section():
             )
         )
     )
+
+def footer():
+    """Footer component"""
+    return Div(cls="footer-dark pt-4", id="footer-content")(
+        Div(cls="container pb-4")(
+            Div(cls="row clearfix")(
+                Div(cls="col-lg-4")(
+                    Div(cls="footer-1", id="footer-1")(
+                        Div(cls="logoImage")(
+                            Div(cls="widget-content")(
+                                Img(alt="", src="./images/logo-light.png")
+                            )
+                        ),
+                        Div(cls="widget Text")(
+                            Div(cls="widget-content")(
+                                P("Phasellus deserunt. Convallis perspiciatis fusce fermentum accumsan, arcu aliquam, velit venenatis augue proin, enim etiam dolor. Mi ac lectus vitae cum, fusce purus posuere.")
+                            )
+                        )
+                    )
+                ),
+                Div(cls="col-lg-2 ml-lg-auto")(
+                    Div(cls="footer-2 section", id="footer-2")(
+                        Div(cls="widget")(
+                            H4(cls="title title-heading")("About"),
+                            Div(cls="widget-content list-label-widget-content")(
+                                Ul(cls="list-unstyled")(
+                                    Li(A(cls="label-name", href="/")("Home")),
+                                    Li(A(cls="label-name", href="/blog")("Blog")),
+                                    Li(A(cls="label-name", href="#")("Lifestyle")),
+                                    Li(A(cls="label-name", href="#")("People")),
+                                    Li(A(cls="label-name", href="#")("Sport"))
+                                )
+                            )
+                        )
+                    )
+                ),
+                Div(cls="col-lg-2")(
+                    Div(cls="footer-3 section", id="footer-3")(
+                        Div(cls="widget")(
+                            H4(cls="title title-heading")("Categories"),
+                            Div(cls="widget-content list-label-widget-content")(
+                                Ul(cls="list-unstyled")(
+                                    Li(A(cls="label-name", href="#")("Business")),
+                                    Li(A(cls="label-name", href="#")("Design")),
+                                    Li(A(cls="label-name", href="#")("Lifestyle")),
+                                    Li(A(cls="label-name", href="#")("Technology"))
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        ),
+        Div(id="credits")(
+            Div(cls="container")(
+                Div(cls="row divider py-4")(
+                    Div(cls="col-lg-6")(
+                        Div(cls="copyright-section text-center text-lg-left")(
+                            f"© {datetime.now().year} Nemesis | All Rights Reserved"
+                        )
+                    ),
+                    Div(cls="col-lg-6")(
+                        Div(cls="footer-menu section", id="footer-menu")(
+                            Div(cls="widget socialList")(
+                                Div(cls="widget-content")(
+                                    Ul(cls="nav")(
+                                        Li(cls="nav-item")(A(cls="nav-link", href="#")(I(cls="fa fa-facebook"))),
+                                        Li(cls="nav-item")(A(cls="nav-link", href="#")(I(cls="fa fa-twitter"))),
+                                        Li(cls="nav-item")(A(cls="nav-link", href="#")(I(cls="fa fa-instagram"))),
+                                        Li(cls="nav-item")(A(cls="nav-link", href="#")(I(cls="fa fa-linkedin"))),
+                                        Li(cls="nav-item")(A(cls="nav-link", href="#")(I(cls="fa fa-youtube-play")))
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    )
+
+# =====================================================
+# ROUTES WITH DATABASE INTEGRATION
+# =====================================================
+
+@rt("/")
+async def homepage():
+    """Homepage route with database integration"""
+    try:
+        # Get data from database
+        data = await get_homepage_data()
+        featured_post = data.get("featured_post")
+        regular_posts = data.get("regular_posts", [])
+        categories = data.get("categories", [])
+        
+        return (
+            Title("Nemesis | Minimal Blog HTML Template"),
+            Meta(name="viewport", content="width=device-width, initial-scale=1.0"),
+            search_overlay(),
+            search_form(),
+            Div(id="page-wrapper", cls="feed-view")(
+                navbar(),
+                hero_slider(featured_post),
+                Div(cls="outer-wrapper clearfix", id="outer-wrapper")(
+                    Div(cls="container fbt-elastic-container")(
+                        Div(cls="row justify-content-center")(
+                            Div(cls="fbt-main-wrapper col-xl-12")(
+                                Div(id="main-wrapper")(
+                                    Div(cls="main-section", id="main_content")(
+                                        Div(cls="blog-posts fbt-index-post-wrap card-columns")(
+                                            *[blog_post_card(post) for post in regular_posts]
+                                        ),
+                                        Div(cls="blog-pager", id="blog-pager")(
+                                            Div(cls="list-inline")(
+                                                A(cls="blog-pager-older-link list-inline-item", href="/blog", title="More posts")(
+                                                    Div(cls="fbt-bp-message text-uppercase font-weight-bold")("More posts"),
+                                                    Span(aria_hidden="true", cls="fa fa-angle-down")
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            ),
+                            sidebar(categories)
+                        )
+                    )
+                ),
+                newsletter_section(),
+                Div(cls="fbt-bottom-shape")(
+                    NotStr('''<svg class="fbt-footer-wave-big" preserveAspectRatio="none" version="1.1" viewBox="5 0 1366 222" width="100%">
+                        <path d="M-2.19,238H1366v-4.27c-67.87-24-146.44-43.08-230.75-53.19-253.33-27.78-293.94,51.64-541.13,29.89C318.08,186.31,289.49,32.92,6.9,11.73c-5.21-.42-10.56-.7-15.9-1V238Z" transform="translate(9.5 -10.22)"></path>
+                    </svg>''')
+                ),
+                footer()
+            )
+        )
+    except Exception as e:
+        print(f"Error in homepage route: {e}")
+        # Return fallback page
+        return (
+            Title("Nemesis Blog - Loading..."),
+            Div(cls="container mt-5")(
+                H1("Welcome to Nemesis Blog"),
+                P("Loading content... Please check your database connection."),
+                A(href="/blog", cls="btn btn-primary")("View Blog")
+            )
+        )
+
+# =====================================================
+# BLOG LISTING ROUTE
+# =====================================================
 
 def headline_section():
     """Top headline section with navigation and social links"""
@@ -361,7 +431,7 @@ def magazine_navbar():
         Div(cls="container nav-mobile-px clearfix")(
             Div(cls="navbar-brand order-2 order-xl-1 m-auto")(
                 A(href="/blog")(
-                    Img(alt="Nemesis", src="/images/logo_nemesis.png")
+                    Img(alt="Nemesis", src="./images/logo_nemesis.png")
                 )
             ),
             Button(
@@ -399,6 +469,9 @@ def magazine_navbar():
 
 def gallery_section(featured_posts):
     """Gallery section with featured posts"""
+    if not featured_posts:
+        return Div()
+    
     return Div(cls="fbt-gallery bg-light py-5 mt-n5 mb-5")(
         Div(cls="container-fluid fbt-elastic-container fbt-gallery-1 px-lg-5")(
             Div(cls="row px-2")(
@@ -476,19 +549,22 @@ def blog_sidebar(featured_post, popular_posts):
                 Div(cls="widget-content")(
                     Div(cls="FeaturedPostContainer")(
                         Div(cls="fbt-item-thumbnail")(
-                            A(cls="post-image-link", href=f"/post/{featured_post['id']}")(
-                                Img(alt="", cls="post-thumbnail lazyloaded", src=featured_post['image'])
+                            A(cls="post-image-link", href=f"/post/{featured_post['id']}" if featured_post else "#")(
+                                Img(alt="", cls="post-thumbnail lazyloaded", 
+                                    src=featured_post['image'] if featured_post else "./images/default-post.jpg")
                             )
-                        ),
+                        ) if featured_post else Div(),
                         Div(cls="fbt-title-section mt-3")(
                             Div(cls="post-meta mb-2")(
-                                Span(cls="post-author")(featured_post['author']),
-                                Span(cls="post-date published")(featured_post['date'])
+                                Span(cls="post-author")(featured_post['author'] if featured_post else "Author"),
+                                Span(cls="post-date published")(featured_post['date'] if featured_post else "Date")
                             ),
                             H3(cls="post-title")(
-                                A(href=f"/post/{featured_post['id']}")(featured_post['title'])
+                                A(href=f"/post/{featured_post['id']}" if featured_post else "#")(
+                                    featured_post['title'] if featured_post else "Featured Post Title"
+                                )
                             ),
-                            P(cls="post-excerpt")(featured_post['excerpt'])
+                            P(cls="post-excerpt")(featured_post['excerpt'] if featured_post else "Post excerpt...")
                         )
                     )
                 )
@@ -502,7 +578,7 @@ def blog_sidebar(featured_post, popular_posts):
                     )
                 ),
                 Div(cls="widget-content")(
-                    *[popular_post_item(post) for post in popular_posts]
+                    *[popular_post_item(post) for post in popular_posts[:4]]
                 )
             )
         )
@@ -529,6 +605,137 @@ def popular_post_item(post):
         )
     )
 
+def pagination_nav(current_page=1, has_more=False):
+    """Pagination navigation"""
+    return Div(cls="pagenav", id="blog-pager")(
+        Span(cls="showpageOf")(f"Page {current_page}"),
+        Span(cls="showpage firstpage")(
+            A(href=f"/blog?page=1" if current_page > 1 else "#")(I(cls="fa fa-angle-double-left"))
+        ) if current_page > 1 else Span(),
+        Span(cls="showpage")(
+            A(href=f"/blog?page={current_page-1}" if current_page > 1 else "#")(I(cls="fa fa-angle-left"))
+        ) if current_page > 1 else Span(),
+        Span(cls="page current")(str(current_page)),
+        Span(cls="displaypageNum")(
+            A(href=f"/blog?page={current_page+1}" if has_more else "#")(I(cls="fa fa-angle-right"))
+        ) if has_more else Span()
+    )
+
+@rt("/blog")
+async def blog_listing(page: int = 1):
+    """Blog listing page with magazine layout"""
+    try:
+        # Get data from database
+        data = await get_blog_listing_data(page)
+        posts = data.get("posts", [])
+        gallery_posts = data.get("gallery_posts", [])
+        sidebar_featured = data.get("sidebar_featured")
+        popular_posts = data.get("popular_posts", [])
+        current_page = data.get("current_page", 1)
+        has_more = data.get("has_more", False)
+        
+        return (
+            Title("Nemesis | Magazine Blog HTML Template"),
+            Meta(name="viewport", content="width=device-width, initial-scale=1.0"),
+            search_overlay(),
+            search_form(),
+            Div(id="page-wrapper", cls="magazine-view feed-view")(
+                headline_section(),
+                magazine_navbar(),
+                Div(cls="outer-wrapper my-5", id="outer-wrapper")(
+                    gallery_section(gallery_posts),
+                    # Ad Block
+                    Div(cls="container fbt-elastic-container mb-5")(
+                        Div(cls="widget fbt-ad-block")(
+                            Div(cls="fbt_ad text-center")(
+                                Div(cls="widget-content")(
+                                    A(href="#")(
+                                        Img(alt="", cls="img-fluid lazyloaded", src="./images/horizontal_ad.jpg")
+                                    )
+                                )
+                            )
+                        )
+                    ),
+                    # Main Content Area
+                    Div(cls="container fbt-elastic-container")(
+                        Div(cls="row justify-content-center")(
+                            # Main Content
+                            Div(cls="fbt-main-wrapper col-lg-8 mb-5 mb-lg-0")(
+                                Div(id="main-wrapper")(
+                                    Div(cls="main-section", id="main_content")(
+                                        Div(cls="fbt-sep-title")(
+                                            H4(cls="title title-heading-left")("Recent posts"),
+                                            Div(cls="title-sep-container")(
+                                                Div(cls="title-sep sep-double")
+                                            )
+                                        ),
+                                        Div(cls="blog-posts fbt-index-post-wrap")(
+                                            *[magazine_post_card(post) for post in posts]
+                                        ),
+                                        pagination_nav(current_page, has_more)
+                                    )
+                                )
+                            ),
+                            # Sidebar
+                            blog_sidebar(sidebar_featured, popular_posts)
+                        )
+                    )
+                ),
+                newsletter_section(),
+                Div(cls="fbt-bottom-shape")(
+                    NotStr('''<svg class="fbt-footer-wave-big" preserveAspectRatio="none" version="1.1" viewBox="5 0 1366 222" width="100%">
+                        <path d="M-2.19,238H1366v-4.27c-67.87-24-146.44-43.08-230.75-53.19-253.33-27.78-293.94,51.64-541.13,29.89C318.08,186.31,289.49,32.92,6.9,11.73c-5.21-.42-10.56-.7-15.9-1V238Z" transform="translate(9.5 -10.22)"></path>
+                    </svg>''')
+                ),
+                footer()
+            )
+        )
+    except Exception as e:
+        print(f"Error in blog listing route: {e}")
+        return (
+            Title("Blog - Nemesis"),
+            Div(cls="container mt-5")(
+                H1("Blog Posts"),
+                P("Loading blog posts... Please check your database connection."),
+                A(href="/", cls="btn btn-primary")("← Back to Home")
+            )
+        )
+
+@rt("/newsletter", methods=["POST"])
+async def newsletter_signup(email: str):
+    """Handle newsletter subscription"""
+    try:
+        success = await subscribe_newsletter(email)
+        if success:
+            return (
+                Title("Newsletter Subscription - Nemesis Blog"),
+                Div(cls="container mt-5")(
+                    Div(cls="alert alert-success")(
+                        H4("Successfully Subscribed!"),
+                        P(f"Thank you! {email} has been added to our newsletter."),
+                        A(href="/", cls="btn btn-primary")("← Back to Home")
+                    )
+                )
+            )
+        else:
+            raise Exception("Subscription failed")
+    except Exception as e:
+        print(f"Newsletter subscription error: {e}")
+        return (
+            Title("Newsletter Subscription Error - Nemesis Blog"),
+            Div(cls="container mt-5")(
+                Div(cls="alert alert-danger")(
+                    H4("Subscription Failed"),
+                    P("There was an error subscribing to our newsletter. Please try again."),
+                    A(href="/", cls="btn btn-primary")("← Back to Home")
+                )
+            )
+        )
+
+# =====================================================
+# CONTACT PAGE ROUTE
+# =====================================================
+
 def contact_hero_section():
     """Contact page hero section with background image"""
     return Div(cls="slider-container")(
@@ -536,7 +743,7 @@ def contact_hero_section():
             Div(cls="col-lg-12")(
                 Div(cls="fbt-shape-container card shadow-none")(
                     Div(cls="fbt-item-thumbnail radius-10")(
-                        Img(alt="Contact Us", cls="post-thumbnail", src="/images/page-img-1.jpg")
+                        Img(alt="Contact Us", cls="post-thumbnail", src="./images/page-img-1.jpg")
                     ),
                     Div(cls="card-img-overlay radius-10")(
                         Div(cls="fbt-page-shape-title d-table w-100")(
@@ -646,6 +853,103 @@ def contact_info_sidebar():
         )
     )
 
+@rt("/contact")
+async def contact_page():
+    """Contact page with form and information"""
+    try:
+        # Get categories for sidebar
+        data = await get_homepage_data()
+        categories = data.get("categories", [])
+        
+        return (
+            Title("Contact Us - Nemesis Blog"),
+            Meta(name="viewport", content="width=device-width, initial-scale=1.0"),
+            search_overlay(),
+            search_form(),
+            Div(id="page-wrapper", cls="page-view")(
+                navbar(),
+                Div(cls="outer-wrapper clearfix", id="outer-wrapper")(
+                    Div(cls="container fbt-elastic-container")(
+                        Div(cls="row justify-content-center")(
+                            Div(cls="fbt-main-wrapper col-xl-12")(
+                                Div(id="main-wrapper")(
+                                    Div(cls="main-section", id="main_content")(
+                                        Div(cls="blog-posts fbt-item-post-wrap")(
+                                            Div(cls="blog-post fbt-item-post")(
+                                                contact_hero_section(),
+                                                Div(cls="row justify-content-center")(
+                                                    Div(cls="col-xl-8 col-lg-8 order-2 order-lg-1 mt-4 mt-lg-0")(
+                                                        contact_form()
+                                                    ),
+                                                    contact_info_sidebar()
+                                                )
+                                            )
+                                        )
+                                    )
+                                )
+                            ),
+                            sidebar(categories)
+                        )
+                    )
+                ),
+                Div(cls="fbt-bottom-shape")(
+                    NotStr('''<svg class="fbt-footer-wave-big" preserveAspectRatio="none" version="1.1" viewBox="5 0 1366 222" width="100%">
+                        <path d="M-2.19,238H1366v-4.27c-67.87-24-146.44-43.08-230.75-53.19-253.33-27.78-293.94,51.64-541.13,29.89C318.08,186.31,289.49,32.92,6.9,11.73c-5.21-.42-10.56-.7-15.9-1V238Z" transform="translate(9.5 -10.22)"></path>
+                    </svg>''')
+                ),
+                footer()
+            )
+        )
+    except Exception as e:
+        print(f"Error in contact page route: {e}")
+        return (
+            Title("Contact - Nemesis Blog"),
+            Div(cls="container mt-5")(
+                H1("Contact Us"),
+                P("Loading contact page... Please check your database connection."),
+                A(href="/", cls="btn btn-primary")("← Back to Home")
+            )
+        )
+
+@rt("/contact", methods=["POST"])
+async def contact_form_submit(name: str, email: str, website: str = "", message: str = ""):
+    """Handle contact form submission"""
+    try:
+        success = await submit_contact_form(name, email, website, message)
+        if success:
+            return (
+                Title("Message Sent - Nemesis Blog"),
+                Meta(name="viewport", content="width=device-width, initial-scale=1.0"),
+                Div(cls="container mt-5")(
+                    Div(cls="alert alert-success", role="alert")(
+                        H4(cls="alert-heading")("Message Sent Successfully!"),
+                        P(f"Thank you {name}, your message has been received. We'll get back to you at {email} soon."),
+                        Hr(),
+                        P(cls="mb-0")("Your message: ", Em(message[:100] + "..." if len(message) > 100 else message))
+                    ),
+                    A(href="/contact", cls="btn btn-primary mt-3")("← Back to Contact"),
+                    A(href="/", cls="btn btn-secondary mt-3 ml-2")("← Back to Home")
+                )
+            )
+        else:
+            raise Exception("Contact form submission failed")
+    except Exception as e:
+        print(f"Contact form submission error: {e}")
+        return (
+            Title("Contact Form Error - Nemesis Blog"),
+            Div(cls="container mt-5")(
+                Div(cls="alert alert-danger")(
+                    H4("Message Failed to Send"),
+                    P("There was an error sending your message. Please try again."),
+                    A(href="/contact", cls="btn btn-primary")("← Back to Contact")
+                )
+            )
+        )
+
+# =====================================================
+# SINGLE POST ROUTE
+# =====================================================
+
 def single_post_hero(post):
     """Single post hero section with image, title, meta, and social sharing"""
     return Div(cls="slider-container")(
@@ -729,42 +1033,10 @@ def post_footer_section(post, content_data):
         )
     )
 
-def post_navigation(current_post_id):
-    """Previous/Next post navigation"""
-    # Find previous and next posts
-    current_index = next((i for i, post in enumerate(sample_posts) if post['id'] == current_post_id), 0)
-    prev_post = sample_posts[current_index - 1] if current_index > 0 else None
-    next_post = sample_posts[current_index + 1] if current_index < len(sample_posts) - 1 else None
-    
-    return Div(cls="fbt-item-post-pager")(
-        Div(cls="card shadow-lg radius-10 mt-3 mb-5")(
-            Div(cls="post-pager row")(
-                Div(cls="previous col-lg-6 bg-primary px-5 py-5 text-left")(
-                    A(cls="fbt-newer-link text-white", href=f"/post/{prev_post['id']}" if prev_post else "#")(
-                        Strong(cls="lead text-left pl-3")(I(cls="fa fa-angle-left"), " Previous"),
-                        Div(cls="h2 text-white fbt-np-title mt-2 pl-3")(
-                            prev_post['title'][:50] + "..." if prev_post and len(prev_post['title']) > 50 
-                            else prev_post['title'] if prev_post else "No previous post"
-                        )
-                    ) if prev_post else Div(cls="text-white pl-3")("No previous post")
-                ),
-                Div(cls="next col-lg-6 bg-warning px-5 py-5 text-right")(
-                    A(cls="fbt-older-link text-white", href=f"/post/{next_post['id']}" if next_post else "#")(
-                        Strong(cls="lead text-right pr-3")("Next ", I(cls="fa fa-angle-right")),
-                        Div(cls="h2 text-white text-right fbt-np-title mt-2 pr-3")(
-                            next_post['title'][:50] + "..." if next_post and len(next_post['title']) > 50 
-                            else next_post['title'] if next_post else "No next post"
-                        )
-                    ) if next_post else Div(cls="text-white pr-3")("No next post")
-                )
-            )
-        )
-    )
-
-def related_posts_section(current_post_id):
+def related_posts_section(related_posts):
     """Related posts section"""
-    # Get 3 random posts excluding current one
-    related = [post for post in sample_posts if post['id'] != current_post_id][:3]
+    if not related_posts:
+        return Div()
     
     return Div(cls="fbt-rel-post-wrapper mb-5")(
         Div(cls="row justify-content-center align-items-center")(
@@ -776,7 +1048,7 @@ def related_posts_section(current_post_id):
             Div(cls="col-xl-9 pl-xl-5")(
                 Div(id="related-posts")(
                     Div(cls="row")(
-                        *[related_post_card(post) for post in related]
+                        *[related_post_card(post) for post in related_posts[:3]]
                     )
                 )
             )
@@ -805,19 +1077,8 @@ def related_post_card(post):
         )
     )
 
-def comments_section(post_id):
+def comments_section(post_id, comments):
     """Comments section with existing comments and comment form"""
-    # Sample comments data
-    comments = [
-        {"id": 1, "author": "John Doe", "avatar": "/images/user-1.jpg", "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut porttitor leo vel nulla posuere accumsan. Suspendisse sed tortor eget justo aliquam euismod.", "replies": [
-            {"id": 2, "author": "Jane Smith", "avatar": "/images/user-2.jpg", "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut porttitor leo vel nulla posuere accumsan."}
-        ]},
-        {"id": 3, "author": "Bob Wilson", "avatar": "/images/user-4.jpg", "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut porttitor leo vel nulla posuere accumsan. Suspendisse sed tortor eget justo aliquam euismod.", "replies": []},
-        {"id": 4, "author": "Alice Brown", "avatar": "/images/user-3.jpg", "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut porttitor leo vel nulla posuere accumsan. Suspendisse sed tortor eget justo aliquam euismod.", "replies": [
-            {"id": 5, "author": "Charlie Davis", "avatar": "/images/user-4.jpg", "content": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut porttitor leo vel nulla posuere accumsan."}
-        ]}
-    ]
-    
     return Div(cls="blog-post-comments")(
         Section(cls="comments embed", id="comments")(
             Div(cls="fbt-comment-button--section list-inline text-center")(
@@ -829,9 +1090,6 @@ def comments_section(post_id):
             Div(cls="comment-list--form")(
                 Div(cls="comment-list")(
                     *[comment_item(comment) for comment in comments],
-                    Div(cls="nav pt-4 mt-n5 mb-5 justify-content-end fbt_bottom_toogle")(
-                        Span("Hide Comments")
-                    ),
                     comment_form(post_id)
                 )
             )
@@ -847,24 +1105,6 @@ def comment_item(comment):
         Div(cls="media-body")(
             H5(cls="mb-2")(comment['author']),
             P(comment['content']),
-            Div(cls="comments__actions")(
-                Span(cls="button")(
-                    A(href="#")(I(cls="fa fa-comments"), "Reply")
-                )
-            ),
-            *[comment_reply(reply) for reply in comment.get('replies', [])]
-        )
-    )
-
-def comment_reply(reply):
-    """Comment reply item"""
-    return Div(cls="comment-reply media mt-4")(
-        A(cls="mr-4", href="#")(
-            Img(src=reply['avatar'], alt="")
-        ),
-        Div(cls="media-body")(
-            H5(cls="mb-2")(reply['author']),
-            P(reply['content']),
             Div(cls="comments__actions")(
                 Span(cls="button")(
                     A(href="#")(I(cls="fa fa-comments"), "Reply")
@@ -918,374 +1158,236 @@ def comment_form(post_id):
         )
     )
 
-def pagination_nav(current_page=2, total_pages=3):
-    """Pagination navigation"""
-    return Div(cls="pagenav", id="blog-pager")(
-        Span(cls="showpageOf")(f"{current_page} / {total_pages}"),
-        Span(cls="showpage firstpage")(
-            A(href="#")(I(cls="fa fa-angle-double-left"))
-        ),
-        Span(cls="showpage")(
-            A(href="#")(I(cls="fa fa-angle-left"))
-        ),
-        Span(cls="displaypageNum")(A(href="#")("1")),
-        Span(cls="page current")("2"),
-        Span(cls="displaypageNum")(A(href="#")("3")),
-        Span(cls="displaypageNum")(
-            A(href="#")(I(cls="fa fa-angle-right"))
-        ),
-        Span(cls="displaypageNum lastpage")(
-            A(href="#")(I(cls="fa fa-angle-double-right"))
-        )
-    )
-
-def footer():
-    """Footer component"""
-    return Div(cls="footer-dark pt-4", id="footer-content")(
-        Div(cls="container pb-4")(
-            Div(cls="row clearfix")(
-                Div(cls="col-lg-4")(
-                    Div(cls="footer-1", id="footer-1")(
-                        Div(cls="logoImage")(
-                            Div(cls="widget-content")(
-                                Img(alt="", src="/images/logo-light.png")
-                            )
-                        ),
-                        Div(cls="widget Text")(
-                            Div(cls="widget-content")(
-                                P("Phasellus deserunt. Convallis perspiciatis fusce fermentum accumsan, arcu aliquam, velit venenatis augue proin, enim etiam dolor. Mi ac lectus vitae cum, fusce purus posuere.")
-                            )
-                        )
-                    )
-                ),
-                Div(cls="col-lg-2 ml-lg-auto")(
-                    Div(cls="footer-2 section", id="footer-2")(
-                        Div(cls="widget")(
-                            H4(cls="title title-heading")("About"),
-                            Div(cls="widget-content list-label-widget-content")(
-                                Ul(cls="list-unstyled")(
-                                    Li(A(cls="label-name", href="/")("Home")),
-                                    Li(A(cls="label-name", href="#")("Lifestyle")),
-                                    Li(A(cls="label-name", href="#")("People")),
-                                    Li(A(cls="label-name", href="#")("Sport"))
-                                )
-                            )
-                        )
-                    )
-                ),
-                Div(cls="col-lg-2")(
-                    Div(cls="footer-3 section", id="footer-3")(
-                        Div(cls="widget")(
-                            H4(cls="title title-heading")("Categories"),
-                            Div(cls="widget-content list-label-widget-content")(
-                                Ul(cls="list-unstyled")(
-                                    Li(A(cls="label-name", href="#")("Business")),
-                                    Li(A(cls="label-name", href="#")("Design")),
-                                    Li(A(cls="label-name", href="#")("Lifestyle")),
-                                    Li(A(cls="label-name", href="#")("Technology"))
-                                )
-                            )
-                        )
-                    )
-                )
-            )
-        ),
-        Div(id="credits")(
-            Div(cls="container")(
-                Div(cls="row divider py-4")(
-                    Div(cls="col-lg-6")(
-                        Div(cls="copyright-section text-center text-lg-left")(
-                            f"© {datetime.now().year} Nemesis | All Rights Reserved"
-                        )
-                    ),
-                    Div(cls="col-lg-6")(
-                        Div(cls="footer-menu section", id="footer-menu")(
-                            Div(cls="widget socialList")(
-                                Div(cls="widget-content")(
-                                    Ul(cls="nav")(
-                                        Li(cls="nav-item")(A(cls="nav-link", href="#")(I(cls="fa fa-facebook"))),
-                                        Li(cls="nav-item")(A(cls="nav-link", href="#")(I(cls="fa fa-twitter"))),
-                                        Li(cls="nav-item")(A(cls="nav-link", href="#")(I(cls="fa fa-instagram"))),
-                                        Li(cls="nav-item")(A(cls="nav-link", href="#")(I(cls="fa fa-linkedin"))),
-                                        Li(cls="nav-item")(A(cls="nav-link", href="#")(I(cls="fa fa-youtube-play")))
-                                    )
-                                )
-                            )
-                        )
-                    )
-                )
-            )
-        )
-    )
-
-@rt("/")
-def homepage():
-    """Homepage route"""
-    # Get featured post and regular posts
-    featured_post = next((post for post in sample_posts if post['is_featured']), sample_posts[0])
-    regular_posts = [post for post in sample_posts if not post['is_featured']]
-    
-    return (
-        Title("Nemesis | Minimal Blog HTML Template"),
-        Meta(name="viewport", content="width=device-width, initial-scale=1.0"),
-        search_overlay(),
-        search_form(),
-        Div(id="page-wrapper", cls="feed-view")(
-            navbar(),
-            hero_slider(featured_post),
-            Div(cls="outer-wrapper clearfix", id="outer-wrapper")(
-                Div(cls="container fbt-elastic-container")(
-                    Div(cls="row justify-content-center")(
-                        Div(cls="fbt-main-wrapper col-xl-12")(
-                            Div(id="main-wrapper")(
-                                Div(cls="main-section", id="main_content")(
-                                    Div(cls="blog-posts fbt-index-post-wrap card-columns")(
-                                        *[blog_post_card(post) for post in regular_posts]
-                                    ),
-                                    Div(cls="blog-pager", id="blog-pager")(
-                                        Div(cls="list-inline")(
-                                            A(cls="blog-pager-older-link list-inline-item", href="#", title="More posts")(
-                                                Div(cls="fbt-bp-message text-uppercase font-weight-bold")("More posts"),
-                                                Span(aria_hidden="true", cls="fa fa-angle-down")
-                                            )
-                                        )
-                                    )
-                                )
-                            )
-                        ),
-                        sidebar()
-                    )
-                )
-            ),
-            newsletter_section(),
-            Div(cls="fbt-bottom-shape")(
-                # SVG wave shape
-                NotStr('''<svg class="fbt-footer-wave-big" preserveAspectRatio="none" version="1.1" viewBox="5 0 1366 222" width="100%">
-                    <path d="M-2.19,238H1366v-4.27c-67.87-24-146.44-43.08-230.75-53.19-253.33-27.78-293.94,51.64-541.13,29.89C318.08,186.31,289.49,32.92,6.9,11.73c-5.21-.42-10.56-.7-15.9-1V238Z" transform="translate(9.5 -10.22)"></path>
-                </svg>''')
-            ),
-            footer()
-        )
-    )
-
-@rt("/blog")
-def blog_listing():
-    """Blog listing page with magazine layout"""
-    # Get posts for different sections
-    featured_post = next((post for post in sample_posts if post['is_featured']), sample_posts[0])
-    gallery_posts = sample_posts[1:6]  # Posts for gallery section
-    main_posts = sample_posts[2:]  # Posts for main listing
-    popular_posts = sample_posts[:4]  # Popular posts for sidebar
-    
-    return (
-        Title("Nemesis | Magazine Blog HTML Template"),
-        Meta(name="viewport", content="width=device-width, initial-scale=1.0"),
-        search_overlay(),
-        search_form(),
-        Div(id="page-wrapper", cls="magazine-view feed-view")(
-            headline_section(),
-            magazine_navbar(),
-            Div(cls="outer-wrapper my-5", id="outer-wrapper")(
-                gallery_section(gallery_posts),
-                # Ad Block
-                Div(cls="container fbt-elastic-container mb-5")(
-                    Div(cls="widget fbt-ad-block")(
-                        Div(cls="fbt_ad text-center")(
-                            Div(cls="widget-content")(
-                                A(href="#")(
-                                    Img(alt="", cls="img-fluid lazyloaded", src="/images/horizontal_ad.jpg")
-                                )
-                            )
-                        )
-                    )
-                ),
-                # Main Content Area
-                Div(cls="container fbt-elastic-container")(
-                    Div(cls="row justify-content-center")(
-                        # Main Content
-                        Div(cls="fbt-main-wrapper col-lg-8 mb-5 mb-lg-0")(
-                            Div(id="main-wrapper")(
-                                Div(cls="main-section", id="main_content")(
-                                    Div(cls="fbt-sep-title")(
-                                        H4(cls="title title-heading-left")("Recent posts"),
-                                        Div(cls="title-sep-container")(
-                                            Div(cls="title-sep sep-double")
-                                        )
-                                    ),
-                                    Div(cls="blog-posts fbt-index-post-wrap")(
-                                        *[magazine_post_card(post) for post in main_posts]
-                                    ),
-                                    pagination_nav()
-                                )
-                            )
-                        ),
-                        # Sidebar
-                        blog_sidebar(featured_post, popular_posts)
-                    )
-                )
-            ),
-            newsletter_section(),
-            Div(cls="fbt-bottom-shape")(
-                NotStr('''<svg class="fbt-footer-wave-big" preserveAspectRatio="none" version="1.1" viewBox="5 0 1366 222" width="100%">
-                    <path d="M-2.19,238H1366v-4.27c-67.87-24-146.44-43.08-230.75-53.19-253.33-27.78-293.94,51.64-541.13,29.89C318.08,186.31,289.49,32.92,6.9,11.73c-5.21-.42-10.56-.7-15.9-1V238Z" transform="translate(9.5 -10.22)"></path>
-                </svg>''')
-            ),
-            footer()
-        )
-    )
-
-@rt("/contact")
-def contact_page():
-    """Contact page with form and information"""
-    return (
-        Title("Contact Us - Nemesis Blog"),
-        Meta(name="viewport", content="width=device-width, initial-scale=1.0"),
-        search_overlay(),
-        search_form(),
-        Div(id="page-wrapper", cls="page-view")(
-            navbar(),
-            Div(cls="outer-wrapper clearfix", id="outer-wrapper")(
-                Div(cls="container fbt-elastic-container")(
-                    Div(cls="row justify-content-center")(
-                        Div(cls="fbt-main-wrapper col-xl-12")(
-                            Div(id="main-wrapper")(
-                                Div(cls="main-section", id="main_content")(
-                                    Div(cls="blog-posts fbt-item-post-wrap")(
-                                        Div(cls="blog-post fbt-item-post")(
-                                            contact_hero_section(),
-                                            Div(cls="row justify-content-center")(
-                                                Div(cls="col-xl-8 col-lg-8 order-2 order-lg-1 mt-4 mt-lg-0")(
-                                                    contact_form()
-                                                ),
-                                                contact_info_sidebar()
-                                            )
-                                        )
-                                    )
-                                )
-                            )
-                        ),
-                        sidebar()
-                    )
-                )
-            ),
-            Div(cls="fbt-bottom-shape")(
-                NotStr('''<svg class="fbt-footer-wave-big" preserveAspectRatio="none" version="1.1" viewBox="5 0 1366 222" width="100%">
-                    <path d="M-2.19,238H1366v-4.27c-67.87-24-146.44-43.08-230.75-53.19-253.33-27.78-293.94,51.64-541.13,29.89C318.08,186.31,289.49,32.92,6.9,11.73c-5.21-.42-10.56-.7-15.9-1V238Z" transform="translate(9.5 -10.22)"></path>
-                </svg>''')
-            ),
-            footer()
-        )
-    )
-
-@rt("/contact", methods=["POST"])
-def contact_form_submit(name: str, email: str, website: str = "", message: str = ""):
-    """Handle contact form submission"""
-    # Here you would typically save to database, send email, etc.
-    # For now, we'll just return a success message
-    
-    return (
-        Title("Message Sent - Nemesis Blog"),
-        Meta(name="viewport", content="width=device-width, initial-scale=1.0"),
-        Div(cls="container mt-5")(
-            Div(cls="alert alert-success", role="alert")(
-                H4(cls="alert-heading")("Message Sent Successfully!"),
-                P(f"Thank you {name}, your message has been received. We'll get back to you at {email} soon."),
-                Hr(),
-                P(cls="mb-0")("Your message: ", Em(message[:100] + "..." if len(message) > 100 else message))
-            ),
-            A(href="/contact", cls="btn btn-primary mt-3")("← Back to Contact"),
-            A(href="/", cls="btn btn-secondary mt-3 ml-2")("← Back to Home")
-        )
-    )
-
 @rt("/post/{post_id}")
-def post_detail(post_id: int):
+async def post_detail(post_id: str):
     """Individual post page with full template"""
-    post = next((post for post in sample_posts if post['id'] == post_id), None)
-    if not post:
-        return "Post not found", 404
-    
-    # Get full content for this post
-    content_data = get_full_post_content(post_id)
-    
-    return (
-        Title(f"{post['title']} - Nemesis Blog"),
-        Meta(name="viewport", content="width=device-width, initial-scale=1.0"),
-        search_overlay(),
-        search_form(),
-        Div(id="page-wrapper", cls="item-view")(
-            navbar(),
-            Div(cls="outer-wrapper clearfix", id="outer-wrapper")(
-                Div(cls="container fbt-elastic-container")(
-                    Div(cls="row justify-content-center")(
-                        Div(cls="fbt-main-wrapper col-xl-12")(
-                            Div(id="main-wrapper")(
-                                Div(cls="main-section", id="main_content")(
-                                    Div(cls="blog-posts fbt-item-post-wrap")(
-                                        Div(cls="blog-post fbt-item-post")(
-                                            # Hero section
-                                            single_post_hero(post),
-                                            # Post content
-                                            Div(cls="row justify-content-center")(
-                                                Div(cls="col-xl-8 col-lg-9")(
-                                                    Div(cls="mt-n5")(
-                                                        post_content_body(content_data)
+    try:
+        # Get post data from database
+        data = await get_post_data(post_id)
+        if not data:
+            return (
+                Title("Post Not Found - Nemesis Blog"),
+                Div(cls="container mt-5")(
+                    H1("Post Not Found"),
+                    P("The requested post could not be found."),
+                    A(href="/blog", cls="btn btn-primary")("← Back to Blog")
+                )
+            )
+        
+        post = data["post"]
+        comments = data["comments"]
+        related_posts = data["related_posts"]
+        content_data = data["content_data"]
+        
+        # Get categories for sidebar
+        homepage_data = await get_homepage_data()
+        categories = homepage_data.get("categories", [])
+        
+        return (
+            Title(f"{post['title']} - Nemesis Blog"),
+            Meta(name="viewport", content="width=device-width, initial-scale=1.0"),
+            search_overlay(),
+            search_form(),
+            Div(id="page-wrapper", cls="item-view")(
+                navbar(),
+                Div(cls="outer-wrapper clearfix", id="outer-wrapper")(
+                    Div(cls="container fbt-elastic-container")(
+                        Div(cls="row justify-content-center")(
+                            Div(cls="fbt-main-wrapper col-xl-12")(
+                                Div(id="main-wrapper")(
+                                    Div(cls="main-section", id="main_content")(
+                                        Div(cls="blog-posts fbt-item-post-wrap")(
+                                            Div(cls="blog-post fbt-item-post")(
+                                                # Hero section
+                                                single_post_hero(post),
+                                                # Post content
+                                                Div(cls="row justify-content-center")(
+                                                    Div(cls="col-xl-8 col-lg-9")(
+                                                        Div(cls="mt-n5")(
+                                                            post_content_body(content_data)
+                                                        )
                                                     )
-                                                )
-                                            ),
-                                            # Post footer with categories and sharing
-                                            post_footer_section(post, content_data),
-                                            # Post navigation (prev/next)
-                                            post_navigation(post_id),
-                                            # Related posts
-                                            related_posts_section(post_id)
-                                        )
-                                    ),
-                                    # Comments section
-                                    Div(cls="row justify-content-center")(
-                                        Div(cls="col-xl-8 col-lg-9")(
-                                            comments_section(post_id)
+                                                ),
+                                                # Post footer with categories and sharing
+                                                post_footer_section(post, content_data),
+                                                # Related posts
+                                                related_posts_section(related_posts)
+                                            )
+                                        ),
+                                        # Comments section
+                                        Div(cls="row justify-content-center")(
+                                            Div(cls="col-xl-8 col-lg-9")(
+                                                comments_section(post_id, comments)
+                                            )
                                         )
                                     )
                                 )
-                            )
-                        ),
-                        sidebar()
+                            ),
+                            sidebar(categories)
+                        )
                     )
-                )
-            ),
-            Div(cls="fbt-bottom-shape")(
-                NotStr('''<svg class="fbt-footer-wave-big" preserveAspectRatio="none" version="1.1" viewBox="5 0 1366 222" width="100%">
-                    <path d="M-2.19,238H1366v-4.27c-67.87-24-146.44-43.08-230.75-53.19-253.33-27.78-293.94,51.64-541.13,29.89C318.08,186.31,289.49,32.92,6.9,11.73c-5.21-.42-10.56-.7-15.9-1V238Z" transform="translate(9.5 -10.22)"></path>
-                </svg>''')
-            ),
-            footer()
+                ),
+                Div(cls="fbt-bottom-shape")(
+                    NotStr('''<svg class="fbt-footer-wave-big" preserveAspectRatio="none" version="1.1" viewBox="5 0 1366 222" width="100%">
+                        <path d="M-2.19,238H1366v-4.27c-67.87-24-146.44-43.08-230.75-53.19-253.33-27.78-293.94,51.64-541.13,29.89C318.08,186.31,289.49,32.92,6.9,11.73c-5.21-.42-10.56-.7-15.9-1V238Z" transform="translate(9.5 -10.22)"></path>
+                    </svg>''')
+                ),
+                footer()
+            )
         )
-    )
+    except Exception as e:
+        print(f"Error in post detail route: {e}")
+        return (
+            Title("Error - Nemesis Blog"),
+            Div(cls="container mt-5")(
+                H1("Error Loading Post"),
+                P("There was an error loading this post. Please try again."),
+                A(href="/blog", cls="btn btn-primary")("← Back to Blog")
+            )
+        )
 
 @rt("/post/{post_id}/comment", methods=["POST"])
-def post_comment_submit(post_id: int, name: str, email: str, website: str = "", comment: str = ""):
+async def post_comment_submit(post_id: str, name: str, email: str, website: str = "", comment: str = ""):
     """Handle comment submission for a post"""
-    post = next((post for post in sample_posts if post['id'] == post_id), None)
-    if not post:
-        return "Post not found", 404
-    
-    # Here you would typically save the comment to database
-    # For now, we'll just return a success message
-    
-    return (
-        Title("Comment Submitted - Nemesis Blog"),
-        Meta(name="viewport", content="width=device-width, initial-scale=1.0"),
-        Div(cls="container mt-5")(
-            Div(cls="alert alert-success", role="alert")(
-                H4(cls="alert-heading")("Comment Submitted Successfully!"),
-                P(f"Thank you {name}, your comment on '{post['title']}' has been submitted for review."),
-                Hr(),
-                P(cls="mb-0")("Your comment: ", Em(comment[:100] + "..." if len(comment) > 100 else comment))
-            ),
-            A(href=f"/post/{post_id}", cls="btn btn-primary mt-3")("← Back to Post"),
-            A(href="/blog", cls="btn btn-secondary mt-3 ml-2")("← Back to Blog")
+    try:
+        success = await submit_comment(post_id, name, email, website, comment)
+        if success:
+            return (
+                Title("Comment Submitted - Nemesis Blog"),
+                Meta(name="viewport", content="width=device-width, initial-scale=1.0"),
+                Div(cls="container mt-5")(
+                    Div(cls="alert alert-success", role="alert")(
+                        H4(cls="alert-heading")("Comment Submitted Successfully!"),
+                        P(f"Thank you {name}, your comment has been submitted for review."),
+                        Hr(),
+                        P(cls="mb-0")("Your comment: ", Em(comment[:100] + "..." if len(comment) > 100 else comment))
+                    ),
+                    A(href=f"/post/{post_id}", cls="btn btn-primary mt-3")("← Back to Post"),
+                    A(href="/blog", cls="btn btn-secondary mt-3 ml-2")("← Back to Blog")
+                )
+            )
+        else:
+            raise Exception("Comment submission failed")
+    except Exception as e:
+        print(f"Comment submission error: {e}")
+        return (
+            Title("Comment Error - Nemesis Blog"),
+            Div(cls="container mt-5")(
+                Div(cls="alert alert-danger")(
+                    H4("Comment Failed to Submit"),
+                    P("There was an error submitting your comment. Please try again."),
+                    A(href=f"/post/{post_id}", cls="btn btn-primary")("← Back to Post")
+                )
+            )
         )
-    )
 
-serve()
+# =====================================================
+# SEARCH ROUTE
+# =====================================================
+
+@rt("/search")
+async def search_results(q: str = ""):
+    """Search results page"""
+    try:
+        if not q or len(q.strip()) < 2:
+            return (
+                Title("Search - Nemesis Blog"),
+                Meta(name="viewport", content="width=device-width, initial-scale=1.0"),
+                search_overlay(),
+                search_form(),
+                Div(id="page-wrapper", cls="feed-view")(
+                    navbar(),
+                    Div(cls="container mt-5")(
+                        H1("Search"),
+                        P("Please enter a search term with at least 2 characters."),
+                        A(href="/", cls="btn btn-primary")("← Back to Home")
+                    ),
+                    footer()
+                )
+            )
+        
+        # Get search results from database
+        data = await search_posts(q)
+        posts = data.get("posts", [])
+        total = data.get("total", 0)
+        
+        # Get categories for sidebar
+        homepage_data = await get_homepage_data()
+        categories = homepage_data.get("categories", [])
+        
+        return (
+            Title(f"Search Results for '{q}' - Nemesis Blog"),
+            Meta(name="viewport", content="width=device-width, initial-scale=1.0"),
+            search_overlay(),
+            search_form(),
+            Div(id="page-wrapper", cls="feed-view")(
+                navbar(),
+                Div(cls="outer-wrapper clearfix", id="outer-wrapper")(
+                    Div(cls="container fbt-elastic-container")(
+                        Div(cls="row justify-content-center")(
+                            Div(cls="fbt-main-wrapper col-xl-12")(
+                                Div(id="main-wrapper")(
+                                    Div(cls="main-section", id="main_content")(
+                                        Div(cls="fbt-sep-title")(
+                                            H4(cls="title title-heading-left")(f"Search Results for '{q}'"),
+                                            Div(cls="title-sep-container")(
+                                                Div(cls="title-sep sep-double")
+                                            )
+                                        ),
+                                        P(f"Found {total} result{'s' if total != 1 else ''} for your search."),
+                                        Div(cls="blog-posts fbt-index-post-wrap card-columns")(
+                                            *[blog_post_card(post) for post in posts]
+                                        ) if posts else Div(cls="alert alert-info")(
+                                            H5("No Results Found"),
+                                            P(f"No posts found matching '{q}'. Try different keywords or browse our categories."),
+                                            A(href="/blog", cls="btn btn-primary")("Browse All Posts")
+                                        )
+                                    )
+                                )
+                            ),
+                            sidebar(categories)
+                        )
+                    )
+                ),
+                newsletter_section(),
+                footer()
+            )
+        )
+    except Exception as e:
+        print(f"Error in search route: {e}")
+        return (
+            Title("Search Error - Nemesis Blog"),
+            Div(cls="container mt-5")(
+                H1("Search Error"),
+                P("There was an error performing your search. Please try again."),
+                A(href="/", cls="btn btn-primary")("← Back to Home")
+            )
+        )
+
+# =====================================================
+# ERROR HANDLING
+# =====================================================
+
+@rt("/test-db")
+async def test_database():
+    """Test database connection"""
+    try:
+        data = await get_homepage_data()
+        return {
+            "status": "success",
+            "message": "Database connection working",
+            "data_preview": {
+                "featured_post": bool(data.get("featured_post")),
+                "regular_posts_count": len(data.get("regular_posts", [])),
+                "categories_count": len(data.get("categories", []))
+            }
+        }
+    except Exception as e:
+        return {
+            "status": "error", 
+            "message": f"Database connection failed: {str(e)}",
+            "suggestion": "Check your .env file and Supabase configuration"
+        }
+
+if __name__ == "__main__":
+    serve()
