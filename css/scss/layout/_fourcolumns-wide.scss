@@ -1,0 +1,85 @@
+/* Four Columns Wide */
+.four-columns-wide {
+    @media (min-width: 1200px) {
+        .card-columns {
+            -moz-column-count: 4;
+            column-count: 4;
+        }
+    }
+    
+    .fbt-post-thumbnail {
+        height: $four_column_main-thumbnail_height;
+    }
+
+    .blog-post {
+        &:nth-child(6) {
+            .fbt-post-thumbnail {
+                height: $four_column_big-thumbnail_height;
+            }
+        }
+        &:nth-child(10) {
+            .fbt-post-thumbnail {
+                height: $four_column_big-thumbnail_height;
+            }
+        }
+    }
+    
+    .fbt-four-grids {
+        .blog-post {
+            &:nth-child(6) {
+                .fbt-post-thumbnail {
+                    height: calc(#{$four_column_big-thumbnail_height} - 22px);
+                }
+            }
+            &:nth-child(10) {
+                .fbt-post-thumbnail {
+                    height: calc(#{$four_column_big-thumbnail_height} - 22px);
+                }
+            }
+        }
+    }
+
+    .fbt-index-post {
+        .post-title.h4 {
+            font-size: 1rem;
+            line-height: calc(1rem + 4px);
+        }
+    }
+
+    .fbt-title-right {
+        height: 510px;
+    }
+    .PopularPosts {
+        .fbt-shape-container {
+            .fbt-item-thumbnail {
+                height: 510px;
+            }
+        }
+        .card-img-overlay {
+            background-color: rgba($black-color, .05);
+            background-image: linear-gradient(-45deg, rgba($black-color, .1) 0%,rgba($black-color, .3) 110%);
+        }
+
+        @media (max-width: 1366px) {
+            .fbt-shape-container .fbt-item-thumbnail {
+                height: 430px;
+            }
+            .fbt-title-right {
+                height: 430px;
+            }
+        }
+		
+		@media (max-width: 575.98px) {
+		   .fbt-shape-container .fbt-shape-title {
+				padding-left: 20px!important;
+				padding-right: 20px!important;
+			}
+		}
+
+        .carousel-indicators {
+            bottom: 15px;
+        }
+
+    }
+
+}

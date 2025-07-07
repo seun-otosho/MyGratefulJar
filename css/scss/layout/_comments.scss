@@ -1,0 +1,94 @@
+/* Comments
+===================================== */
+.fbt-comment-button--section {
+    margin-top: $comment-title_margin_top;
+    margin-bottom: $comment-title_margin_bottom;
+}
+.fbt-comment-button {
+    position: relative;
+    cursor: pointer;
+    &:before {
+        content: '';
+        display: block;
+        position: absolute;
+        z-index: -1;
+        width: calc(#{$comment_title_circle} - 90px);
+        height: calc(#{$comment_title_circle} - 90px);
+        border-radius: 2000px;
+        background: $pseudo-circle-2_bg;
+        left: -50px;
+        top: -30px;
+    }
+    &:after {
+        content: '';
+        display: block;
+        position: absolute;
+        z-index: -1;
+        width: $comment_title_circle;
+        height: $comment_title_circle;
+        border-radius: 2000px;
+        background: linear-gradient(45deg,rgba($pseudo-circle-3_bg, 0) 45%,rgba($pseudo-circle-3_bg, .25) 100%);
+        left: 50%;
+        top: -60px;
+        transform: translateX(-50%);
+    }
+}
+
+.blog-post-comments {
+    .comment_toogle_button {
+        font-size: 30px;
+        &:before {
+            content: "\f107";
+        }
+    }
+
+    .fbt-close-icon:before {
+        content: '\f106';
+    }
+    .fbt_bottom_toogle {
+        cursor: pointer;
+    }
+
+    .comment {
+        background: $comment_background;
+        padding: $comment_padding;
+        border: $comment_border;
+
+        .comment-reply {
+            background: $comment_reply_background;
+            padding: calc(#{$comment_padding} - 5px);
+            border: $comment_border;
+        }
+
+
+        p {
+            font-size: calc(#{$body-font-size} + 1px);
+            margin-bottom: $comment_text_margin_bottom
+        }
+
+        .button {
+            a {
+                color: $black-color;
+                font-size: calc(#{$post-body-font-size} - 1px);
+                &:hover {
+                    color: $main-color;
+                }
+                .fa {
+                    font-size: $post-body-font-size;
+                    margin-right: .25rem;
+                }
+            }
+        }
+    }
+
+    .comment-list {
+        display: none;
+    }
+
+    .comment-form {
+        .form-control {
+            border-width: 2px;
+            border-color: $comment_border_color;
+        }
+    }
+}

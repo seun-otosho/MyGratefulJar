@@ -1,0 +1,22 @@
+/* Magazine Block 1
+===================================== */
+.fbt-block-1 {
+    margin-bottom: 1.5rem;
+    .fbt-large {
+        margin-bottom: 1rem;
+        background-color: $block_1_large_bg;
+        .fbt-post-thumbnail {
+            height: $block_1_large_thumb;
+        }
+    }
+
+    .fbt-small {
+        .post-title {
+            margin-bottom: 0!important;
+        }
+
+        .fbt-post-thumbnail {
+            height: $block_1_small_thumb;
+        }
+    }
+}

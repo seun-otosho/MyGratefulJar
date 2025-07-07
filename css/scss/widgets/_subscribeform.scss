@@ -1,0 +1,162 @@
+/* Subscribe Form
+===================================== */
+.fbt-bottom-section {
+	.FollowByEmail {
+		.widget-content {
+			position: relative;
+			margin-top: $form_margin_top;
+			margin-bottom: $form_margin_bottom;
+			h2.title {
+				color: $sf_color;
+				position: relative;
+			}
+			.col-lg-3 {
+				&:before {
+					content: '';
+					display: block;
+					position: absolute;
+					width: calc(#{$pseudo-circle-1_width_height} - 80px);
+					height: calc(#{$pseudo-circle-1_width_height} - 80px);
+					border-radius: 2000px;
+					background: $form_circle_1_bg_color;
+					left: -30px;
+					top: -30px;
+				}
+			}
+		}
+		.card {
+			background: $form_background;
+			box-shadow: 0 1rem 3rem rgba($black-color, .18);
+			&.dark-form {
+				background: $dark_form_background;
+			}
+		}
+		.follow-by-email-inner {
+			input[type="text"] {
+				background-color: $text_input_background_color;
+				border: 0;
+				font-size: 16px;
+			}
+			.follow-by-email-submit {
+				width: 140px;
+				line-height: 98%;
+				background-color: $button_background_color;
+				color: $button_color;
+				border: 0;
+				transition: background-color 0.3s ease;
+				&:hover {
+					background-color: $hover_button_background_color;
+				}
+			}
+		}
+	}
+}
+.subscriber-form {
+	position: relative;
+	&:before {
+		content: '';
+		display: block;
+		position: absolute;
+		width: calc(#{$pseudo-circle-2_width_height} - 90px);
+		height: calc(#{$pseudo-circle-2_width_height} - 90px);
+		border-radius: 2000px;
+		background: linear-gradient(59deg,rgba(0,201,255,0) 45%,$form_circle_2_bg_color 100%);
+		right: -80px;
+		top: -100px;
+		@media (max-width: 991.98px) {
+			display: none;
+		}
+	}
+	form {
+		position: relative;
+		background-color: $form_background_color;
+		box-shadow: 0 0px 0px rgba($black-color,.15), inset 0 0 calc(22px - 0px) rgba($black-color,.1);
+		input {
+			width: 90%;
+			height: 68px;
+			border: 0;
+			padding: 0;
+			padding-left: 40px;
+			background: 0;
+			font-size: 16px;
+			color: $sf_color;
+			&::placeholder {
+				font-size: 16px;
+				color: $sf_color;
+			}
+		}
+	}
+	input[type="submit"] {
+		position: absolute;
+		right: 10px;
+		top: 10px;
+		height: 48px;
+		padding: 17px 0;
+		border-radius: 25px;
+	}
+}
+.fbt-email-form {
+	border-radius: 45px;
+}
+@media all and (-ms-high-contrast: none) {
+	.subscriber-form {
+		form {
+			position: relative;
+			background-color: $form_background_color;
+			box-shadow: 0 10px 22px rgba($black-color,.1);
+		}
+	}
+}
+@media (-ms-high-contrast: active) {
+	.subscriber-form {
+		form {
+			position: relative;
+			background-color: $form_background_color;
+			box-shadow: 0 10px 22px rgba($black-color,.1);
+		}
+	}
+}
+@media (max-width:767.98px) {
+	.fbt-bottom-section {
+		.FollowByEmail {
+			.follow-by-email-inner {
+				.follow-by-email-submit {
+					width: 100px;
+				}
+			}
+		}
+	}
+}
+@media (max-width:575.98px) {
+	.subscriber-form {
+		form {
+			input {
+				padding-left: 20px;
+			}
+		}
+	}
+}
+
+.dark-form {
+	form {
+		box-shadow: 0 10px 22px rgba(0,0,0,.15), inset 0 0 calc(22px - 22px) rgba(0,0,0,.1);
+		input {
+			color: $white-color;
+			&::placeholder {
+				color: $white-color;
+			}
+		}
+	}
+
+	h2.title {
+		color: $white-color !important;
+	}
+
+	.follow-by-email-submit {
+		background-color: $dark_form_button_bg!important;
+		&:hover {
+			background-color: $dark_form_button_bg_hover!important;
+		}
+	}
+}
+

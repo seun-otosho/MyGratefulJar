@@ -1,0 +1,24 @@
+/* Magazine Newsletter
+===================================== */
+.fbt-newsletter-area {
+    background-color: $mag_newsletter_bg;
+    .subscriber-form:before {
+        display: none;
+    }
+
+    form {
+        box-shadow: inset 0 0 calc(22px - 0px) rgba($black-color, .19);
+    }
+
+    .follow-by-email-submit {
+		background-color: $red-color!important;
+		&:hover {
+			background-color: $orange-color!important;
+		}
+    }
+    
+    .title {
+        font-size: calc(#{$h1-font-size} + 10px) !important;
+        line-height: 100%!important;
+    }
+}

@@ -1,0 +1,112 @@
+/* Root
+===================================== */
+:root {
+    --primary:   #007bff;
+    --secondary: #6c757d;
+    --success:   #9adca1;
+    --info:      #17a2b8;
+    --warning:   #ffc107;
+    --danger:    #dc3545;
+    --light:     #f1f4f9;
+    --dark:      #343a40;
+    --white:     #ffffff;
+    --black:     #000;
+}
+
+.badge-primary,
+.bg-primary {
+    background-color: var(--primary) !important;
+}
+.badge-secondary,
+.bg-secondary {
+    background-color: var(--secondary) !important;
+}
+.badge-success,
+.bg-success {
+    background-color: var(--success) !important;
+}
+.badge-info,
+.bg-info {
+    background-color: var(--info) !important;
+}
+.badge-warning,
+.bg-warning {
+    background-color: var(--warning) !important;
+}
+.badge-danger,
+.bg-danger {
+    background-color: var(--danger) !important;
+}
+.badge-light,
+.bg-light {
+    background-color: var(--light) !important;
+}
+.badge-dark,
+.bg-dark {
+    background-color: var(--dark) !important;
+}
+.badge-black,
+.bg-black {
+    background-color: $black-color !important;
+}
+.bg-red {
+    background-color: $red-color !important;
+}
+.bg-orange {
+    background-color: $orange-color !important;
+}
+.btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active,
+.show > .btn-primary.dropdown-toggle,
+.btn-primary,
+.btn-primary:hover {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}
+.btn-secondary:not(:disabled):not(.disabled):active, .btn-secondary:not(:disabled):not(.disabled).active,
+.btn-secondary,
+.btn-secondary:hover {
+    background-color: var(--secondary);
+    border-color: var(--secondary);
+}
+.btn-success:not(:disabled):not(.disabled):active, .btn-success:not(:disabled):not(.disabled).active,
+.btn-success,
+.btn-success:hover {
+    background-color: var(--success);
+    border-color: var(--success);
+}
+.btn-info:not(:disabled):not(.disabled):active, .btn-info:not(:disabled):not(.disabled).active,
+.btn-info,
+.btn-info:hover {
+    background-color: var(--info);
+    border-color: var(--info);
+}
+.btn-warning:not(:disabled):not(.disabled):active, .btn-warning:not(:disabled):not(.disabled).active,
+.btn-warning,
+.btn-warning:hover {
+    background-color: var(--warning);
+    border-color: var(--warning);
+}
+.btn-danger:not(:disabled):not(.disabled):active, .btn-danger:not(:disabled):not(.disabled).active,
+.btn-danger,
+.btn-danger:hover {
+    background-color: var(--danger);
+    border-color: var(--danger);
+}
+.btn-light:not(:disabled):not(.disabled):active, .btn-light:not(:disabled):not(.disabled).active,
+.btn-light,
+.btn-light:hover {
+    background-color: var(--light);
+    border-color: var(--light);
+}
+.btn-dark:not(:disabled):not(.disabled):active, .btn-dark:not(:disabled):not(.disabled).active,
+.btn-dark,
+.btn-dark:hover {
+    background-color: var(--dark);
+    border-color: var(--dark);
+}
+.btn-black:not(:disabled):not(.disabled):active, .btn-black:not(:disabled):not(.disabled).active,
+.btn-black,
+.btn-black:hover {
+    background-color: var(--black);
+    border-color: var(--black);
+}

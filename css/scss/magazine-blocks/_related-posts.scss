@@ -1,0 +1,15 @@
+/* Magazine Related Posts
+===================================== */
+.magazine-view {
+    #related-posts {
+        .fbt-post-thumbnail {
+            height: $rel_posts_thumb_height;
+        }
+        h5 a {
+            &:hover {
+                color: $link-hover-color;
+                text-decoration: none;
+            }
+        }
+    }
+}

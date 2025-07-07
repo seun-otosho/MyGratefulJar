@@ -1,0 +1,39 @@
+/* Magazine Block 3
+===================================== */
+.fbt-block-3 {
+    margin-bottom: 2rem;
+    .post {
+        position: relative;
+        
+        .fbt-title-caption {
+            position: absolute;
+            bottom: 10px;
+            left: 8px;
+            &.w-85 {
+                width: 90%;
+            }
+        }
+    }
+
+    .fbt-large {
+        .fbt-post-thumbnail {
+            height: $block_3_large_thumb;
+            .post-tag {
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                margin: 0;
+            }
+        }
+
+        .post-title {
+            font-size: calc(#{$h3-font-size} + 6px)!important;
+            line-height: calc(#{$h3-line-height} + 2px)!important;
+        }
+    }
+    .fbt-small {
+        .fbt-post-thumbnail {
+            height: $block_3_small_thumb;
+        }
+    }
+}
