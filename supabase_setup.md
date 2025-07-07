@@ -1,5 +1,5 @@
 # Supabase Database Setup Guide for Nemesis Blog
-
+<!-- cp -->
 This guide will help you set up the Supabase database for your Nemesis Blog platform.
 
 ## 🚀 Quick Setup Steps
