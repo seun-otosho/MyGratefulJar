@@ -3,3 +3,5 @@
 .vscode
 .vercel
 .sesskey
+__pycache__
+*.pyc
