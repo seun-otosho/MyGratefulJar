@@ -9,7 +9,6 @@ import asyncio
 import os
 from dotenv import load_dotenv
 
-from main import footer, newsletter_section, hero_slider
 
 # Load environment variables
 load_dotenv()
@@ -110,7 +109,7 @@ def navbar_with_auth(auth_ctx: AuthContext = None):
         Div(cls="container nav-mobile-px clearfix")(
             Div(cls="navbar-brand order-2 order-xl-1 m-auto")(
                 A(href="/")(
-                    Img(alt="Nemesis", src="./images/logo_nemesis.png")
+                    Img(alt="Nemesis", src="/images/logo_nemesis.png")
                 )
             ),
             Button(
@@ -151,8 +150,12 @@ def navbar_with_auth(auth_ctx: AuthContext = None):
 
 def user_nav_button(auth_ctx: AuthContext):
     """User navigation button with avatar"""
-    avatar_url = auth_ctx.session.avatar_url or "./images/default-avatar.jpg"
-    display_name = auth_ctx.session.display_name or "User"
+    if not auth_ctx.session == {}:
+        avatar_url = auth_ctx.session.avatar_url
+        display_name = auth_ctx.session.display_name
+    else:
+        avatar_url = "/images/default-avatar.jpg"
+        display_name = "User"
     
     return Div(cls="dropdown")(
         A(
@@ -201,9 +204,15 @@ def admin_nav_menu(auth_ctx: AuthContext):
 
 def user_nav_menu(auth_ctx: AuthContext):
     """User navigation menu for authenticated users"""
+    if not auth_ctx.session == {}:
+        avatar_url = auth_ctx.session.avatar_url
+        display_name = auth_ctx.session.display_name
+    else:
+        avatar_url = "/images/default-avatar.jpg"
+        display_name = "User"
     return Li(cls="nav-item dropdown")(
         A(href="#", cls="nav-link dropdown-toggle", aria_haspopup="true", aria_expanded="false", data_toggle="dropdown")(
-            auth_ctx.session.display_name or "User"
+            display_name
         ),
         Div(cls="dropdown-menu")(
             A(href="/profile", cls="dropdown-item")("Profile"),
@@ -280,21 +289,27 @@ def enhanced_sidebar(categories=None, auth_ctx: AuthContext = None):
 
 def user_sidebar_section(auth_ctx: AuthContext):
     """User info section in sidebar"""
-    avatar_url = auth_ctx.session.avatar_url or "./images/default-avatar.jpg"
-    display_name = auth_ctx.session.display_name or "User"
-    role_badge_color = {
-        UserRole.ADMIN: "danger",
-        UserRole.EDITOR: "warning", 
-        UserRole.AUTHOR: "info",
-        UserRole.USER: "secondary"
-    }.get(auth_ctx.session.role, "secondary")
+    if not auth_ctx.session == {}:
+        avatar_url = auth_ctx.session.avatar_url
+        display_name = auth_ctx.session.display_name
+        role = auth_ctx.session.role
+    else:
+        avatar_url = "/images/default-avatar.jpg"
+        display_name = "User"
+        role_badge_color = "secondary"
+    role = {
+        "danger" : UserRole.ADMIN ,
+        "warning" : UserRole.EDITOR ,
+        "info" : UserRole.AUTHOR ,
+        "secondary" : UserRole.USER
+    }.get(role_badge_color)
     
     return Div(cls="sidebar-user-info p-3 border-bottom")(
         Div(cls="d-flex align-items-center")(
             Img(src=avatar_url, cls="rounded-circle mr-3", width="50", height="50"),
             Div(
                 H6(cls="mb-1")(display_name),
-                Span(cls=f"badge badge-{role_badge_color}")(auth_ctx.session.role.value.title())
+                Span(cls=f"badge badge-{role_badge_color}")(role.value.title())
             )
         ),
         Div(cls="mt-2")(
@@ -343,6 +358,114 @@ def admin_sidebar_section(auth_ctx: AuthContext):
         )
     )
 
+
+def footer():
+    """Footer component"""
+    return Div(cls="footer-dark pt-4", id="footer-content")(
+        Div(cls="container pb-4")(
+            Div(cls="row clearfix")(
+                Div(cls="col-lg-4")(
+                    Div(cls="footer-1", id="footer-1")(
+                        Div(cls="logoImage")(
+                            Div(cls="widget-content")(
+                                Img(alt="", src="/images/logo-light.png")
+                            )
+                        ),
+                        Div(cls="widget Text")(
+                            Div(cls="widget-content")(
+                                P("Phasellus deserunt. Convallis perspiciatis fusce fermentum accumsan, arcu aliquam, velit venenatis augue proin, enim etiam dolor. Mi ac lectus vitae cum, fusce purus posuere.")
+                            )
+                        )
+                    )
+                ),
+                Div(cls="col-lg-2 ml-lg-auto")(
+                    Div(cls="footer-2 section", id="footer-2")(
+                        Div(cls="widget")(
+                            H4(cls="title title-heading")("About"),
+                            Div(cls="widget-content list-label-widget-content")(
+                                Ul(cls="list-unstyled")(
+                                    Li(A(cls="label-name", href="/")("Home")),
+                                    Li(A(cls="label-name", href="#")("Lifestyle")),
+                                    Li(A(cls="label-name", href="#")("People")),
+                                    Li(A(cls="label-name", href="#")("Sport"))
+                                )
+                            )
+                        )
+                    )
+                ),
+                Div(cls="col-lg-2")(
+                    Div(cls="footer-3 section", id="footer-3")(
+                        Div(cls="widget")(
+                            H4(cls="title title-heading")("Categories"),
+                            Div(cls="widget-content list-label-widget-content")(
+                                Ul(cls="list-unstyled")(
+                                    Li(A(cls="label-name", href="#")("Business")),
+                                    Li(A(cls="label-name", href="#")("Design")),
+                                    Li(A(cls="label-name", href="#")("Lifestyle")),
+                                    Li(A(cls="label-name", href="#")("Technology"))
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        ),
+        Div(id="credits")(
+            Div(cls="container")(
+                Div(cls="row divider py-4")(
+                    Div(cls="col-lg-6")(
+                        Div(cls="copyright-section text-center text-lg-left")(
+                            f"© {datetime.now().year} Nemesis | All Rights Reserved"
+                        )
+                    ),
+                    Div(cls="col-lg-6")(
+                        Div(cls="footer-menu section", id="footer-menu")(
+                            Div(cls="widget socialList")(
+                                Div(cls="widget-content")(
+                                    Ul(cls="nav")(
+                                        Li(cls="nav-item")(A(cls="nav-link", href="#")(I(cls="fa fa-facebook"))),
+                                        Li(cls="nav-item")(A(cls="nav-link", href="#")(I(cls="fa fa-twitter"))),
+                                        Li(cls="nav-item")(A(cls="nav-link", href="#")(I(cls="fa fa-instagram"))),
+                                        Li(cls="nav-item")(A(cls="nav-link", href="#")(I(cls="fa fa-linkedin"))),
+                                        Li(cls="nav-item")(A(cls="nav-link", href="#")(I(cls="fa fa-youtube-play")))
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    )
+
+def newsletter_section():
+    """Newsletter subscription section"""
+    return Div(cls="fbt-bottom-section clearfix", id="fbt_bottom_section")(
+        Div(cls="widget FollowByEmail")(
+            Div(cls="widget-content")(
+                Div(cls="container")(
+                    Div(cls="row justify-content-center")(
+                        Div(cls="follow-by-email-inner subscriber-form col-lg-10")(
+                            Div(cls="card radius-10 p-5")(
+                                Div(cls="row justify-content-center align-items-center py-3")(
+                                    Div(cls="col-lg-3")(
+                                        H2(cls="title h1 mb-4 mb-lg-0 text-center text-lg-left")("Subscribe to our Newsletter")
+                                    ),
+                                    Div(cls="col-lg-8 pl-lg-4")(
+                                        Form(action="#", cls="fbt-email-form", method="post")(
+                                            Input(autocomplete="off", cls="follow-by-email-address", name="email", placeholder="Enter your Email", type="email"),
+                                            Input(cls="follow-by-email-submit", type="submit", value="Subscribe")
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                    )
+                )
+            )
+        )
+    )
+
 # =====================================================
 # ENHANCED ROUTES WITH AUTHENTICATION
 # =====================================================
@@ -367,7 +490,8 @@ async def homepage(request):
             search_form(),
             Div(id="page-wrapper", cls="feed-view")(
                 navbar_with_auth(auth_ctx),
-                hero_slider(featured_post),
+                # hero_slider(featured_post),
+                enhanced_sidebar(categories, auth_ctx),
                 Div(cls="outer-wrapper clearfix", id="outer-wrapper")(
                     Div(cls="container fbt-elastic-container")(
                         Div(cls="row justify-content-center")(
@@ -416,8 +540,16 @@ async def homepage(request):
 
 def welcome_message(auth_ctx: AuthContext):
     """Welcome message for authenticated users"""
+    if not auth_ctx.session == {}:
+        avatar_url = auth_ctx.session.avatar_url
+        display_name = auth_ctx.session.display_name
+        role = auth_ctx.session.role
+    else:
+        avatar_url = "/images/default-avatar.jpg"
+        display_name = "User"
+        role_badge_color = "secondary"
     return Div(cls="alert alert-info mb-4")(
-        H5(f"Welcome back, {auth_ctx.session.display_name}!"),
+        H5(f"Welcome back, {display_name}!"),
         P(cls="mb-0")(
             "Ready to create something amazing? ",
             A(href="/admin/posts/new", cls="alert-link")("Write a new post") if auth_ctx.is_author() else "",
