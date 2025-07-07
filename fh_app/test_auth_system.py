@@ -108,14 +108,14 @@ async def test_authentication_system():
         
         # Test 2: User roles and enums
         print("\n2. Testing user roles...")
-        from auth_system import UserRole
+        from fh_app.auth_system import UserRole
         
         roles = [UserRole.USER, UserRole.AUTHOR, UserRole.EDITOR, UserRole.ADMIN]
         print(f"✅ User roles defined: {[role.value for role in roles]}")
         
         # Test 3: Authentication models
         print("\n3. Testing authentication models...")
-        from auth_system import LoginRequest, RegisterRequest, UserProfile, AuthSession
+        from fh_app.auth_system import LoginRequest, RegisterRequest, UserProfile, AuthSession
         
         # Test login request
         login_req = LoginRequest(email="test@example.com", password="password123")
@@ -150,7 +150,7 @@ async def test_authentication_system():
         
         # Test 4: Authentication service
         print("\n4. Testing authentication service...")
-        from auth_system import auth_service
+        from fh_app.auth_system import auth_service
         
         print("✅ Authentication service initialized")
         
@@ -192,7 +192,7 @@ async def test_permission_system():
     print("=" * 30)
     
     try:
-        from auth_system import UserRole
+        from fh_app.auth_system import UserRole
         from middleware import AuthContext, AuthSession
         from datetime import datetime, timedelta
         

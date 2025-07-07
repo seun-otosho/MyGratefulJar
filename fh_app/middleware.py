@@ -3,16 +3,13 @@ FastHTML Middleware for Authentication and Authorization
 Handles session validation, route protection, and user context
 """
 
-from typing import Optional, Callable, Any, Dict
+from typing import Callable
 from functools import wraps
 from fasthtml.common import *
-import asyncio
-from datetime import datetime
 
 # Import our auth system
-from auth_system import (
-    auth_service, 
-    AuthSession, 
+from fh_app.auth_system import (
+    AuthSession,
     UserRole, 
     validate_session,
     check_permission

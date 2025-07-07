@@ -10,8 +10,8 @@ from pathlib import Path
 
 def create_env_file():
     """Create .env file from template if it doesn't exist"""
-    env_file = Path(".env")
-    env_example = Path(".env.example")
+    env_file = Path("../.env")
+    env_example = Path("../.env.example")
     
     if env_file.exists():
         print("✅ .env file already exists")

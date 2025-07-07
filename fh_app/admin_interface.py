@@ -4,16 +4,14 @@ Phase 4.2: Complete admin dashboard with content management
 """
 
 from fasthtml.common import *
-from typing import Optional, Dict, Any, List
-from datetime import datetime
-import asyncio
+from typing import Dict, List
 
 # Import authentication system
 try:
-    from auth_system import UserRole, AuthSession
-    from auth_system_minimal import UserRole, AuthSession
+    from fh_app.auth_system import UserRole, AuthSession
+    from fh_app.auth_system_minimal import UserRole, AuthSession
 except ImportError:
-    from auth_system_minimal import UserRole, AuthSession
+    from fh_app.auth_system_minimal import UserRole, AuthSession
 
 from middleware import AuthContext, get_auth_context, handle_auth_error
 
@@ -39,8 +37,8 @@ def admin_layout(title: str, content, auth_ctx: AuthContext, active_section: str
                 )
             )
         ),
-        Script(src="./js/jquery.min.js"),
-        Script(src="./js/bootstrap.bundle.min.js"),
+        Script(src="../js/jquery.min.js"),
+        Script(src="../js/bootstrap.bundle.min.js"),
         Script(admin_custom_js())
     )
 

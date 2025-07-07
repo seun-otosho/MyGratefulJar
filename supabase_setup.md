@@ -50,7 +50,7 @@ pip install supabase pydantic python-dotenv
 ### 5. Test Database Connection
 
 ```python
-from database_models import db
+from fh_app.database_models import db
 
 # Test connection
 try:
@@ -135,7 +135,7 @@ The schema includes sample data for:
 ### Fetch Published Posts
 
 ```python
-from database_models import db
+from fh_app.database_models import db
 
 # Get latest posts
 posts = await db.get_published_posts(limit=10)
@@ -153,7 +153,7 @@ results = await db.search_posts("javascript tutorial")
 ### Create Content
 
 ```python
-from database_models import PostModel, CommentModel
+from fh_app.database_models import PostModel, CommentModel
 
 # Create new post
 post = PostModel(
@@ -179,7 +179,7 @@ await db.create_comment(comment)
 ### Handle Forms
 
 ```python
-from database_models import ContactSubmissionModel
+from fh_app.database_models import ContactSubmissionModel
 
 # Contact form submission
 submission = ContactSubmissionModel(

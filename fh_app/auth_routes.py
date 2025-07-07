@@ -4,24 +4,19 @@ Handles login, register, logout, profile, and password reset routes
 """
 
 from fasthtml.common import *
-from typing import Optional, Dict, Any
-import asyncio
 
 # Import our auth system and middleware
 from auth_system import (
     auth_service,
     register_user,
     login_user,
-    get_user_profile,
-    UserRole,
-    AuthSession
+    get_user_profile
 )
-from middleware import (
+from fh_app.middleware import (
     session_manager,
     get_auth_context,
     handle_auth_error,
-    get_redirect_url,
-    AuthContext
+    get_redirect_url
 )
 
 # =====================================================
@@ -53,7 +48,7 @@ def navbar():
     return Nav(cls="navbar navbar-expand-lg navbar-light bg-light")(
         Div(cls="container")(
             A(cls="navbar-brand", href="/")(
-                Img(src="./images/logo_nemesis.png", height="40", alt="Nemesis")
+                Img(src="../images/logo_nemesis.png", height="40", alt="Nemesis")
             ),
             Ul(cls="navbar-nav ml-auto")(
                 Li(cls="nav-item")(A(cls="nav-link", href="/")("Home")),

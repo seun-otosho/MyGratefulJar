@@ -37,10 +37,10 @@ custom_hdrs = [
     Link(href="./css/fonts.css", rel="stylesheet", media="screen"),
     Link(href="./css/bootstrap.min.css", rel="stylesheet", media="screen"),
     Link(href="./css/style.css", rel="stylesheet", media="screen"),
-    Script(src="./js/jquery.min.js"),
-    Script(src="./js/bootstrap.bundle.min.js"),
-    Script(src="./js/plugins.js"),
-    Script(src="./js/main.js"),
+    Script(src="../js/jquery.min.js"),
+    Script(src="../js/bootstrap.bundle.min.js"),
+    Script(src="../js/plugins.js"),
+    Script(src="../js/main.js"),
 ]
 
 app, rt = fast_app(hdrs=custom_hdrs)
@@ -84,7 +84,7 @@ def simple_navbar(user: Optional[Dict] = None):
     return Nav(cls="navbar navbar-expand-lg navbar-light bg-light")(
         Div(cls="container")(
             A(cls="navbar-brand", href="/")(
-                Img(src="./images/logo_nemesis.png", height="40", alt="Nemesis")
+                Img(src="../images/logo_nemesis.png", height="40", alt="Nemesis")
             ),
             Div(cls="navbar-nav ml-auto")(
                 A(cls="nav-link", href="/")("Home"),

@@ -5,8 +5,6 @@ Integrates Supabase database, authentication, and all blog functionality
 
 from fasthtml.common import *
 from datetime import datetime
-import asyncio
-import os
 from dotenv import load_dotenv
 
 
@@ -14,19 +12,13 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Import database integration
-from database_integration import (
-    get_homepage_data,
-    get_blog_listing_data, 
-    get_post_data,
-    search_posts,
-    submit_contact_form,
-    submit_comment,
-    subscribe_newsletter
+from fh_app.database_integration import (
+    get_homepage_data
 )
 
 # Import authentication system
 try:
-    from auth_system import (
+    from fh_app.auth_system import (
         auth_service,
         UserRole,
         AuthSession
@@ -34,7 +26,7 @@ try:
     AUTH_AVAILABLE = True
 except ImportError:
     # Fallback to minimal auth system
-    from auth_system_minimal import (
+    from fh_app.auth_system_minimal import (
         auth_service,
         UserRole,
         AuthSession
@@ -42,17 +34,15 @@ except ImportError:
     AUTH_AVAILABLE = False
     print("Using minimal authentication system")
 
-from middleware import (
-    session_manager,
+from fh_app.middleware import (
     get_auth_context,
-    handle_auth_error,
     get_user_navigation,
     get_admin_sidebar,
     AuthContext
 )
 
-from auth_routes import add_auth_routes_to_app
-from admin_interface import add_admin_routes_to_app
+from fh_app.auth_routes import add_auth_routes_to_app
+from fh_app.admin_interface import add_admin_routes_to_app
 
 # Custom CSS and JS headers to match the original template
 custom_hdrs = [

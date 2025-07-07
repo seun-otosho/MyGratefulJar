@@ -4,9 +4,6 @@ Integrates Supabase database, authentication, and all blog functionality
 """
 
 from fasthtml.common import *
-from datetime import datetime
-import asyncio
-import os
 from dotenv import load_dotenv
 
 from main import footer, newsletter_section, hero_slider
@@ -16,24 +13,17 @@ load_dotenv()
 
 # Import database integration
 from database_integration import (
-    get_homepage_data,
-    get_blog_listing_data, 
-    get_post_data,
-    search_posts,
-    submit_contact_form,
-    submit_comment,
-    subscribe_newsletter
+    get_homepage_data
 )
 
 # Import authentication system
-from auth_system import (
-    auth_service,
+from fh_app.auth_system import (
     UserRole
 )
 
 # Import models separately to avoid circular imports
 try:
-    from auth_system import AuthSession
+    from fh_app.auth_system import AuthSession
 except ImportError:
     # Define AuthSession locally if import fails
     from pydantic import BaseModel
@@ -50,7 +40,6 @@ except ImportError:
         is_valid: bool = True
 
 from middleware import (
-    session_manager,
     get_auth_context,
     handle_auth_error,
     get_user_navigation,
@@ -58,7 +47,7 @@ from middleware import (
     AuthContext
 )
 
-from auth_routes import add_auth_routes_to_app
+from fh_app.auth_routes import add_auth_routes_to_app
 
 # Custom CSS and JS headers to match the original template
 custom_hdrs = [
@@ -68,10 +57,10 @@ custom_hdrs = [
     Link(href="./css/fonts.css", rel="stylesheet", media="screen"),
     Link(href="./css/bootstrap.min.css", rel="stylesheet", media="screen"),
     Link(href="./css/style.css", rel="stylesheet", media="screen"),
-    Script(src="./js/jquery.min.js"),
-    Script(src="./js/bootstrap.bundle.min.js"),
-    Script(src="./js/plugins.js"),
-    Script(src="./js/main.js"),
+    Script(src="../js/jquery.min.js"),
+    Script(src="../js/bootstrap.bundle.min.js"),
+    Script(src="../js/plugins.js"),
+    Script(src="../js/main.js"),
 ]
 
 app, rt = fast_app(hdrs=custom_hdrs)
@@ -115,7 +104,7 @@ def navbar_with_auth(auth_ctx: AuthContext = None):
         Div(cls="container nav-mobile-px clearfix")(
             Div(cls="navbar-brand order-2 order-xl-1 m-auto")(
                 A(href="/")(
-                    Img(alt="Nemesis", src="./images/logo_nemesis.png")
+                    Img(alt="Nemesis", src="../images/logo_nemesis.png")
                 )
             ),
             Button(
