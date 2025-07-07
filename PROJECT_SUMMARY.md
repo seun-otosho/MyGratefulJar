@@ -1,5 +1,5 @@
 # Nemesis Blog Platform - Project Summary & Implementation Status
-
+<!-- cp -->
 ## 🎯 Project Overview
 A **modern blog platform** that combines:
 - **Backend**: FastHTML (Python web framework) with Supabase PostgreSQL database

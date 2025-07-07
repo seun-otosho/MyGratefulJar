@@ -1,5 +1,5 @@
 # Project Summary & Implementation Plan
-
+<!-- cp -->
 ## 🎯 Project Overview
 This project appears to be a **hybrid web application** that combines:
 - **Backend**: FastHTML (Python web framework) 
