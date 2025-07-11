@@ -1,0 +1,399 @@
+// Colors
+$white-color:                   #fff;
+$black-color:                   #000;
+$black-color_1:                 #111;
+$title-color:                   #393939;
+$body-color:                    #333;
+$main-color:                    #007bff;
+$link-color:                    $main-color;
+$link-hover-color:              #47c3fb;
+$body-bg:                       #fff;
+$red-color:                     #ff005b;
+$gray-color:                    #ccc;
+$gray-light-color:              #eee;
+$orange-color:                  #ff9900;
+$light-color:                   #f1f4f9;
+$green_color:                   #9adca1;
+$light-dark:                    #343a40;
+$pink-color:                    #ff4274;
+$yellow-color:                  #ffad00;
+
+ 
+
+// Typography
+$p-line-height:                  1.6em;                                          // text line height
+$body-font-size:                 14px;                                           // body font-size
+$post-body-font-size:            17px;                                           // post body font-size
+
+$body-font:                      'Nunito', sans-serif;                           // body font Family
+$base-title-font:                'Nunito', sans-serif;                           // title font Family
+
+$montserrat-title-font:          'Montserrat', sans-serif;                       // montserrat text
+$roboto-font:                    'Roboto', sans-serif;                           // roboto text
+$oswald-title-font:              'Oswald', sans-serif;                           // oswald text
+$barlow-title-font:              'Barlow Semi Condensed', sans-serif;            // Barlow Semi Condensed text
+
+$font_awesome:                   FontAwesome;                                    // Font Awesome
+
+$title-font-weight-extra-bold:    900;
+$base-title-font-weight-bold:     700;
+$base-title-font-weight-semibold: 600;
+$base-title-font-weight-regular:  400;
+$base-title-font-weight-slim:     300;
+
+$h1-font-size:                    28px;
+$h1-line-height:                  32px;
+
+$h2-font-size:                    25px;
+$h2-line-height:                  27px;
+
+$h3-font-size:                    20px;
+$h3-line-height:                  24px;
+
+$h4-font-size:                    20px;
+$h4-line-height:                  24px;
+
+$h5-font-size:                    18px;
+$h5-line-height:                  20px;
+
+$h6-font-size:                    14px;
+$h6-line-height:                  17px;
+
+
+
+// Page Content
+$page-wrapper-width:              100%;
+$page-wrapper-margin-top:         25px;
+$page-wrapper-margin-bottom:      0px;
+$page-wrapper-shadow-width:       0px;
+
+
+
+// Container [large screens]
+$container-width:                 1200px;                    // container width in large screens bigger then 1441px
+
+
+
+// Border radius
+$border-radius:                   15px !important;           // grids border radius
+
+
+
+// Navbar Menu
+$navbar-bg:                     #fff;                     // navbar background
+$navbar-color:                  #333;                     // navbar color
+$nav-margin-bottom:               40px;                     // navbar margin bottom
+
+$navbar-sticky-bg:              #fff;                     // navbar background
+$navbar-sticky-color:           #333;                     // navbar color
+
+$dropdown-bg:                   #fff;                     // dropdown background
+$dropdown-hover-bg:             rgba($black-color, .05);    // dropdown hover link background
+$dropdown-color:                #333;                     // dropdown color
+$dropdown-hover-color:          #000;                     // dropdown hover color
+$dropdown-border-height:          3px;                      // border top height
+$dropdown-border-color:           #47c3fb !important;     // border top color
+
+$logo-width:                      200px;                    // logo width
+$menu-font-size:                  13px;                     // menu font-size
+$icons-font-size:                 22px;                     // icons font size
+
+$main-navbar-shadow:              0 0 20px rgba(103,151,255,0);           // navbar shadow (transparent)
+$sticky-nav-shadow:               0 0 20px rgba(103,151,255,.25);         // sticky navbar shadow
+
+
+
+// Slider 
+$slider-container-padding:        48px;
+$slider-container-margin:         48px;
+
+
+
+// Slider 1
+$slider_1-height:                480px;
+$slider_1-large-screen-height:   430px;
+$slider_1-tablet-height:         350px;
+$slider_1-mobile-height:         300px;
+
+$slider-width:                   80px;       // minimum dimensions: 15px
+$slider_1-title-color:           #333333;
+$slider_1-hover-title-color:     #000000;
+$slider-meta-color:              #333333;
+$slier-author-color:             #333333;
+
+$slider_1-title-size:                59px;  // slider 1 title size
+$slider_1-title-size-medium-screen:  50px;  // large screen title size
+$slider_1-title-size-tablet:         42px;  // tablet screen title size
+$slider_1-title-size-mobile:         28px;  // mobile screen title size
+
+$pseudo-circle-1_width_height:   150px;
+$pseudo-circle-2_width_height:   350px;
+$pseudo-circle-3_width_height:   600px;
+
+$pseudo-circle-1_bg:            #ff4ac2;
+$pseudo-circle-2_bg:            #ffad00;
+$pseudo-circle-3_bg:            #00C9FF;
+
+$slider_1-box-shadow:            0 12px 58px 0 rgba(0,31,52,.35);
+$slider_1-img-bg:               #ffffff;
+
+$slider_1-button-color:         #ffffff;  // Slider Button Color
+$slider_1-bg-color:             #4a42ec;  // Slider Button Background Color
+$slider_1-border-color:         #4a42ec;  // Slider Button Border Color
+
+$slider_1-button-hover-color:          #ffffff;  // Slider Button Hover Color
+$slider_1-hover-bg-color:              #007bff;  // Slider Button Hover Background Color
+$slider_1-hover-border-color:          #007bff;  // Slider Button Hover Border Color
+
+
+
+// Slider 2
+$slider_2-height:               calc(100vh - 120px);      // big slider height
+$slider_2-overlay:              rgba($black-color, .55);  // big slider overlay
+$slider_2-margin-top:           -$nav-margin-bottom;
+$slider_2-title-font-size:      72px;                     // title font size
+$indicators-margin:             40px;                     // indicators distance from the bottom
+
+$slider_arrows-width-height:    30px;
+
+
+
+// Posts
+$post-card-shadow:                0 15px 15px -10px rgba(23,16,159,.15);  // posts card shadow 
+
+// Post Grid Colors
+$post-text-color:                  #222222;
+$post-meta-hover:                  $link-hover-color;
+$index-post-color:                 #ffffff;
+$overlay-post-color:               #fff;
+$overlay-background_color:         rgba($black-color, .1);
+$main-background_color:            #4a42ec;
+$post-background_color_3:          #ff4274;
+$post-background_color_5:          #0099cc;
+$post-background_color_7:          #b5afeb;
+$post-background_color_11:         #ff9900;
+$post-background_color_15:         #939ead;
+
+
+
+// Post Grid Image Dimensions
+$image_thumbnail_height:               242px;     // main thumbnail height
+$image_overlay-thumbnail_height:       250px;     // main overlay thumbnail height
+$image_overlay-thumbnail_big:          434px;     // main overlay big thumbnail height
+
+$fullpage_main-thumbnail_height:       210px;     // full page main thumbnail
+$fullpage_big-thumbnail_height:        416px;     // full page big thumbnail
+
+$four_column_main-thumbnail_height:    210px;     // full page main thumbnail
+$four_column_big-thumbnail_height:     416px;     // full page big thumbnail
+
+
+
+// Overlay small thumbnails height
+$image_overlay-thumbnail_2:         $image_overlay-thumbnail_height;
+$image_overlay-thumbnail_4:         $image_overlay-thumbnail_height;
+$image_overlay-thumbnail_6:         $image_overlay-thumbnail_big;
+$image_overlay-thumbnail_8:         $image_overlay-thumbnail_height;
+$image_overlay-thumbnail_10:        $image_overlay-thumbnail_height;
+$image_overlay-thumbnail_12:        $image_overlay-thumbnail_height;
+$image_overlay-thumbnail_14:        $image_overlay-thumbnail_height;
+
+
+
+// Grids Distance
+$grid-margin:                       35px;
+
+
+
+// Blog pager Pseudo Circles
+$blog_pager_circle:       150px;   
+
+
+
+// Footer
+$widget_title_font_size:   17px;
+$footer_color:             #fff;                                    // dark footer color
+$footer_hover_color:       rgba($footer_color, .85);                  // dark footer hover color
+$footer_background_color:  #4a42ec;                                 // dark footer background color
+$wave_svg_background:      #fff;                                    // shape background
+$wave_svg_height:          300px;                                     // svg wave main height
+$wave_svg_mobile_height:   150px;                                     // svg wave mobile height
+
+$footer_light_color:              #111111;                          // footer light color
+$footer_light_hover_color:        rgba($footer_light_color, .75);
+$footer_light_background_color:   #fff;                             // light footer background color 
+
+
+
+// Back to Top
+$back_to_top_color:                    #fff;                        // button color
+$back_to_top_background_color:         var(--primary);                // background color
+$back_to_top_hover_background_color:   var(--warning);                // hover background color
+$back_to_top_width:                    50px;                          // Width
+$back_to_top_height:                   50px;                          // Height
+
+
+
+// Sidebar
+$sidebar_color:                        #333333;                     // sidebar color
+$sidebar_background_color:             #ffffff;                     // sidebar background color
+$sidebar_overlay_background_color:     rgba($black-color, 0.75);      // open sidebar overlay
+$sidebar_width:                        320px;                         // sidebar width
+$sidebar-cursor:                       url('data:image/svg+xml;utf8,<svg width="28" height="28" fill="%23ffffff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 27.8"><path d="M12.66,13.91.27,26.3a.88.88,0,0,0,.62,1.5.86.86,0,0,0,.62-.25L14,15.06,26.49,27.55a.88.88,0,0,0,.62.25.86.86,0,0,0,.62-.25.88.88,0,0,0,0-1.25L15.34,13.91,27.74,1.5a.86.86,0,0,0,0-1.24.86.86,0,0,0-1.24,0L14,12.75,1.51.26A.88.88,0,0,0,.26,1.5Z" transform="translate(0 0)"/></svg>'), auto;
+
+
+
+// Related Posts
+$rp_hover_color:                       var(--dark);
+$rp_shape_background_color:            var(--light);
+$rp_thumbnail_height:                  250px;
+
+
+
+// Comments
+$comment_title_circle:                 150px;
+$comment-title_margin_top:             100px;
+$comment-title_margin_bottom:          70px;
+$comment_text_margin_bottom:           .5rem;
+
+$comment_background:                   #f1f4f9;
+$comment_reply_background:             #fff;
+$comment_border:                       2px solid #eeeeee;
+$comment_padding:                      25px;
+
+$comment_border_color:                 #eee;
+
+$contact_border_color:                 #eee;
+
+
+
+// Popular Posts
+$pp_thumbnail_height:                 260px;                            // thumbnail height
+$title_color_light:                   rgba(37,37,37,.06);             // title light
+$title_color_dark:                    #393939;                        // title dark
+$pp_margin-top:                       40px;                             // margin-top
+
+
+
+// Subscribe Form
+$sf_color:                          #393939;                          // form input & title color
+$button_color:                      #ffffff;                          // button color
+$form_background_color:             rgba($white-color, .3);
+$text_input_background_color:       rgba($white-color, .1);
+$button_background_color:           #4a42ec;                          // button background
+$hover_button_background_color:     #007bff;                          // button hover background
+
+$dark_form_background:              #343a40;                          // dark form background
+$dark_form_button_bg:               #111;                             // dark form button background
+$dark_form_button_bg_hover:         #343a40;                          // dark form hover button background
+
+
+
+$form_margin_top:                   80px;                               // margin top
+$form_margin_bottom:                -150px;                             // margin bottom
+$form_circle_1_bg_color:            #97CE4E;                          // circle BG 1
+$form_circle_2_bg_color:            #f1f4f9;                          // circle BG 2
+$form_background:                   #fff;                             // form BG
+
+
+
+// Widgets Settings
+$widget_margin:                     30px;
+$widget_title_margin_bottom:        15px;
+$widget_title_height:               30px;
+$widget_itle_color:                 #111111;
+$border_color_right:                #eee;
+$border_color_left:                 #4a42ec;
+$widget_title_font_size:            17px;
+
+
+
+// Four Columns
+$four_columns_footer_background:    #f1f4f9;
+$four_column_index_text_color:      #333 !important;
+
+
+
+// Headline
+$headline_bg_1:                     $main-color;
+$headline_bg_2:                     #ff005b;
+
+
+
+// Magazine Popular Posts - Magazine Latest Posts Widgets
+$list_thumbnail_height:             100px;
+$list_thumbnail_width:              100px;
+
+// magazine main thumbnail
+$mag_main_thumbnail_height:         230px;
+
+// Magazine Style tags
+$tag_color:                         $white-color;
+$background_tag_color_1:            #007bff;
+$background_tag_color_2:            #ffc107;
+$background_tag_color_3:            #6c757d;
+$background_tag_color_4:            #ff005b;
+$background_tag_color_5:            #9adca1;
+$background_tag_color_6:            #343a40;
+
+
+
+// Magazine Pagination Colors
+$pagination_color:                  $white-color;
+$pagination_background_color_1:    #007bff;
+$pagination_background_color_2:    #343a40;
+
+
+
+// Magazine Slider
+$large_thumbnail_height:           450px!default;
+$small_thumbnail_height:           calc((#{$large_thumbnail_height} - .5rem) / 2) !default;
+
+$slider_2_thumb_height:            480px;
+
+// Magazine Newsletter
+$mag_newsletter_bg:                #f1f4f9;
+
+// Magazine Block 1
+$block_1_large_bg:                 #f1f4f9; //#FAE8D2;
+$block_1_large_thumb:              250px;
+$block_1_small_thumb:              150px;
+
+
+
+// Gallery 1
+$gallery_thumb_height:             280px;
+$gallery_1_background:             transparent;
+$gallery_1_padding:                0 0;
+
+
+
+// Gallery 2 (Video Gallery)
+$video_gallery_bg_color:                #000;
+$video_gallery_large_thumb_height:      calc(#{$list_thumbnail_height} * 4 + 3rem);        // large screens big thumbnail height
+$small_screens_large_thumb_height:      calc(#{$video_gallery_large_thumb_height} / 1.5);  // small screens big thumbnail height
+
+
+
+// Related Posts
+$rel_posts_thumb_height:                140px; 
+
+
+
+// Mega Menu
+$mm_bg_color:                           #ffffff;
+$mm_thumb_height_1:                     125px;
+$mm_thumb_height_2:                     115px;
+$mm_categories_bg:                      #f7f7f7;
+
+
+
+// Magazine Block 3
+$block_3_large_thumb:                   350px;
+$block_3_small_thumb:                   280px;
+
+
+
+// Magazine Block 5 
+$block_5_large_thumb:                   450px;
+$block_5_small_thumb:                   190px;

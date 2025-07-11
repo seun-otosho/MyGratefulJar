@@ -1,0 +1,110 @@
+/* Video Gallery
+===================================== */
+.fbt-video-gallery {
+    .title-heading {
+        color: $white-color;
+        margin-bottom: 1rem;
+    }
+    background-color: $video_gallery_bg_color;
+    padding: 2.5rem 0 3.5rem;
+    .fbt-main-gallery {
+        .large {
+            position: relative;
+            .fbt-post-thumbnail {
+                height: $video_gallery_large_thumb_height;
+                @media (max-width: 991.98px) {
+                    height: $small_screens_large_thumb_height;
+                }
+                .video-icon {
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%,-50%);
+                    width: 64px;
+                    height: 64px;
+                    font-size: 30px;
+                    i {
+                        margin-left: 5px;
+                        line-height: 60px;
+                    }
+                }
+            }
+
+            .fbt-post-caption {
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                background-color: rgba(0, 0, 0, 0.05);
+                pointer-events: none;
+                transition: all 0.3s ease-in-out;
+                .title-caption {
+                    position: absolute;
+                    bottom: 0;
+                    width: 100%;
+                    pointer-events: auto;
+                    background-image: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 100%);
+                    span,
+                    a,
+                    p {
+                        color: $white-color;
+                    }
+                    a:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+
+            .post-tag {
+                position: absolute;
+                left: 1.5rem;
+                top: 1.5rem;
+                color: #fff;
+                background-color: $background_tag_color_3;
+                pointer-events: auto;
+                transition: all 0.3s ease-in-out;
+                cursor: pointer;
+            }
+    
+            &:hover {
+                .post-tag {
+                    color: $white-color;
+                    background-color: $black-color!important;
+                }
+    
+                .fbt-post-caption {
+                    background-color: rgba($black-color, 0);
+                }
+            }
+
+        }
+    }
+
+    .fbt_list_posts {
+        .fbt-item-thumbnail {
+            position: relative;
+            .video-icon {
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%,-50%);
+                width: 34px;
+                height: 34px;
+                font-size: 15px;
+                i {
+                    margin-left: 3px;
+                    line-height: 30px;
+                }
+            }
+        }
+
+        .fbt-title-caption {
+            a {
+                color: $white-color;
+                &:hover {
+                    color: $link-hover-color;
+                }
+            }
+        }
+    }
+}
+

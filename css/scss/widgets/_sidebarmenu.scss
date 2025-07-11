@@ -1,0 +1,22 @@
+/* Sidebar Menu
+===================================== */
+.sidebar-wrapper__content {
+	.fbt-sidebar--menu {
+		margin-left: -20px;
+		margin-right: -20px;
+		.list-group-item {
+			border-left: 0 !important;
+			border-right: 0 !important;
+			padding-left: 20px;
+			padding-right: 20px;
+			border-radius: 0;
+			font: $base-title-font-weight-regular 13px $roboto-font;
+			background: transparent;
+			letter-spacing: 0.2px;
+            border-bottom: 1px solid #eeeeee;
+            &:first-child {
+                border-top: 1px solid #eeeeee;
+            }
+		}
+	}
+}

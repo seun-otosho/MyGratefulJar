@@ -1,0 +1,45 @@
+ /* Page Settings
+===================================== */
+
+ /* Full Page */
+.full-page {
+    .fbt-elastic-container {
+        max-width: 100%;
+        @media (min-width: 768px) {
+            padding: 0 3rem;
+        }
+    }
+    @media (min-width: 1200px) {
+        .card-columns {
+            -moz-column-count: 5;
+            column-count: 5;
+        }
+    }
+    @media (max-width: 1601.98px) {
+        .fbt-index-post .post-title.h4 {
+            font-size: 1rem;
+            line-height: calc(1rem + 4px);
+        }
+    }
+
+    .fbt-post-thumbnail {
+        height: $fullpage_main-thumbnail_height;
+    }
+
+    .blog-post:nth-child(6) .fbt-post-thumbnail,
+    .blog-post:nth-child(10) .fbt-post-thumbnail {
+        height: $fullpage_big-thumbnail_height;
+    }
+
+    .blog-post {
+        &:nth-child(2n+2) {
+            .card-body {
+                .post-excerpt {
+                    display: none;
+                }
+            }
+        }
+    }
+
+}
+

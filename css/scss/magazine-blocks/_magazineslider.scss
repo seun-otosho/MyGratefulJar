@@ -1,0 +1,111 @@
+/* Magazine Slider 1
+===================================== */
+.fbt-mag-slider {
+    .post-item {
+        position: relative;
+    
+        &.medium,
+        &.large {
+            .fbt-post-thumbnail {
+                height: $large_thumbnail_height;
+            }
+            @media (max-width: 767.98px) {
+                height: $small_thumbnail_height;
+            }
+        }
+
+        &.small_thumb {
+            &:first-child {
+                margin-bottom: .5rem;
+            }
+
+            .fbt-post-thumbnail {
+                height: $small_thumbnail_height;
+            }
+        }
+    }
+
+    .fbt-post-caption {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-color: rgba($black-color, .05);
+        pointer-events: none;
+        transition: all 0.3s ease-in-out;
+        .title-caption {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            pointer-events: auto;
+            background-image: linear-gradient(to top, rgba($black-color, 0.9) 0%, rgba($black-color, 0) 100%);
+            span,
+            a,
+            p {
+                color: $white-color;
+            }
+            a:hover {
+                text-decoration: underline;
+            }
+
+            .post-title {
+                margin: 0;
+                @media (max-width: 767.98px) {
+                    font-size: $h5-font-size!important;
+                    line-height: $h5-line-height!important;
+                }
+            }
+        }
+    }
+
+    .post-tag {
+        position: absolute;
+        left: 1.5rem;
+        top: 1.5rem;
+        color: $white-color;
+        background-color: $background_tag_color_3;
+        pointer-events: auto;
+        transition: all 0.3s ease-in-out;
+        cursor: pointer;
+    }
+
+    .medium {
+        .post-tag {
+            background-color: $background_tag_color_2;
+        }
+    }
+
+    .small_thumb {
+        .post-tag {
+            background-color: $background_tag_color_1;
+        }
+        &.last {
+            .post-tag {
+                background-color: $background_tag_color_5;
+            }
+        }
+    }
+
+    .post-item {
+        &:hover {
+            .post-tag {
+                color: $white-color;
+                background-color: $black-color!important;
+            }
+
+            .fbt-post-caption {
+                background-color: rgba($black-color, 0);
+            }
+        }
+    }
+}
+
+@media (max-width: 767.98px) {
+    .grid-padding-left {
+        padding-left: .25rem
+    }
+    .grid-padding-right {
+        padding-right: .25rem
+    }
+}
