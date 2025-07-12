@@ -140,7 +140,7 @@ def create_welcome_page():
         title="Welcome to your new Wagtail site!",
         body_class="template-homepage",
         content=content,
-        extra_css=["static/css/welcome_page.css",],
+        extra_css=["/static/css/welcome_page.css",],
     )
 
 
