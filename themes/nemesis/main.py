@@ -22,12 +22,6 @@ custom_hdrs = [
 
 
 def BaseLayout(request, title: str, body_class: str, *children, extra_css=None, extra_js=None):
-    # # We can now build the nav dynamically
-    # unauth_nav_items = [
-    #     A('Home', href=reverse('item_list')),
-    #     A('About', href=reverse('about')),
-    #     A('Contact', href=reverse('contact')),
-    # ]
     if request.user.is_authenticated:
         nav_items = [
             # *unauth_nav_items,
@@ -57,7 +51,7 @@ def BaseLayout(request, title: str, body_class: str, *children, extra_css=None, 
             *([Link(rel="stylesheet", href=css) for css in extra_css] if extra_css else []),
         ),
         Body(
-            Nav(*nav_items),  # Use the dynamic nav items
+            # Nav(*nav_items),  # Use the dynamic nav items
             Main(*children),
             cls=body_class,
         )
@@ -76,7 +70,7 @@ def homepage(request):
         search_overlay(),
         search_form(),
         Div(id="page-wrapper", cls="feed-view")(
-            navbar(),
+            navbar(request),
             hero_slider(featured_post),
             Div(cls="outer-wrapper clearfix", id="outer-wrapper")(
                 Div(cls="container fbt-elastic-container")(

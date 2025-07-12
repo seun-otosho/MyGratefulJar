@@ -6,7 +6,7 @@ sample_posts = [
         "excerpt": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec facilisis leo et bibendum pretium. Suspendisse li...",
         "author": "fbtemplates",
         "date": "March 08, 2017",
-        "image": "/images/img-1.jpg",
+        "image": "/static/images/img-1.jpg",
         "is_featured": True,
         "is_video": False,
         "category": "Design"
@@ -17,7 +17,7 @@ sample_posts = [
         "excerpt": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec facilisis leo et bibendum pretium. Suspendisse li...",
         "author": "fbtemplates",
         "date": "June 19, 2019",
-        "image": "/images/img-2.jpg",
+        "image": "/static/images/img-2.jpg",
         "is_featured": False,
         "is_video": False,
         "category": "Lifestyle"
@@ -28,7 +28,7 @@ sample_posts = [
         "excerpt": "Donec dolor elit, pellentesque a massa pellentesque, euismod sagittis ipsum. Nullam a diam ac turpis iaculis vu...",
         "author": "fbtemplates",
         "date": "June 05, 2019",
-        "image": "/images/img-3.jpg",
+        "image": "/static/images/img-3.jpg",
         "is_featured": False,
         "is_video": False,
         "category": "Friends"
@@ -39,7 +39,7 @@ sample_posts = [
         "excerpt": "Fames dictumst massa massa, qui sapien per, mauris id sed cubilia suspendisse neque. Proin natoque consectetuer...",
         "author": "fbtemplates",
         "date": "September 13, 2018",
-        "image": "/images/img-4.jpg",
+        "image": "/static/images/img-4.jpg",
         "is_featured": False,
         "is_video": True,
         "category": "Technology"
@@ -50,7 +50,7 @@ sample_posts = [
         "excerpt": "Phasellus deserunt. Convallis perspiciatis fusce fermentum accumsan, arcu aliquam, velit venenatis augue proin...",
         "author": "fbtemplates",
         "date": "May 26, 2018",
-        "image": "/images/img-5.jpg",
+        "image": "/static/images/img-5.jpg",
         "is_featured": False,
         "is_video": False,
         "category": "Lifestyle"
@@ -61,7 +61,7 @@ sample_posts = [
         "excerpt": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec facilisis leo et bibendum pretium...",
         "author": "fbtemplates",
         "date": "June 19, 2019",
-        "image": "/images/mag-img-18.jpg",
+        "image": "/static/images/mag-img-18.jpg",
         "is_featured": False,
         "is_video": True,
         "category": "Sport"
@@ -72,7 +72,7 @@ sample_posts = [
         "excerpt": "Donec dolor elit, pellentesque a massa pellentesque, euismod sagittis ipsum...",
         "author": "fbtemplates",
         "date": "June 19, 2019",
-        "image": "/images/mag-img-19.jpg",
+        "image": "/static/images/mag-img-19.jpg",
         "is_featured": False,
         "is_video": False,
         "category": "Business"
@@ -83,7 +83,7 @@ sample_posts = [
         "excerpt": "Phasellus deserunt. Convallis perspiciatis fusce fermentum accumsan, arcu aliquam...",
         "author": "fbtemplates",
         "date": "June 19, 2019",
-        "image": "/images/mag-img-21.jpg",
+        "image": "/static/images/mag-img-21.jpg",
         "is_featured": False,
         "is_video": False,
         "category": "Design"

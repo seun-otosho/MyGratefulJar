@@ -1,5 +1,8 @@
-from fasthtml.common import *
 from datetime import datetime
+
+from django.urls import reverse
+from fasthtml.common import *
+
 
 def search_overlay():
     """Search overlay component"""
@@ -7,6 +10,7 @@ def search_overlay():
         id="fbt-content-overlay",
         onclick="closeNav()"
     )
+
 
 def search_form():
     """Search form component"""
@@ -22,8 +26,24 @@ def search_form():
         Button(id="close", type="reset", value="×")
     )
 
-def navbar():
+
+def navbar(request):
     """Main navigation component"""
+    if request.user.is_authenticated:
+        nav_items = [
+            # A form is the correct way to do a POST for logout
+            Form(
+                Li(cls="nav-item")(A(href=reverse('account_logout'), cls="nav-link", type="submit", )("Logout"), ),
+                action=reverse('account_logout'),
+                method="post",
+                style="display: inline;"
+            )
+        ]
+    else:
+        nav_items = [
+            Li(cls="nav-item")(A(href=reverse('account_login'), cls="nav-link")("Login")),
+            Li(cls="nav-item")(A(href=reverse('account_signup'), cls="nav-link")("Sign Up")),
+        ]
     return Nav(cls="navbar navbar-expand-xl navbar-fbt fbt-nav-skin fbt_sticky_nav")(
         Div(cls="container nav-mobile-px clearfix")(
             Div(cls="navbar-brand order-2 order-xl-1 m-auto")(
@@ -33,7 +53,8 @@ def navbar():
             ),
             Button(
                 cls="navbar-toggler order-1 order-xl-2",
-                aria_expanded="false", aria_label="Toggle navigation", data_target="#navbar-menu", data_toggle="collapse",
+                aria_expanded="false", aria_label="Toggle navigation", data_target="#navbar-menu",
+                data_toggle="collapse",
                 type="button"
             )("☰"),
             Div(cls="header-buttons order-3 order-lg-4")(
@@ -43,7 +64,8 @@ def navbar():
             Div(cls="collapse navbar-collapse order-4 order-xl-3 clearfix", id="navbar-menu")(
                 Ul(cls="navbar-nav m-auto clearfix")(
                     Li(cls="nav-item dropdown")(
-                        A(href="#", cls="nav-link dropdown-toggle", aria_haspopup="true", aria_expanded="false", data_toggle="dropdown")("Home"),
+                        A(href="#", cls="nav-link dropdown-toggle", aria_haspopup="true", aria_expanded="false",
+                          data_toggle="dropdown")("Home"),
                         Div(cls="dropdown-menu")(
                             A(href="/", cls="dropdown-item")("Home 1"),
                             A(href="/blog", cls="dropdown-item")("Blog"),
@@ -60,11 +82,13 @@ def navbar():
                     ),
                     Li(cls="nav-item")(
                         A(href="#", cls="nav-link")("Lifestyle")
-                    )
+                    ),
+                    *nav_items
                 )
             )
         )
     )
+
 
 def hero_slider(featured_post):
     """Hero slider component with featured post"""
@@ -93,7 +117,8 @@ def hero_slider(featured_post):
                                         Span(cls="post-date published")(featured_post['date'])
                                     ),
                                     A(href=f"/post/{featured_post['id']}")(
-                                        Span(cls="fbt_read_more btn btn-primary-slider radius-25 px-5 mt-2")("Keep reading ...")
+                                        Span(cls="fbt_read_more btn btn-primary-slider radius-25 px-5 mt-2")(
+                                            "Keep reading ...")
                                     )
                                 )
                             )
@@ -103,6 +128,7 @@ def hero_slider(featured_post):
             )
         )
     )
+
 
 def blog_post_card(post):
     """Individual blog post card component"""
@@ -127,6 +153,7 @@ def blog_post_card(post):
         )
     )
 
+
 def newsletter_section():
     """Newsletter subscription section"""
     return Div(cls="fbt-bottom-section clearfix", id="fbt_bottom_section")(
@@ -138,11 +165,13 @@ def newsletter_section():
                             Div(cls="card radius-10 p-5")(
                                 Div(cls="row justify-content-center align-items-center py-3")(
                                     Div(cls="col-lg-3")(
-                                        H2(cls="title h1 mb-4 mb-lg-0 text-center text-lg-left")("Subscribe to our Newsletter")
+                                        H2(cls="title h1 mb-4 mb-lg-0 text-center text-lg-left")(
+                                            "Subscribe to our Newsletter")
                                     ),
                                     Div(cls="col-lg-8 pl-lg-4")(
                                         Form(action="#", cls="fbt-email-form", method="post")(
-                                            Input(autocomplete="off", cls="follow-by-email-address", name="email", placeholder="Enter your Email", type="email"),
+                                            Input(autocomplete="off", cls="follow-by-email-address", name="email",
+                                                  placeholder="Enter your Email", type="email"),
                                             Input(cls="follow-by-email-submit", type="submit", value="Subscribe")
                                         )
                                     )
@@ -154,6 +183,7 @@ def newsletter_section():
             )
         )
     )
+
 
 def footer():
     """Footer component"""
