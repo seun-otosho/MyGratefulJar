@@ -1,25 +1,44 @@
 # core/components.py
+from django.urls import reverse
 from fasthtml.common import *
 # This Django utility helps resolve static file paths
 from django.templatetags.static import static
 
 
-def BaseLayout(*children, title: str):
+def BaseLayout(*children, title: str, request): # Add request as a parameter
+    # We can now build the nav dynamically
+    if request.user.is_authenticated:
+        nav_items = [
+            A('Home', href=reverse('item_list')),
+            A('About', href=reverse('about')),
+            A('Contact', href=reverse('contact')),
+            # A form is the correct way to do a POST for logout
+            Form(
+                Button(f"Logout ({request.user.username})", type="submit"),
+                action=reverse('account_logout'),
+                method="post",
+                style="display: inline;"
+            )
+        ]
+    else:
+        nav_items = [
+            A('Home', href=reverse('item_list')),
+            A('About', href=reverse('about')),
+            A('Contact', href=reverse('contact')),
+            A('Login', href=reverse('account_login')),
+            A('Sign Up', href=reverse('account_signup'))
+        ]
+
     return Html(
         Head(
             Title(title),
-            Meta(charset="UTF-_8"),
+            Meta(charset="utf-8"),
             Meta(name="viewport", content="width=device-width, initial-scale=1.0"),
-            # Use Django's static() function to get the correct URL for our CSS
             Link(rel="stylesheet", href=static('css/style.css'))
         ),
         Body(
-            Nav(
-                A('Home', href='/items/'),
-                A('About', href='/about/'),
-                A('Contact', href='/contact/'),
-            ),
-            Main(*children) # Render child components here
+            Nav(*nav_items), # Use the dynamic nav items
+            Main(*children)
         )
     )
 

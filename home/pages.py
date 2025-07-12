@@ -1,4 +1,6 @@
 from pathlib import Path
+
+from django.urls import reverse
 from fasthtml.common import *
 from fastcore.basics import NotStr
 from fastcore.xml import __all__
@@ -75,6 +77,19 @@ def create_welcome_page():
 
         # Footer
         Footer(
+            A(
+                Svg(
+                    Path(d="M9 21c0 .5.4 1 1 1h4c.6 0 1-.5 1-1v-1H9v1zm3-19C8.1 2 5 5.1 5 9c0 2.4 1.2 4.5 3 5.7V17c0 .5.4 1 1 1h6c.6 0 1-.5 1-1v-2.3c1.8-1.3 3-3.4 3-5.7 0-3.9-3.1-7-7-7zm2.9 11.1l-.9.6V16h-4v-2.3l-.9-.6C7.8 12.2 7 10.6 7 9c0-2.8 2.2-5 5-5s5 2.2 5 5c0 1.6-.8 3.2-2.1 4.1z"),
+                    xmlns="http://www.w3.org/2000/svg",
+                    viewBox="0 0 24 24"
+                ),
+                Div(
+                    H2("Items Page"),
+                    P("Topics, references, & how-tos")
+                ),
+                href=reverse("item_list"),
+                cls="option option-one"
+            ),
             A(
                 Svg(
                     Path(d="M9 21c0 .5.4 1 1 1h4c.6 0 1-.5 1-1v-1H9v1zm3-19C8.1 2 5 5.1 5 9c0 2.4 1.2 4.5 3 5.7V17c0 .5.4 1 1 1h6c.6 0 1-.5 1-1v-2.3c1.8-1.3 3-3.4 3-5.7 0-3.9-3.1-7-7-7zm2.9 11.1l-.9.6V16h-4v-2.3l-.9-.6C7.8 12.2 7 10.6 7 9c0-2.8 2.2-5 5-5s5 2.2 5 5c0 1.6-.8 3.2-2.1 4.1z"),

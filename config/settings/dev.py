@@ -16,3 +16,9 @@ try:
     from .local import *
 except ImportError:
     pass
+
+
+try:
+    from .auth import *
+except ImportError:
+    pass

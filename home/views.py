@@ -23,14 +23,16 @@ def item_list_view(request):
     # Compose components: wrap the page content in the layout
     page = BaseLayout(
         ItemListPage(items=sample_items),
-        title="Item List"
+        title="Item List",
+        request=request
     )
     return HttpResponse(to_xml(page))
 
 def about_view(request):
     page = BaseLayout(
         AboutPage(),
-        title="About Us"
+        title="About Us",
+        request=request
     )
     return HttpResponse(to_xml(page))
     # return page
@@ -60,6 +62,7 @@ def contact_view(request):
     # On GET or if form is invalid, render the form page
     page = BaseLayout(
         ContactFormComponent(form=form, request=request),
-        title="Contact Us"
+        title="Contact Us",
+        request=request
     )
     return HttpResponse(to_xml(page))
