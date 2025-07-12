@@ -9,7 +9,8 @@ def BaseLayout(*children, title: str, request): # Add request as a parameter
     # We can now build the nav dynamically
     if request.user.is_authenticated:
         nav_items = [
-            A('Home', href=reverse('item_list')),
+            A('Home', href="/"),
+            A('Items', href=reverse('item_list')),
             A('About', href=reverse('about')),
             A('Contact', href=reverse('contact')),
             # A form is the correct way to do a POST for logout
@@ -22,7 +23,8 @@ def BaseLayout(*children, title: str, request): # Add request as a parameter
         ]
     else:
         nav_items = [
-            A('Home', href=reverse('item_list')),
+            A('Home', href="/"),
+            A('Items', href=reverse('item_list')),
             A('About', href=reverse('about')),
             A('Contact', href=reverse('contact')),
             A('Login', href=reverse('account_login')),
@@ -34,7 +36,7 @@ def BaseLayout(*children, title: str, request): # Add request as a parameter
             Title(title),
             Meta(charset="utf-8"),
             Meta(name="viewport", content="width=device-width, initial-scale=1.0"),
-            Link(rel="stylesheet", href=static('css/style.css'))
+            Link(rel="stylesheet", href=static('/css/style.css'))
         ),
         Body(
             Nav(*nav_items), # Use the dynamic nav items

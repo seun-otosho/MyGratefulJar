@@ -49,7 +49,7 @@ def base_template(title="", body_class="", content=None, extra_css=None, extra_j
             Title(title or "My Wagtail Site"),
             Meta(charset="utf-8"),
             Meta(name="viewport", content="width=device-width, initial-scale=1.0"),
-            Link(rel="stylesheet", href="static/css/config.css", type="text/css"),
+            Link(rel="stylesheet", href="/static/css/config.css", type="text/css"),
             # Add extra CSS if provided
             *([Link(rel="stylesheet", href=css) for css in extra_css] if extra_css else []),
         ),

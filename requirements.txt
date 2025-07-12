@@ -1,6 +1,13 @@
-Django>=5.2,<5.3
-wagtail>=7.0,<7.1
+Django
+python-fasthtml
+wagtail
 
 django-extensions
 
 django-allauth
+
+supabase
+pydantic[email]
+python-dotenv
+email-validator
+PyJWT

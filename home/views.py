@@ -1,11 +1,12 @@
 from fasthtml.common import *
 
 from home.pages import create_welcome_page
+from themes.nemesis.main import homepage
 
 
-def hello_world(request):
-    html = "<html><body>Hello, world!</body></html>"
-    return HttpResponse(html, content_type="text/html")
+def home(request):
+
+    return HttpResponse(to_xml(homepage(request)), content_type="text/html")
 
 
 def welcome(request):
