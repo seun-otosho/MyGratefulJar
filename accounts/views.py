@@ -1,4 +1,4 @@
-# core/auth_views.py
+# accounts/views.py
 from allauth.account.views import (LoginView, SignupView, PasswordResetView, PasswordResetDoneView,
                                    PasswordResetFromKeyView, PasswordResetFromKeyDoneView, PasswordChangeView)
 from django.http import HttpResponse
