@@ -1,17 +1,15 @@
-# core/auth_views.py
-from allauth.account.views import (LoginView, SignupView, PasswordResetView, PasswordResetDoneView,
-                                   PasswordResetFromKeyView, PasswordResetFromKeyDoneView, PasswordChangeView)
+# accounts/views.py
+from allauth.account.views import (
+    LoginView, SignupView, PasswordResetView, PasswordResetDoneView, PasswordResetFromKeyView,
+    PasswordResetFromKeyDoneView, PasswordChangeView
+)
 from django.http import HttpResponse
 
 from home.components import BaseLayout
-# Import our components and layout
-# from config.components import BaseLayout
-from .components import (LoginPageComponent, SignupPageComponent, PasswordResetRequestComponent,
-                         PasswordResetDoneComponent, PasswordResetFromKeyComponent, PasswordResetFromKeyDoneComponent,
-                         PasswordChangeComponent)
-
-
-# from fastcore.xml import to_xml
+from .components import (
+    LoginPageComponent, SignupPageComponent, PasswordResetRequestComponent, PasswordResetDoneComponent,
+    PasswordResetFromKeyComponent, PasswordResetFromKeyDoneComponent, PasswordChangeComponent
+)
 
 
 # A custom view that subclasses Allauth's LoginView

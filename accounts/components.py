@@ -1,4 +1,4 @@
-# core/auth_components.py
+# accounts/components.py
 from django.urls import reverse
 from fasthtml.common import *
 from django.middleware.csrf import get_token
