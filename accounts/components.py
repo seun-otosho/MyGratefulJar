@@ -1,4 +1,5 @@
 # core/auth_components.py
+from django.urls import reverse
 from fasthtml.common import *
 from django.middleware.csrf import get_token
 
@@ -50,4 +51,49 @@ def SignupPageComponent(request, form):
         form,
         title="Sign Up",
         submit_text="Sign Up"
+    )
+
+# --- NEW COMPONENTS FOR PASSWORD RESET ---
+
+# Component for the page where the user requests a password reset
+def PasswordResetRequestComponent(request, form):
+    return FormLayout(
+        request,
+        form,
+        title="Reset Your Password",
+        submit_text="Send Reset Email"
+    )
+
+# Component for the "email sent" confirmation page
+def PasswordResetDoneComponent():
+    return Div(
+        H2("Password Reset Email Sent"),
+        P("We have sent you an email with instructions on how to reset your password. Please check your inbox.")
+    )
+
+# Component for the page where the user enters their new password
+def PasswordResetFromKeyComponent(request, form):
+    return FormLayout(
+        request,
+        form,
+        title="Choose a New Password",
+        submit_text="Set New Password"
+    )
+
+# Component for the "password successfully changed" confirmation page
+def PasswordResetFromKeyDoneComponent():
+    return Div(
+        H2("Password Successfully Reset"),
+        P("You can now log in with your new password."),
+        A("Log In Now", href=reverse('account_login'), cls="button")
+    )
+
+
+# --- NEW COMPONENT FOR PASSWORD CHANGE (for logged-in users) ---
+def PasswordChangeComponent(request, form):
+    return FormLayout(
+        request,
+        form,
+        title="Change Your Password",
+        submit_text="Save New Password"
     )
