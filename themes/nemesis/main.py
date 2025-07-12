@@ -40,6 +40,8 @@ def BaseLayout(request, title: str, body_class: str, *children, extra_css=None, 
             A('Sign Up', href=reverse('account_signup'))
         ]
 
+    featured_post = next((post for post in sample_posts if post['is_featured']), sample_posts[0])
+
     return Html(
         Head(
             Title(title),
@@ -51,59 +53,60 @@ def BaseLayout(request, title: str, body_class: str, *children, extra_css=None, 
             *([Link(rel="stylesheet", href=css) for css in extra_css] if extra_css else []),
         ),
         Body(
-            # Nav(*nav_items),  # Use the dynamic nav items
-            Main(*children),
+            search_overlay(),
+            search_form(),
+            Div(id="page-wrapper", cls="feed-view")(
+                navbar(request),
+                hero_slider(featured_post),
+                Div(cls="outer-wrapper clearfix", id="outer-wrapper")(
+                    Div(cls="container fbt-elastic-container")(
+                        Div(cls="row justify-content-center")(
+                            Div(cls="fbt-main-wrapper col-xl-12")(
+                                Div(id="main-wrapper")(
+                                    Div(cls="main-section", id="main_content")(
+                                        Main(*children),
+                                    )
+                                )
+                            ),
+                            sidebar()
+                        )
+                    )
+                ),
+                newsletter_section(),
+                Div(cls="fbt-bottom-shape")(
+                    # SVG wave shape
+                    NotStr('''<svg class="fbt-footer-wave-big" preserveAspectRatio="none" version="1.1" viewBox="5 0 1366 222" width="100%">
+                    <path d="M-2.19,238H1366v-4.27c-67.87-24-146.44-43.08-230.75-53.19-253.33-27.78-293.94,51.64-541.13,29.89C318.08,186.31,289.49,32.92,6.9,11.73c-5.21-.42-10.56-.7-15.9-1V238Z" transform="translate(9.5 -10.22)"></path>
+                </svg>''')
+                ),
+                footer()
+            ),
             cls=body_class,
         )
     )
 
+
 def homepage(request):
     """Homepage route"""
     # Get featured post and regular posts
-    featured_post = next((post for post in sample_posts if post['is_featured']), sample_posts[0])
     regular_posts = [post for post in sample_posts if not post['is_featured']]
+    content = [
+        Div(cls="blog-posts fbt-index-post-wrap card-columns")(
+            *[blog_post_card(post) for post in regular_posts]
+        ),
+        Div(cls="blog-pager", id="blog-pager")(
+            Div(cls="list-inline")(
+                A(cls="blog-pager-older-link list-inline-item", href="#",
+                  title="More posts")(
+                    Div(cls="fbt-bp-message text-uppercase font-weight-bold")("More posts"),
+                    Span(aria_hidden="true", cls="fa fa-angle-down")
+                )
+            )
+        )]
 
     return BaseLayout(
         request,
         "Nemesis | Minimal Blog HTML Template",
         "",
-        search_overlay(),
-        search_form(),
-        Div(id="page-wrapper", cls="feed-view")(
-            navbar(request),
-            hero_slider(featured_post),
-            Div(cls="outer-wrapper clearfix", id="outer-wrapper")(
-                Div(cls="container fbt-elastic-container")(
-                    Div(cls="row justify-content-center")(
-                        Div(cls="fbt-main-wrapper col-xl-12")(
-                            Div(id="main-wrapper")(
-                                Div(cls="main-section", id="main_content")(
-                                    Div(cls="blog-posts fbt-index-post-wrap card-columns")(
-                                        *[blog_post_card(post) for post in regular_posts]
-                                    ),
-                                    Div(cls="blog-pager", id="blog-pager")(
-                                        Div(cls="list-inline")(
-                                            A(cls="blog-pager-older-link list-inline-item", href="#",
-                                              title="More posts")(
-                                                Div(cls="fbt-bp-message text-uppercase font-weight-bold")("More posts"),
-                                                Span(aria_hidden="true", cls="fa fa-angle-down")
-                                            )
-                                        )
-                                    )
-                                )
-                            )
-                        ),
-                        sidebar()
-                    )
-                )
-            ),
-            newsletter_section(),
-            Div(cls="fbt-bottom-shape")(
-                # SVG wave shape
-                NotStr('''<svg class="fbt-footer-wave-big" preserveAspectRatio="none" version="1.1" viewBox="5 0 1366 222" width="100%">
-                    <path d="M-2.19,238H1366v-4.27c-67.87-24-146.44-43.08-230.75-53.19-253.33-27.78-293.94,51.64-541.13,29.89C318.08,186.31,289.49,32.92,6.9,11.73c-5.21-.42-10.56-.7-15.9-1V238Z" transform="translate(9.5 -10.22)"></path>
-                </svg>''')
-            ),
-            footer()
-        )
+        *content
     )
