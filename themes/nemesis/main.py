@@ -23,22 +23,9 @@ custom_hdrs = [
 
 def BaseLayout(request, title: str, body_class: str, *children, extra_css=None, extra_js=None):
     if request.user.is_authenticated:
-        nav_items = [
-            # *unauth_nav_items,
-            # A form is the correct way to do a POST for logout
-            Form(
-                Button(f"Logout ({request.user.username})", type="submit"),
-                action=reverse('account_logout'),
-                method="post",
-                style="display: inline;"
-            )
-        ]
+        pass
     else:
-        nav_items = [
-            # *unauth_nav_items,
-            A('Login', href=reverse('account_login')),
-            A('Sign Up', href=reverse('account_signup'))
-        ]
+        pass
 
     return Html(
         Head(
@@ -50,11 +37,7 @@ def BaseLayout(request, title: str, body_class: str, *children, extra_css=None, 
             # Add extra CSS if provided
             *([Link(rel="stylesheet", href=css) for css in extra_css] if extra_css else []),
         ),
-        Body(
-            # Nav(*nav_items),  # Use the dynamic nav items
-            Main(*children),
-            cls=body_class,
-        )
+        Body(            Main(*children),            cls=body_class,        )
     )
 
 def homepage(request):
