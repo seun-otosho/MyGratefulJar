@@ -3,6 +3,52 @@ from django.urls import reverse
 from fasthtml.common import *
 # This Django utility helps resolve static file paths
 from django.templatetags.static import static
+from fasthtml.components import Div, Span
+from fasthtml.xtend import A
+
+from themes.nemesis.components import blog_post_card
+from themes.nemesis.main import BaseLayout
+from themes.nemesis.meta import sample_posts
+from django.middleware.csrf import get_token
+
+
+def homepage(request):
+    """Homepage route"""
+    # Get featured post and regular posts
+    regular_posts = [post for post in sample_posts if not post['is_featured']]
+    content = [
+        Div(cls="blog-posts fbt-index-post-wrap card-columns")(
+            *[blog_post_card(post) for post in regular_posts]
+        ),
+        Div(cls="blog-pager", id="blog-pager")(
+            Div(cls="list-inline")(
+                A(cls="blog-pager-older-link list-inline-item", href="#",
+                  title="More posts")(
+                    Div(cls="fbt-bp-message text-uppercase font-weight-bold")("More posts"),
+                    Span(aria_hidden="true", cls="fa fa-angle-down")
+                )
+            )
+        )
+    ]
+    return content
+
+# A component to render our contact form
+def ContactFormComponent(form, request):
+    # We need the request to generate the CSRF token
+    csrf_token = get_token(request)
+    return Form(
+        H2('Contact Us'),
+        # Manually add the CSRF token, as we aren't using {% csrf_token %}
+        Input(type='hidden', name='csrfmiddlewaretoken', value=csrf_token),
+        # Render the form fields. `form.as_p` generates <p>-wrapped fields.
+        # `Raw` tells FastHTML to inject the HTML string directly.
+        NotStr(form.as_p()),
+        # Raw(form.as_p()),
+        Button('Submit', type='submit')
+    )
+
+
+# --- ols COMPONENTS ---
 
 
 def BaseLayout(*children, title: str, request): # Add request as a parameter
@@ -62,19 +108,3 @@ def AboutPage():
         P('This is a demo project combining Django and FastHTML.')
     )
 
-from django.middleware.csrf import get_token
-
-# A component to render our contact form
-def ContactFormComponent(form, request):
-    # We need the request to generate the CSRF token
-    csrf_token = get_token(request)
-    return Form(
-        H2('Contact Us'),
-        # Manually add the CSRF token, as we aren't using {% csrf_token %}
-        Input(type='hidden', name='csrfmiddlewaretoken', value=csrf_token),
-        # Render the form fields. `form.as_p` generates <p>-wrapped fields.
-        # `Raw` tells FastHTML to inject the HTML string directly.
-        NotStr(form.as_p()),
-        # Raw(form.as_p()),
-        Button('Submit', type='submit')
-    )

@@ -2,7 +2,7 @@ from django.urls import reverse
 from fasthtml.common import *
 
 from .components import (
-    blog_post_card, footer, hero_slider, navbar, newsletter_section, search_overlay, search_form, sidebar)
+    footer, hero_slider, navbar, newsletter_section, search_overlay, search_form, sidebar)
 from .meta import sample_posts
 
 # Custom CSS and JS headers to match the original template
@@ -21,13 +21,11 @@ custom_hdrs = [
 ]
 
 
-def BaseLayout(request, title: str, body_class: str, *children, extra_css=None, extra_js=None):
+def BaseLayout(request, title: str, body_class: str, *children, slider=None, extra_css=None, extra_js=None):
     if request.user.is_authenticated:
         pass
     else:
         pass
-
-    featured_post = next((post for post in sample_posts if post['is_featured']), sample_posts[0])
 
     return Html(
         Head(
@@ -44,10 +42,7 @@ def BaseLayout(request, title: str, body_class: str, *children, extra_css=None, 
             search_form(),
             Div(id="page-wrapper", cls="feed-view")(
                 navbar(request),
-                hero_slider(featured_post) if request.path not in [
-                    reverse('account_login'),reverse('account_signup'),
-                    reverse('account_reset_password'),reverse('account_signup'),
-                ] else "",
+                slider if slider else "",
                 Div(cls="outer-wrapper clearfix", id="outer-wrapper")(
                     Div(cls="container fbt-elastic-container")(
                         Div(cls="row justify-content-center")(
@@ -73,30 +68,4 @@ def BaseLayout(request, title: str, body_class: str, *children, extra_css=None, 
             ),
             cls=body_class,
         )
-    )
-
-
-def homepage(request):
-    """Homepage route"""
-    # Get featured post and regular posts
-    regular_posts = [post for post in sample_posts if not post['is_featured']]
-    content = [
-        Div(cls="blog-posts fbt-index-post-wrap card-columns")(
-            *[blog_post_card(post) for post in regular_posts]
-        ),
-        Div(cls="blog-pager", id="blog-pager")(
-            Div(cls="list-inline")(
-                A(cls="blog-pager-older-link list-inline-item", href="#",
-                  title="More posts")(
-                    Div(cls="fbt-bp-message text-uppercase font-weight-bold")("More posts"),
-                    Span(aria_hidden="true", cls="fa fa-angle-down")
-                )
-            )
-        )]
-
-    return BaseLayout(
-        request,
-        "Nemesis | Minimal Blog HTML Template",
-        "",
-        *content
     )

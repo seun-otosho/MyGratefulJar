@@ -72,7 +72,7 @@ def navbar(request):
                         )
                     ),
                     Li(cls="nav-item")(
-                        A(href="/contact", cls="nav-link")("Contact")
+                        A(href=reverse("contact"), cls="nav-link")("Contact")
                     ),
                     Li(cls="nav-item")(
                         A(href="#", cls="nav-link")("Sport")
