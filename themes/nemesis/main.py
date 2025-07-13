@@ -57,7 +57,10 @@ def BaseLayout(request, title: str, body_class: str, *children, extra_css=None, 
             search_form(),
             Div(id="page-wrapper", cls="feed-view")(
                 navbar(request),
-                hero_slider(featured_post),
+                hero_slider(featured_post) if request.path not in [
+                    reverse('account_login'),reverse('account_signup'),
+                    reverse('account_reset_password'),reverse('account_signup'),
+                ] else "",
                 Div(cls="outer-wrapper clearfix", id="outer-wrapper")(
                     Div(cls="container fbt-elastic-container")(
                         Div(cls="row justify-content-center")(
