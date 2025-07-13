@@ -29,7 +29,7 @@ def BaseLayout(request, title: str, body_class: str, *children, slider=None, ext
 
     return Html(
         Head(
-            Title(title),
+            Title(title + " - My Grateful Jar" if title else "My Grateful Jar" ),
             Meta(charset="utf-8"),
             Meta(name="viewport", content="width=device-width, initial-scale=1.0"),
             Link(rel="stylesheet", href="/static/css/config.css", type="text/css"),

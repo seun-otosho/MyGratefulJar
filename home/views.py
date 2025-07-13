@@ -3,7 +3,8 @@ from fasthtml.common import *
 from themes.nemesis.components import hero_slider
 from themes.nemesis.main import BaseLayout
 from themes.nemesis.meta import sample_posts
-from .components import ContactFormComponent, homepage
+from utils import django_form_to_fasthtml
+from .components import ContactFormComponent, homepage, contact_page
 from .forms import ContactForm
 
 
@@ -11,7 +12,7 @@ def home(request):
     featured_post = next((post for post in sample_posts if post['is_featured']), sample_posts[0])
     page = BaseLayout(
         request,
-        "Nemesis | Minimal Blog HTML Template",
+        "Welcome",
         "",
         *homepage(request),
         slider=hero_slider(featured_post)
@@ -20,30 +21,32 @@ def home(request):
 
 
 def contact_view(request):
-    if request.method == 'POST':
-        form = ContactForm(request.POST)
-        if form.is_valid():
-            # Process the data (e.g., send an email)
-            print("Form is valid!")
-            print(form.cleaned_data)
-            # For this demo, just show a success message
-            page = BaseLayout(
-                request,
-                "Success",
-                "",
-                H2('Thank You!'),
-                P('Your message has been sent.'),
-            )
-            return HttpResponse(to_xml(page))
-    else:
-        form = ContactForm()  # An unbound form
+    # if request.method == 'POST':
+    #     form = ContactForm(request.POST)
+    #     if form.is_valid():
+    #         # Process the data (e.g., send an email)
+    #         print("Form is valid!")
+    #         print(form.cleaned_data)
+    #         # For this demo, just show a success message
+    #         page = BaseLayout(
+    #             request,
+    #             "Success",
+    #             "",
+    #             H2('Thank You!'),
+    #             P('Your message has been sent.'),
+    #         )
+    #         return HttpResponse(to_xml(page))
+    # else:
+    #     form = ContactForm()  # An unbound form
+    #
+    # fh_form = django_form_to_fasthtml(form)
 
     # On GET or if form is invalid, render the form page
     page = BaseLayout(
         request,
         "Contact Us",
         "",
-        ContactFormComponent(form=form, request=request),
+        contact_page(),
     )
     return HttpResponse(to_xml(page))
 
