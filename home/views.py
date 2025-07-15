@@ -1,11 +1,19 @@
 from fasthtml.common import *
 
 from themes.nemesis.components import hero_slider
-from themes.nemesis.main import BaseLayout
+from themes.nemesis.main import Base, BaseLayout
 from themes.nemesis.meta import sample_posts
-from utils import django_form_to_fasthtml
 from .components import ContactFormComponent, homepage, contact_page
-from .forms import ContactForm
+
+
+def base(request):
+    page = Base(
+        request,
+        "Base",
+        "",
+        "feed",
+    )
+    return HttpResponse(to_xml(page), content_type="text/html")
 
 
 def home(request):
@@ -14,6 +22,7 @@ def home(request):
         request,
         "Welcome",
         "",
+        "feed",
         *homepage(request),
         slider=hero_slider(featured_post)
     )
@@ -46,6 +55,7 @@ def contact_view(request):
         request,
         "Contact Us",
         "",
+        "page",
         contact_page(),
     )
     return HttpResponse(to_xml(page))
