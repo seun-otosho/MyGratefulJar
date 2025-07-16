@@ -1,15 +1,20 @@
 Django
 python-fasthtml
 wagtail
-
-django-extensions
+psycopg2-binary
 
 django-allauth
 
+django-extensions
+
+
 supabase
 pydantic[email]
+
+dj-database-url
+python-decouple
 python-dotenv
+whitenoise
+
 email-validator
 PyJWT
-whitenoise
-dj-database-url
