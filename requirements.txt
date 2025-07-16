@@ -12,6 +12,7 @@ supabase
 pydantic[email]
 
 dj-database-url
+decouple
 python-decouple
 python-dotenv
 whitenoise

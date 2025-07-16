@@ -14,7 +14,6 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 import os
 
 import dj_database_url
-from decouple import config
 from dotenv import load_dotenv
 
 # Load environment variables from the .env file (if present)
@@ -26,11 +25,7 @@ BASE_DIR = os.path.dirname(PROJECT_DIR)
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
-ALLOWED_HOSTS = config(
-    'ALLOWED_HOSTS',
-    default='localhost,127.0.0.1,0.0.0.0',
-    cast=lambda v: [s.strip() for s in v.split(',')]
-)
+ALLOWED_HOSTS = ["localhost", "0.0.0.0", ".vercel.app", ".now.sh"]
 
 # Application definition
 INSTALLED_APPS = [
