@@ -12,3 +12,4 @@ python-dotenv
 email-validator
 PyJWT
 whitenoise
+dj-database-url
