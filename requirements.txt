@@ -11,3 +11,4 @@ pydantic[email]
 python-dotenv
 email-validator
 PyJWT
+whitenoise
