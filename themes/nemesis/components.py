@@ -73,8 +73,11 @@ def navbar(request):
                           data_toggle="dropdown")("Home"),
                         Div(cls="dropdown-menu")(
                             A(href="/", cls="dropdown-item")("Home 1"),
-                            A(href="/blog", cls="dropdown-item")("Blog"),
+                            A(href=reverse("blog:blog"), cls="dropdown-item")("Blog"),
                         )
+                    ),
+                    Li(cls="nav-item")(
+                        A(href=reverse("blog:blog"), cls="nav-link")("Magazine")
                     ),
                     Li(cls="nav-item")(
                         A(href=reverse("contact"), cls="nav-link")("Contact")
@@ -539,7 +542,7 @@ def pagination_nav(current_page=2, total_pages=3):
 
 
 custom_hdrs = [
-    Link(rel="shortcut icon", href="/favicon.ico", type="image/x-icon"),
+    Link(rel="shortcut icon", href="/static/images/favicon.ico", type="image/x-icon"),
     Link(href="https://fonts.googleapis.com/css?family=Montserrat:900%7CNunito:400,700%7COswald%7CRoboto",
          rel="stylesheet"),
     Link(href="/static/css/animate.min.css", rel="stylesheet", media="screen"),

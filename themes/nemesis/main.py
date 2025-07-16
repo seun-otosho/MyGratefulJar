@@ -78,7 +78,7 @@ def BaseLayout(request, title: str, body_class: str, page_class: str, *children,
         body_class,
         page_class,
         *children,
-
+        slider=slider,
     )
 
 
